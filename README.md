@@ -1,27 +1,39 @@
-# TG
+<p align="center">
+  <img src="https://github.com/SauloHGN/TicketTower/assets/100096259/dbf4fdb6-1d6b-4545-a14b-5c494c174f7f" />
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+## Preview
 
-## Development server
+<br/>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Inicialização
 
-## Code scaffolding
+```
+npm install devDependencies
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+ng serve
+```
 
-## Build
+`http://localhost:4200/`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Ajuda
 
-## Running unit tests
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli).<br/><br/>
+[Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.<br/><br/>
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.<br/>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Ferramentas
 
-## Running end-to-end tests
+<div style="display: inline_block" alt="linguagens">
+<a target="_blank"> <img src="https://github.com/SauloHGN/TicketTower/assets/100096259/1f11251a-9858-4ac7-9d4d-4b063b4782ea" alt="angular_icon" width="45" height="45"/> </a>
+<a target="_blank"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="c#_icon" width="40" height="40"/> </a>
+<a target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="html_icon" width="40" height="40"/> </a>
+<a target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="css_icon" width="40" height="40"/> </a>
+</div><br/>
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Autores
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| [<img src="https://avatars.githubusercontent.com/u/88466085?v=4" width=115><br><sub>Pedro Grundler</sub>](https://github.com/pEdrolgdcm) | [<img src="https://avatars.githubusercontent.com/u/99048941?v=4" width=115><br><sub>João Paulo Caetano</sub>](https://github.com/Jpcaetano) | [<img src="https://avatars.githubusercontent.com/u/100096259?v=4" width=115><br><sub>Saulo Nunes</sub>](https://github.com/SauloHGN) |
+| :--------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------: |
