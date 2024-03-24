@@ -26,5 +26,5 @@ import {
   ],
 })
 export class SidebarComponent {
-  title = 'Teste';
+  title = '';
 }
