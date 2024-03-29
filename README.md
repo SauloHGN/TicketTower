@@ -9,7 +9,11 @@
 ### Inicialização
 
 ```
-npm install devDependencies
+npm install @angular/cli
+```
+
+```
+npm install dependencies
 ```
 
 ```
