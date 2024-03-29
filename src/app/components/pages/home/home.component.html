@@ -1,10 +1,11 @@
-<main class="flex">
-  <section class="flex">
+<div class="flex">
+  <section class="flex h-screen w-screen">
     <aside class="border-border border-r">
-      <app-sidebar class="flex flex-col h-screen"></app-sidebar>
+      <app-sidebar class="flex flex-col"></app-sidebar>
     </aside>
-    <div id="mainContent" class="grid-rows-1">
-      <app-header></app-header>
-    </div>
+    <header class="flex flex-col flex-grow border-border border-b h-10">
+      <app-header class="flex col-auto"></app-header>
+    </header>
+    <main></main>
   </section>
-</main>
+</div>
