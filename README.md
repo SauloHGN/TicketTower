@@ -1,6 +1,8 @@
 <p align="center">
-  <img src="https://github.com/SauloHGN/TicketTower/assets/100096259/dbf4fdb6-1d6b-4545-a14b-5c494c174f7f" />
+  <img src="https://github.com/SauloHGN/TicketTower/assets/100096259/e86f2216-8d74-41a7-b868-6e6831304ab3" widht="50" height="150"/>
+  <h1 align="center">Ticket Tower</h1>
 </p>
+<br/>
 
 ## Preview
 

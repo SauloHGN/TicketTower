@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { RouterModule } from '@angular/router';
 import {
   lucideBarChart4,
   lucideNotepadText,
@@ -12,7 +13,7 @@ import {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [NgIconComponent],
+  imports: [NgIconComponent, RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
   viewProviders: [
