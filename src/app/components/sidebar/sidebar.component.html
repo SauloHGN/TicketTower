@@ -7,7 +7,8 @@
 
       <div class="flex flex-col px-1 mt-4">
         <a
-          href="/home"
+          routerLink="/tarefas"
+          routerLinkActive="active"
           class="flex items-center, text-base, px-2 py-2 hover:bg-zinc-200 rounded-md"
         >
           <ng-icon
@@ -51,7 +52,11 @@
           >Links Extras</span
         >
 
-        <a href="/home" class="px-2 p-2 my-1 hover:bg-zinc-200 rounded-md">
+        <a
+          routerLink="/configuracao"
+          routerLinkActive="active"
+          class="px-2 p-2 my-1 hover:bg-zinc-200 rounded-md"
+        >
           <ng-icon
             name="lucideSettings2"
             color="black"
