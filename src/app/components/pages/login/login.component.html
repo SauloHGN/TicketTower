@@ -1,8 +1,20 @@
 <section>
-  <div class="flex justify-center flex-col">
+  <div class="flex justify-center flex-col w-1/4">
     <span class="text-center">Login</span><br />
-    <input type="email" name="Email" id="" placeholder="Email" /><br />
-    <input type="password" name="Senha" id="" placeholder="Senha" /><br />
-    <button class="h-10 w-20 border-border border-2">Entrar</button>
+    <input
+      type="email"
+      name="Email"
+      [(ngModel)]="loginObj.email"
+      placeholder="Email"
+    /><br />
+    <input
+      type="password"
+      name="Senha"
+      [(ngModel)]="loginObj.senha"
+      placeholder="Senha"
+    /><br />
+    <button class="h-10 w-20 border-border border-2" (click)="Login()">
+      Entrar
+    </button>
   </div>
 </section>

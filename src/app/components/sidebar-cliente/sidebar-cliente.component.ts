@@ -12,14 +12,13 @@ import {
   lucideMenuSquare,
   lucideTicketPlus,
 } from '@ng-icons/lucide';
-//import { radixGear, radixReader, radixHome } from '@ng-icons/radix-icons';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-sidebar-cliente',
   standalone: true,
   imports: [NgIconComponent, RouterModule],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css',
+  templateUrl: './sidebar-cliente.component.html',
+  styleUrl: './sidebar-cliente.component.css',
   viewProviders: [
     provideIcons({
       lucideBarChart4,
@@ -34,6 +33,4 @@ import {
     }),
   ],
 })
-export class SidebarComponent {
-  title = '';
-}
+export class SidebarClienteComponent {}
