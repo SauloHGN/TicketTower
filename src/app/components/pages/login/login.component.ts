@@ -21,9 +21,9 @@ export class LoginComponent {
   ) {}
 
   Login() {
-    console.log('Clicado');
-    console.log('email', this.loginObj.email);
-    console.log('senha', this.loginObj.senha);
+    //console.log('Clicado');
+    //console.log('email', this.loginObj.email);
+    //console.log('senha', this.loginObj.senha);
 
     //Validação
     if (this.loginObj.email.length > 0 && this.loginObj.senha.length > 6) {
