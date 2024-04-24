@@ -6,7 +6,12 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "install-all-deps": "npm install && cd backend && npm install",
+    "install-frontend": "npm install",
+    "install-backend": "cd backend && npm install",
+    "start-backend": "cd backend && nest start",
+    "start-all": "ng serve && cd backend && nest start"
   },
   "private": true,
   "dependencies": {
