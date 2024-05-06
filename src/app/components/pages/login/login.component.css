@@ -1,0 +1,70 @@
+/* login.component.css */
+
+/* Estilo para a seção do formulário de login */
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura total da tela */
+    background-color: #edf2f7; /* Cor de fundo suave */
+  }
+  
+  /* Estilo para o contêiner do formulário de login */
+  .flex {
+    text-align: center;
+    max-width: 400px; /* Limitar a largura do formulário */
+    padding: 20px;
+    background-color: #ffffff; /* Fundo branco para o formulário */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  /* Estilo para a logo */
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px; /* Espaçamento inferior para separar do título */
+  }
+  
+  /* Estilo para o título de Login */
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d3748; /* Cor do texto escura */
+    margin-bottom: 20px; /* Espaçamento inferior */
+  }
+  
+  /* Estilo para os campos de entrada */
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #cbd5e0; /* Cor da borda suave */
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  /* Estilo para o botão de login */
+  .btn-login {
+    width: 100%;
+    height: 40px;
+    background-color: #2d3748; /* Cor de fundo do botão */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transição suave de cor ao passar o mouse */
+  }
+  
+  .btn-login:hover {
+    background-color: #1a202c; /* Cor do botão ao passar o mouse */
+  }
+  
+  /* Estilo para mensagens de erro e sucesso */
+  .toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Certificar-se de que está acima de outros elementos */
+  }
+  
