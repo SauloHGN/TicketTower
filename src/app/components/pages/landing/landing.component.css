@@ -1,0 +1,123 @@
+body
+{
+    background-color: aliceblue;
+    color: black;
+    font-family: poppinsregular;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+header
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#title
+{
+    flex-direction: column;
+    line-height: 10px;
+}
+
+ul
+{
+    margin-right: 100px;
+}
+
+li
+{
+    display: inline-block;
+    margin-inline: 70px;
+}
+
+a
+{
+    color: rgb(0, 0, 0);
+}
+
+a:hover
+{
+    color: rgb(0, 174, 255);
+    transition: 0.3ms all;
+}
+
+#loginbtn
+{
+    border: 2px solid rgb(0, 174, 255);
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+#loginbtn:hover
+{
+    background-color: rgb(0, 174, 255);
+    color: black;
+}
+
+h1
+{
+    font-size: 50px;
+    font-weight: 1500;
+    margin-left: 200px;
+}
+
+main
+{
+    display: flex;
+    flex-direction: row;
+    margin-top: 100px;
+}
+
+#imagenzinha
+{
+    width: 90px;
+    margin-right: 200px;
+}
+
+p
+{
+    margin-left: 150px;
+    margin-right: 80px;
+}
+
+h2
+{
+    margin-left: 150px;
+    font-size: 76px;
+    line-height: 10px;
+}
+
+span
+{
+    color: rgb(0, 174, 255);
+    max-width: 800px;
+}
+
+p
+{
+    line-height: 30px;
+    max-width: 800px;
+    font-family: poppinslight;
+}
+
+aside
+{
+    margin-top: 70px;
+}
+
+article
+{
+    margin-right: 200px;
+}
+
+img
+{
+    width: 700px;
+}
