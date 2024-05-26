@@ -4,21 +4,23 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Enderecos } from './enderecos.entity';
 
 @Entity()
 export class Empresas {
   @PrimaryGeneratedColumn()
-  ID: number;
+  id: number;
 
-  @Column()
-  Nome: string;
+  @Column({ name: 'nome', nullable: false })
+  nome: string;
 
-  @Column()
-  CNPJ: string;
+  @Column({ name: 'cnpj', nullable: false })
+  cnpj: string;
 
-  @OneToOne(() => Enderecos, (endereco) => endereco.ID)
-  @JoinColumn({ name: 'EnderecoID' })
-  EnderecoID: Enderecos;
+  @ManyToOne(() => Enderecos, (Enderecos) => Enderecos.id)
+  @JoinColumn({ name: 'id_endereco' })
+  id_endereco: Enderecos;
 }

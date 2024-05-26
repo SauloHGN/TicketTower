@@ -9,8 +9,8 @@ import {
 @Entity()
 export class Setores {
   @PrimaryGeneratedColumn()
-  ID: number;
+  id: number;
 
-  @Column()
-  NomeSetor: string;
+  @Column({ name: 'nome' })
+  nome: string;
 }

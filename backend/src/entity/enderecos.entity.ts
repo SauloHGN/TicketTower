@@ -9,17 +9,23 @@ import {
 @Entity()
 export class Enderecos {
   @PrimaryGeneratedColumn()
-  ID: number;
+  id: number;
 
-  @Column()
-  Rua: string;
+  @Column({ name: 'numero', nullable: false })
+  numero: string;
 
-  @Column()
-  Cidade: string;
+  @Column({ name: 'rua', nullable: false })
+  rua: string;
 
-  @Column()
-  Estado: string;
+  @Column({ name: 'bairro', nullable: false })
+  bairro: string;
 
-  @Column()
-  CEP: string;
+  @Column({ name: 'cidade', nullable: false })
+  cidade: string;
+
+  @Column({ name: 'estado', nullable: false })
+  estado: string;
+
+  @Column({ name: 'cep', nullable: false })
+  cep: string;
 }

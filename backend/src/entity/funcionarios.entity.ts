@@ -6,22 +6,33 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { Usuarios } from './usuario.entity';
 import { Setores } from './setores.entity';
+import { Permissao } from 'src/enums/permissao';
 
 @Entity()
 export class Funcionarios {
   @PrimaryGeneratedColumn()
-  ID: number;
+  id: number;
 
-  @OneToOne(() => Usuarios)
-  @JoinColumn({ name: 'UsuarioID' })
-  UsuarioID: Usuarios;
+  @Column({ name: 'nome', nullable: false })
+  nome: string;
 
-  @Column()
-  Cargo: string;
+  @Column({ name: 'email', nullable: false })
+  email: string;
 
-  @ManyToOne(() => Setores)
-  @JoinColumn({ name: 'SetorID' })
-  SetorID: Setores;
+  @Column({ name: 'senha', nullable: false })
+  senha: string;
+
+  @Column({ name: 'celular', nullable: false })
+  celular: string;
+
+  @Column({ name: 'cargo', nullable: false })
+  cargo: string;
+
+  @Column({ name: 'permissao', type: 'enum', enum: Permissao })
+  permissao: Permissao;
+
+  @ManyToOne(() => Setores, (Setores) => Setores.id)
+  @JoinColumn({ name: 'id_setor' })
+  id_setor: Setores;
 }

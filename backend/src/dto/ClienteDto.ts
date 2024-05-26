@@ -1,7 +1,10 @@
-import { DeepPartial } from 'typeorm';
-import { UsuariosDto } from './UsuariosDto';
-import { Empresas } from 'src/entity/empresas.entity';
+import { Empresas } from '../entity/empresas.entity';
 
-export class ClienteDto extends UsuariosDto {
-  IDEmpresa: DeepPartial<Empresas>;
+export class ClienteDTO {
+  id: number;
+  nome: string;
+  email: string;
+  senha: string;
+  celular: string;
+  id_empresa: Empresas;
 }
