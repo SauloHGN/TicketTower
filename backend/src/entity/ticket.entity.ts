@@ -7,41 +7,43 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { Usuarios } from './usuario.entity';
-import { EquipamentosServidores } from './equipamentosservidores.entity';
-import { registrotarefas } from './registrotarefas.entity';
+import { Funcionarios } from './funcionarios.entity';
 import { Setores } from './setores.entity';
+import { AbertoPorTipo } from 'src/enums/abertoPor';
+import { StatusTicket } from 'src/enums/statusTicket';
+import { Prioridade } from 'src/enums/prioridade';
 
 @Entity()
 export class Tickets {
   @PrimaryGeneratedColumn()
-  ID: number;
+  id: number;
 
   @Column({ type: 'datetime' })
-  DataAbertura: Date;
+  data_hora_abertura: Date;
 
   @Column({ type: 'datetime' })
-  DataEncerramento: Date;
+  data_hora_encerramento: Date;
 
   @Column()
-  Prioridade: number;
+  aberto_por: number;
 
-  @ManyToOne(() => Usuarios)
-  @JoinColumn({ name: 'AbertoPor' })
-  AbertoPor: Usuarios;
+  @Column({ type: 'enum', enum: AbertoPorTipo })
+  aberto_por_tipo: AbertoPorTipo;
 
-  @ManyToOne(() => Setores, (Setores) => Setores.ID)
-  @JoinColumn({ name: 'Responsavel' })
-  Responsavel: Setores;
+  @Column({ type: 'enum', enum: StatusTicket, default: StatusTicket.ABERTO })
+  status: StatusTicket;
 
-  @ManyToOne(() => EquipamentosServidores)
-  @JoinColumn({ name: 'IdEquipamento' })
-  IdEquipamento: EquipamentosServidores;
+  @ManyToOne(() => Setores, (Setores) => Setores.id)
+  @JoinColumn({ name: 'id_setor' })
+  id_setor: Setores;
 
-  @Column()
-  Descricao: string;
+  @Column({ type: 'enum', enum: Prioridade })
+  prioridade: Prioridade;
 
-  @OneToMany(() => registrotarefas, (RegistroTarefa) => RegistroTarefa.ID)
-  @JoinColumn({ name: 'RegistroTarefas' })
-  RegistroTarefas: registrotarefas;
+  @Column({ name: 'descricao' })
+  descricao: string;
+
+  @ManyToOne(() => Funcionarios, (Funcionarios) => Funcionarios.id)
+  @JoinColumn({ name: 'id_funcionario' })
+  id_funcionario: Funcionarios;
 }

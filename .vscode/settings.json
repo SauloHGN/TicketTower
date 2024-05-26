@@ -1,6 +1,7 @@
 {
   "files.associations": {
-    "*.css": "tailwindcss"
+    "*.css": "css",
+    "*.tailwind.css": "tailwindcss"
   },
   "vsicons.presets.nestjs": true
 }

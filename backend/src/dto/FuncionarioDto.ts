@@ -1,8 +1,12 @@
-import { DeepPartial } from 'typeorm';
-import { UsuariosDto } from './UsuariosDto';
-import { Setores } from 'src/entity/setores.entity';
+import { Permissao } from 'src/enums/permissao';
+import { Setores } from '../entity/setores.entity';
 
-export class FuncionarioDto extends UsuariosDto {
-  Cargo: string;
-  SetorID: DeepPartial<Setores>;
+export class FuncionarioDTO {
+  nome: string;
+  email: string;
+  senha: string;
+  celular: string;
+  cargo: string;
+  permissao: Permissao;
+  id_setor: Setores;
 }

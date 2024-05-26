@@ -5,19 +5,26 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { Usuarios } from './usuario.entity';
 import { Empresas } from './empresas.entity';
 
 @Entity()
 export class Clientes {
   @PrimaryGeneratedColumn()
-  ID: number;
+  id: number;
 
-  @OneToOne(() => Usuarios)
-  @JoinColumn({ name: 'usuarioID' })
-  usuarioID: Usuarios;
+  @Column({ name: 'nome', nullable: false })
+  nome: string;
+
+  @Column({ name: 'email', nullable: false })
+  email: string;
+
+  @Column({ name: 'senha', nullable: false })
+  senha: string;
+
+  @Column({ name: 'celular', nullable: false })
+  celular: string;
 
   @OneToOne(() => Empresas)
-  @JoinColumn({ name: 'IDEmpresa' })
-  IDEmpresa: Empresas;
+  @JoinColumn({ name: 'id_empresa' })
+  id_empresa: Empresas;
 }
