@@ -1,6 +1,11 @@
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="landing.component.css">
     <link rel="stylesheet" href="fonts.css">
+    <title>Landing Page</title>
 </head>
 <body>
     <header>
@@ -9,23 +14,68 @@
             <h1>Tower</h1>
         </div>
         <article>
-            <img id="imagenzinha" src="images/icone.ico" alt="tonhao">
+            <img id="imagenzinha" src="../../../assets/icone.ico" alt="tonhao">
         </article>
         <ul>
             <a href="#"><li>Inicio</li></a>
-            <a href="#"><li>Sobre</li></a>
+            <a href="#"><li>Documentação</li></a>
             <a href="#"><li>FAQ</li></a>
             <a href="/login" id="loginbtn"><li>Login</li></a>
         </ul>
     </header>
     <main>
-        <aside>
-            <span><h2>Quem</h2></span>
-            <h2>somos nós</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-        </aside>
-        <article>
-            <img src="images/about-img.png" alt="TicketTower">
-        </article>
+        <section id="primeira">
+            <aside>
+                <span><h2>Quem</h2></span>
+                <h2>somos nós</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+            </aside>
+            <article id="imagem1">
+                <img src="../../../assets/landingpageimg.png" alt="TicketTower">
+            </article>
+        </section>
+
+        <section id="terceira">
+            <div id="faq" class="faq-body">
+                <div class="faq-header">
+                    <span><h3 class="faq-title">Perguntas</h3></span>
+                  <h3 class="faq-title">Frequentes</h3>
+                  <div class="seperator"></div>
+                </div>
+                <div class="faq-list">
+                    <div>
+                      <details open>
+                        <summary title="O caetano dá a bundinha?">O caetano dá a bundinha?</summary>
+                        <p class="faq-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed illo quod debitis ducimus iste soluta rerum ipsa consequuntur minus quae. Ea minus ex corporis, pariatur quia rerum sequi iusto odit enim expedita fugiat, assumenda molestiae earum iste blanditiis, ipsum ratione.</p>
+                      </details>
+                      </div>
+                    <div>
+                      <details>
+                        <summary title="Saulo mamou alguém pra conseguir um estágio?">Saulo mamou alguém pra conseguir um estágio?</summary>
+                        <p class="faq-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, molestias similique! Molestiae sapiente omnis, illo facere odit reprehenderit eveniet consequuntur sit minus adipisci temporibus eius inventore quidem. Dignissimos, facere quae. Rem quas a laborum est officia pariatur voluptatum iusto perferendis aut labore fugit magni inventore nulla architecto, velit, facilis itaque.</p>
+                      </details>
+                      </div>
+                    <div>
+                      <details>
+                        <summary title="Pedro vai conseguir se formar?">Pedro vai conseguir se formar?</summary>
+                        <p class="faq-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis quisquam numquam labore explicabo cupiditate laboriosam. Ipsam explicabo possimus illum aspernatur.</p>
+                      </details>
+                      </div>
+                    <div>
+                      <details>
+                        <summary title="O breno vai conseguir meter um shape?">O breno vai conseguir meter um shape?</summary>
+                        <p class="faq-content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo quos quam asperiores enim sequi nihil? Iure blanditiis autem in ratione rerum, sequi cupiditate eos nemo iusto unde eaque voluptatum alias, porro aliquid sunt. Nesciunt veritatis, ex esse tempora laudantium officiis? Quas corrupti a aut sed quaerat, ipsa incidunt tempora velit dolor distinctio repellat tenetur illum consectetur quos veniam eius provident earum doloremque commodi! Minus amet, obcaecati rem, modi accusantium ad, deleniti possimus incidunt laudantium vitae iusto laborum culpa! Similique, repellat.</p>
+                      </details>
+                      </div>
+                    <div>
+                          <details>
+                              <summary title="O joão vai sair no soco com a professora de inglês?">O joão vai sair no soco com a professora de inglês?</summary>
+                              <p class="faq-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis quisquam numquam labore explicabo cupiditate laboriosam. Ipsam explicabo possimus illum aspernatur.</p>
+                          </details>
+                      </div>
+                </div>
+              </div>
+        </section>
     </main>
 </body>
+</html>

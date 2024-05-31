@@ -6,8 +6,10 @@ import { HomeClienteComponent } from './components/pages/cliente/home-cliente/ho
 import { HomeFuncionarioComponent } from './components/pages/funcionario/home-funcionario/home-funcionario.component';
 import { TarefasComponent } from './components/tarefas/tarefas.component';
 import { ConfiguracaoComponent } from './components/configuracao/configuracao.component';
+import { CriarTicketComponent } from './components/criarticket/criarticket.component';
 
 import { NgModule } from '@angular/core';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
@@ -21,6 +23,18 @@ export const routes: Routes = [
       {
         path: 'tarefas',
         component: TarefasComponent,
+        outlet: 'secundary',
+      },
+
+      {
+        path: 'cadastro',
+        component: CadastroComponent,
+        outlet: 'secundary',
+      },
+
+      {
+        path: 'CriarTicket',
+        component: CriarTicketComponent,
         outlet: 'secundary',
       },
 
