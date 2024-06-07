@@ -7,16 +7,42 @@
     <link rel="stylesheet" href="criarticket.component.css">
 </head>
 <body>
-    <div class="header">
-        <img src="../../assets/icone.ico" alt="Logo da Empresa" class="logo">
-        <h1>Abrir um chamado</h1>
-    </div>
     <form action="/submit-ticket" method="post" enctype="multipart/form-data">
-        <label for="problema">Problema</label>
-        <input type="text" id="problema" name="problema" required>
+        <div class="header">
+            <img src="../../assets/icone.ico" alt="Logo da Empresa" class="logo">
+            <h1>Abrir um chamado</h1>
+        </div>
+        <div class="title-group">
+            <label for="problema">Título</label>
+            <input type="text" id="problema" name="problema" required>
+        </div>
 
         <label for="descricao">Descrição</label>
         <textarea id="descricao" name="descricao" required></textarea>
+
+        <div class="select-group">
+            <div class="select-container">
+                <label for="setor">Setor</label>
+                <select id="setor" name="setor" required>
+                    <option value="">Selecione o setor</option>
+                    <option value="Pedro">Pedro</option>
+                    <option value="Lucas">Lucas</option>
+                    <option value="Grundler">Grundler</option>
+                    <option value="De">De</option>
+                    <option value="Carvalho">Carvalho</option>
+                    <option value="Moreira">Moreira</option>
+                </select>
+            </div>
+            <div class="select-container">
+                <label for="prioridade">Prioridade</label>
+                <select id="prioridade" name="prioridade" required>
+                    <option value="">Selecione a prioridade</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média">Média</option>
+                    <option value="Alta">Alta</option>
+                </select>
+            </div>
+        </div>
 
         <div class="buttons">
             <label class="custom-file-upload" for="file">

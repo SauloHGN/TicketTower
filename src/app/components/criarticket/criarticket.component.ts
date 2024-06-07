@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-criarticket',
@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
   styleUrl: './criarticket.component.css',
   imports: [],
 })
-export class CriarTicketComponent {}
+export class CriarTicketComponent{}
