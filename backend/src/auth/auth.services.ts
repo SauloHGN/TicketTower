@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Funcionarios } from '../entity/funcionarios.entity';
 import { Clientes } from '../entity/clientes.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
 
   async login(email: string, senha: string) {
     const user = await this.verificarLogin(email, senha);
+
     if (user == null) {
       return { message: 'Credenciais inválidas' };
     }
@@ -36,18 +38,26 @@ export class AuthService {
     email: string,
     senha: string,
   ): Promise<Funcionarios | Clientes | null> {
+    const senhaHash = await this.GerarHash(senha);
+
     const funcionario = await this.funcionariosRepository.findOne({
       where: { email },
     });
-    if (funcionario && bcrypt.compareSync(senha, funcionario.senha)) {
+    if (funcionario && senhaHash == funcionario.senha) {
       return funcionario;
     }
 
     const cliente = await this.clientesRepository.findOne({ where: { email } });
-    if (cliente && bcrypt.compareSync(senha, cliente.senha)) {
+    if (cliente && senhaHash == cliente.senha) {
       return cliente;
     }
 
     return null;
+  }
+
+  async GerarHash(senha: string): Promise<string> {
+    const senhaHash = crypto.createHash('sha256');
+    senhaHash.update(senha);
+    return senhaHash.digest('hex');
   }
 }
