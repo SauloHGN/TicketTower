@@ -1,17 +1,18 @@
 <section>
   <div class="flex justify-center flex-col items-center w-1/3">
-    <img src="../../../assets/icone.ico" alt="Logo" class="mb-6" width="100" height="auto">
+    <img
+      src="../../../assets/icone.ico"
+      alt="Logo"
+      class="mb-6"
+      width="100"
+      height="auto"
+    />
     <span class="text-xl font-bold mb-4">Login</span>
     <div class="flex flex-col w-full max-w-sm">
       <div class="form-control">
-        <input
-          type="text"
-          name="email"
-          [(ngModel)]="loginObj.email"
-          required
-        />
+        <input type="text" name="email" [(ngModel)]="loginObj.email" required />
         <label>
-          <span style=>Email</span>
+          <span>Email</span>
         </label>
       </div>
       <div class="form-control">
@@ -22,7 +23,7 @@
           required
         />
         <label>
-          <span style=>Senha</span>
+          <span>Senha</span>
         </label>
       </div>
       <div class="container-button">
@@ -30,12 +31,15 @@
           type="submit"
           class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
           (click)="Login()"
-          >
+        >
           Entrar
         </button>
       </div>
       <div class="my-2 mt-4">
-        <p>Esqueceu a senha ? <a class="decoration-current text-cyan-600" href="">Clique aqui</a></p>
+        <p>
+          Esqueceu a senha ?
+          <a class="decoration-current text-cyan-600" href="">Clique aqui</a>
+        </p>
       </div>
     </div>
   </div>

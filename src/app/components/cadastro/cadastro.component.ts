@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { Permissao } from '../../enum/permissao';
 
 @Component({
   selector: 'app-cadastro',
@@ -29,4 +30,8 @@ export class CadastroComponent {
   showFuncionarioForm(): boolean {
     return this.selectedType === 'funcionario';
   }
+
+  valorPermissao: any = Permissao; // Propriedade para armazenar o valor selecionado
+  enumValues = Object.values(Permissao); // Array com os valores do enum
+  enum = Permissao;
 }

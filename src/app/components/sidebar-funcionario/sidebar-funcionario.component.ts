@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   lucideBarChart4,
   lucideNotepadText,
@@ -12,6 +12,7 @@ import {
   lucideMenuSquare,
   lucideTicketPlus,
 } from '@ng-icons/lucide';
+import { LogoutService } from '../../services/logout.service';
 
 @Component({
   selector: 'app-sidebar-funcionario',
@@ -33,4 +34,12 @@ import {
     }),
   ],
 })
-export class SidebarFuncionarioComponent {}
+export class SidebarFuncionarioComponent {
+  title = '';
+  constructor(private router: Router, private logoutService: LogoutService) {}
+
+  logout() {
+    this.logoutService.Logout();
+    this.router.navigate(['/']); // Redirecionar para a landing page
+  }
+}

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { LogoutService } from '../../services/logout.service';
 import {
   lucideBarChart4,
   lucideNotepadText,
@@ -36,4 +37,10 @@ import {
 })
 export class SidebarComponent {
   title = '';
+  constructor(private router: Router, private logoutService: LogoutService) {}
+
+  logout() {
+    this.logoutService.Logout();
+    this.router.navigate(['/']); // Redirecionar para a landing page
+  }
 }

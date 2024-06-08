@@ -173,8 +173,10 @@
             <label for="funcionario-permissao"
               >Permissão:
               <select id="funcionario-permissao" name="funcionario-permissao">
-                <option value="">--Selecione--</option>
-                <!-- Adicione opções de permissão aqui -->
+                <!-- <option value="">--Selecione--</option> -->
+                <option *ngFor="let valor of enumValues" [value]="valor">
+                  {{ valor }}
+                </option>
               </select>
             </label>
 

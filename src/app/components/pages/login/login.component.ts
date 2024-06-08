@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgxMaskPipe, NgxMaskDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
+  providers: [LoginService],
 })
 export class LoginComponent {
   loginObj: LoginModel = new LoginModel();
@@ -21,16 +23,12 @@ export class LoginComponent {
   ) {}
 
   Login() {
-    //console.log('Clicado');
-    //console.log('email', this.loginObj.email);
-    //console.log('senha', this.loginObj.senha);
-
     //Validação
     if (this.loginObj.email.length > 0 && this.loginObj.senha.length > 6) {
       this.loginService
         .Entrar(this.loginObj.email, this.loginObj.senha)
         .subscribe({
-          next: () => {
+          next: (LoginResponse) => {
             this.toastService.success('Login feito com sucesso!');
             this.router.navigate(['/home']);
           },
@@ -39,7 +37,9 @@ export class LoginComponent {
           },
         });
     } else {
-      this.toastService.error('Email ou senha fora do padrão');
+      this.toastService.error(
+        'Email ou senha inválidos. \nCertifique-se de que o Email é válido e a senha tem pelo menos 6 caracteres.'
+      );
     }
 
     this.loginObj.email = '';
