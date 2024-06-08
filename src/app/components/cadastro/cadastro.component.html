@@ -1,105 +1,213 @@
 <head>
-    <link rel="stylesheet" href="cadastro.component.css">
+  <link rel="stylesheet" href="cadastro.component.css" />
+  <title>Cadastro</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastro</h1>
-        <form>
-            <label for="type">Selecione o tipo de cadastro:</label>
-            <select id="type" name="type">
+  <div class="container">
+    <!-- <h1>Cadastro</h1> -->
+    <form>
+      <label for="type" class="text-nowrap text-center"
+        >Tipo de cadastro:</label
+      >
+      <select id="type" name="type" [(ngModel)]="selectedType">
+        <option value="">--Selecione--</option>
+        <option value="empresa">Empresa</option>
+        <option value="cliente">Cliente</option>
+        <option value="setor">Setor</option>
+        <option value="funcionario">Funcionário</option>
+      </select>
+
+      <div *ngIf="selectedType === 'empresa'" class="conteudo">
+        <div id="empresa" class="form-section">
+          <div class="title">
+            <h2>Cadastro de Empresa</h2>
+          </div>
+
+          <div class="flex flex-row justify-center">
+            <label for="empresa-nome"
+              >Nome:
+              <input type="text" id="empresa-nome" name="empresa-nome" />
+            </label>
+
+            <label for="empresa-email"
+              >Email:
+              <input type="email" id="empresa-email" name="empresa-email" />
+            </label>
+          </div>
+
+          <div class="flex flex-row justify-center">
+            <label for="empresa-cnpj"
+              >CNPJ:
+              <input
+                type="text"
+                id="empresa-cnpj"
+                name="empresa-cnpj"
+                mask="00.000.000/0000-00"
+              />
+            </label>
+
+            <label for="empresa-cidade"
+              >Cidade:
+              <input type="text" id="empresa-cidade" name="empresa-cidade" />
+            </label>
+          </div>
+
+          <div class="flex flex-row justify-center">
+            <label for="empresa-numero"
+              >Número:
+              <input type="text" id="empresa-numero" name="empresa-numero" />
+            </label>
+
+            <label for="empresa-bairro"
+              >Bairro:
+              <input type="text" id="empresa-bairro" name="empresa-bairro" />
+            </label>
+          </div>
+
+          <div class="flex flex-row justify-center">
+            <label for="empresa-cep"
+              >CEP:
+              <input
+                type="text"
+                id="empresa-cep"
+                name="empresa-cep"
+                mask="00000-000"
+              />
+            </label>
+
+            <label for="empresa-rua"
+              >Rua:
+              <input type="text" id="empresa-rua" name="empresa-rua" />
+            </label>
+          </div>
+
+          <div class="flex flex-row justify-center">
+            <label for="empresa-estado"
+              >Estado:
+              <input type="text" id="empresa-estado" name="empresa-estado" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="selectedType === 'cliente'" class="conteudo">
+        <div id="cliente" class="form-section">
+          <div class="title">
+            <h2>Cadastro de Cliente</h2>
+          </div>
+
+          <div class="flex flex-row justify-center">
+            <label for="cliente-nome"
+              >Nome:
+              <input type="text" id="cliente-nome" name="cliente-nome" />
+            </label>
+
+            <label for="cliente-email"
+              >Email:
+              <input type="email" id="cliente-email" name="cliente-email" />
+            </label>
+          </div>
+
+          <div class="flex flex-row justify-center">
+            <label for="cliente-celular"
+              >Celular:
+              <input
+                type="text"
+                id="cliente-celular"
+                name="cliente-celular"
+                mask="(00) 00000-0000"
+              />
+            </label>
+
+            <label for="cliente-empresa"
+              >Empresa:
+              <select id="cliente-empresa" name="cliente-empresa">
                 <option value="">--Selecione--</option>
-                <option value="empresa">Empresa</option>
-                <option value="cliente">Cliente</option>
-                <option value="setor">Setor</option>
-                <option value="funcionario">Funcionário</option>
-            </select>
+                <!-- Adicione opções de empresa aqui -->
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
 
-            <div id="empresa" class="form-section">
-                <h2>Cadastro de Empresa</h2>
-                <label for="empresa-nome">Nome:</label>
-                <input type="text" id="empresa-nome" name="empresa-nome">
-                
-                <label for="empresa-email">Email:</label>
-                <input type="email" id="empresa-email" name="empresa-email">
-                
-                <label for="empresa-cnpj">CNPJ:</label>
-                <input type="text" id="empresa-cnpj" name="empresa-cnpj">
-                
-                <label for="empresa-cidade">Cidade:</label>
-                <input type="text" id="empresa-cidade" name="empresa-cidade">
-                
-                <label for="empresa-numero">Número:</label>
-                <input type="text" id="empresa-numero" name="empresa-numero">
-                
-                <label for="empresa-bairro">Bairro:</label>
-                <input type="text" id="empresa-bairro" name="empresa-bairro">
-                
-                <label for="empresa-cep">CEP:</label>
-                <input type="text" id="empresa-cep" name="empresa-cep">
-                
-                <label for="empresa-rua">Rua:</label>
-                <input type="text" id="empresa-rua" name="empresa-rua">
-                
-                <label for="empresa-estado">Estado:</label>
-                <input type="text" id="empresa-estado" name="empresa-estado">
-            </div>
+      <div *ngIf="selectedType === 'setor'" class="conteudo">
+        <div id="setor" class="form-section">
+          <div class="title">
+            <h2>Cadastro de Setor</h2>
+          </div>
+          <div class="flex flex-row justify-center">
+            <label for="setor-nome"
+              >Nome:
+              <input type="text" id="setor-nome" name="setor-nome" />
+            </label>
+          </div>
+        </div>
+      </div>
 
-            <div id="cliente" class="form-section">
-                <h2>Cadastro de Cliente</h2>
-                <label for="cliente-nome">Nome:</label>
-                <input type="text" id="cliente-nome" name="cliente-nome">
-                
-                <label for="cliente-email">Email:</label>
-                <input type="email" id="cliente-email" name="cliente-email">
-                
-                <label for="cliente-senha">Senha:</label>
-                <input type="password" id="cliente-senha" name="cliente-senha">
-                
-                <label for="cliente-celular">Celular:</label>
-                <input type="text" id="cliente-celular" name="cliente-celular">
-                
-                <label for="cliente-empresa">Empresa:</label>
-                <select id="cliente-empresa" name="cliente-empresa">
-                    <option value="">--Selecione--</option>
-                    <!-- Adicione opções de empresa aqui -->
-                </select>
-            </div>
+      <div *ngIf="selectedType === 'funcionario'" class="conteudo">
+        <div id="funcionario" class="form-section">
+          <div class="title">
+            <h2>Cadastro de Funcionário</h2>
+          </div>
+          <div class="flex flex-row justify-center">
+            <label for="funcionario-nome"
+              >Nome:
+              <input
+                type="text"
+                id="funcionario-nome"
+                name="funcionario-nome"
+              />
+            </label>
 
-            <div id="setor" class="form-section">
-                <h2>Cadastro de Setor</h2>
-                <label for="setor-nome">Nome:</label>
-                <input type="text" id="setor-nome" name="setor-nome">
-            </div>
+            <label for="funcionario-email"
+              >Email:
+              <input
+                type="email"
+                id="funcionario-email"
+                name="funcionario-email"
+              />
+            </label>
+          </div>
 
-            <div id="funcionario" class="form-section">
-                <h2>Cadastro de Funcionário</h2>
-                <label for="funcionario-nome">Nome:</label>
-                <input type="text" id="funcionario-nome" name="funcionario-nome">
-                
-                <label for="funcionario-email">Email:</label>
-                <input type="email" id="funcionario-email" name="funcionario-email">
-                
-                <label for="funcionario-senha">Senha:</label>
-                <input type="password" id="funcionario-senha" name="funcionario-senha">
-                
-                <label for="funcionario-permissao">Permissão:</label>
-                <select id="funcionario-permissao" name="funcionario-permissao">
-                    <option value="">--Selecione--</option>
-                    <!-- Adicione opções de permissão aqui -->
-                </select>
-                
-                <label for="funcionario-celular">Celular:</label>
-                <input type="text" id="funcionario-celular" name="funcionario-celular">
-                
-                <label for="funcionario-setor">Setor:</label>
-                <select id="funcionario-setor" name="funcionario-setor">
-                    <option value="">--Selecione--</option>
-                    <!-- Adicione opções de setor aqui -->
-                </select>
-            </div>
+          <div class="flex flex-row justify-center">
+            <label for="funcionario-permissao"
+              >Permissão:
+              <select id="funcionario-permissao" name="funcionario-permissao">
+                <option value="">--Selecione--</option>
+                <!-- Adicione opções de permissão aqui -->
+              </select>
+            </label>
 
-            <button type="submit">Cadastrar</button>
-        </form>
-    </div>
+            <label for="funcionario-celular"
+              >Celular:
+              <input
+                type="text"
+                id="funcionario-celular"
+                name="funcionario-celular"
+                mask="(00) 00000-0000"
+              />
+            </label>
+          </div>
 
+          <div class="flex flex-row justify-center">
+            <label for="funcionario-setor"
+              >Setor:
+              <select id="funcionario-setor" name="funcionario-setor">
+                <option value="">--Selecione--</option>
+                <!-- Adicione opções de setor aqui -->
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="selectedType && selectedType !== '--Selecione--'">
+        <button
+          type="submit"
+          class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
+        >
+          Cadastrar
+        </button>
+      </div>
+    </form>
+  </div>
 </body>

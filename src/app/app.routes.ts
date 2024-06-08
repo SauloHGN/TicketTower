@@ -22,24 +22,28 @@ export const routes: Routes = [
     children: [
       {
         path: 'tarefas',
+        title: 'Fila de Tickets',
         component: TarefasComponent,
         outlet: 'secundary',
       },
 
       {
         path: 'cadastro',
+        title: 'Cadastro',
         component: CadastroComponent,
         outlet: 'secundary',
       },
 
       {
         path: 'CriarTicket',
+        title: 'Criar Ticket',
         component: CriarTicketComponent,
         outlet: 'secundary',
       },
 
       {
         path: 'configuracoes',
+        title: 'Configurações',
         component: ConfiguracaoComponent,
         outlet: 'secundary',
       },
@@ -54,12 +58,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'tarefas',
+        title: 'Fila de Tickets',
         component: TarefasComponent,
         outlet: 'secundary',
       },
 
       {
         path: 'configuracoes',
+        title: 'Configurações',
         component: ConfiguracaoComponent,
         outlet: 'secundary',
       },
@@ -74,12 +80,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'tarefas',
+        title: 'Fila de Tickets',
         component: TarefasComponent,
         outlet: 'secundary',
       },
 
       {
         path: 'configuracoes',
+        title: 'Configurações',
         component: ConfiguracaoComponent,
         outlet: 'secundary',
       },
