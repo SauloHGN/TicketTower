@@ -25,7 +25,18 @@
           <span style=>Senha</span>
         </label>
       </div>
-      <button class="btn-login" (click)="Login()">Entrar</button>
+      <div class="container-button">
+        <button
+          type="submit"
+          class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
+          (click)="Login()"
+          >
+          Entrar
+        </button>
+      </div>
+      <div class="my-2 mt-4">
+        <p>Esqueceu a senha ? <a class="decoration-current text-cyan-600" href="">Clique aqui</a></p>
+      </div>
     </div>
   </div>
 </section>
