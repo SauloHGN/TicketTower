@@ -4,8 +4,8 @@ import { Funcionarios } from '../entity/funcionarios.entity';
 import { Clientes } from '../entity/clientes.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
+import { padrao } from 'src/enums/padrao';
 
 @Injectable()
 export class AuthService {
@@ -18,20 +18,26 @@ export class AuthService {
   ) {}
 
   async login(email: string, senha: string) {
-    const user = await this.verificarLogin(email, senha);
+    try {
+      const user = await this.verificarLogin(email, senha);
 
-    if (user == null) {
-      return { message: 'Credenciais inválidas' };
+      if (user == null) {
+        throw new UnauthorizedException('Credenciais inválidas');
+      }
+
+      const accessToken = this.jwtService.sign({
+        id: user.id,
+        nome: user.nome,
+        email: user.email,
+        tipo: user instanceof Funcionarios ? 'funcionario' : 'cliente',
+        permissao: user instanceof Funcionarios ? user.permissao : 'cliente',
+        defaultPass: user.senha == padrao.SENHA ? true : false,
+      });
+
+      return { accessToken };
+    } catch (error) {
+      throw error;
     }
-
-    const accessToken = this.jwtService.sign({
-      id: user.id,
-      nome: user.nome,
-      email: user.email,
-      tipo: user instanceof Funcionarios ? 'funcionario' : 'cliente',
-    });
-
-    return { accessToken };
   }
 
   async verificarLogin(

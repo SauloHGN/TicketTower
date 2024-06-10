@@ -98,7 +98,7 @@
 
           <div class="flex flex-row justify-center">
             <label for="cliente-nome"
-              >Nome:
+              >Nome e Sobrenome:
               <input type="text" id="cliente-nome" name="cliente-nome" />
             </label>
 
@@ -123,7 +123,9 @@
               >Empresa:
               <select id="cliente-empresa" name="cliente-empresa">
                 <option value="">--Selecione--</option>
-                <!-- Adicione opções de empresa aqui -->
+                <option *ngFor="let empresa of empresas" [value]="empresa.id">
+                  {{ empresa.nome }}
+                </option>
               </select>
             </label>
           </div>
@@ -151,7 +153,7 @@
           </div>
           <div class="flex flex-row justify-center">
             <label for="funcionario-nome"
-              >Nome:
+              >Nome e Sobrenome:
               <input
                 type="text"
                 id="funcionario-nome"
@@ -173,8 +175,10 @@
             <label for="funcionario-permissao"
               >Permissão:
               <select id="funcionario-permissao" name="funcionario-permissao">
-                <option value="">--Selecione--</option>
-                <!-- Adicione opções de permissão aqui -->
+                <!-- <option value="">--Selecione--</option> -->
+                <option *ngFor="let valor of enumValues" [value]="valor">
+                  {{ valor }}
+                </option>
               </select>
             </label>
 
@@ -194,7 +198,9 @@
               >Setor:
               <select id="funcionario-setor" name="funcionario-setor">
                 <option value="">--Selecione--</option>
-                <!-- Adicione opções de setor aqui -->
+                <option *ngFor="let setor of setores" [value]="setor.id">
+                  {{ setor.nome }}
+                </option>
               </select>
             </label>
           </div>
@@ -204,6 +210,7 @@
         <button
           type="submit"
           class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
+          (click)="Cadastro()"
         >
           Cadastrar
         </button>

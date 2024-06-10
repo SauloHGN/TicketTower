@@ -10,8 +10,10 @@
 
 ### Inicialização
 
+_Front-end_
+
 ```
-npm install @angular/cli
+npm install -g @angular/cli
 ```
 
 ```
@@ -23,6 +25,18 @@ ng serve
 ```
 
 `http://localhost:4200/`
+
+_Back-end_
+
+```
+cd backend
+```
+
+```
+nest start
+```
+
+`http://localhost:3000/`
 
 ### Ajuda
 

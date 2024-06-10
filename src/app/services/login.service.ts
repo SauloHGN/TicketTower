@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  apiUrl: string = 'http://';
+  apiUrl: string = 'http://localhost:3000/auth/';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -15,16 +15,12 @@ export class LoginService {
       .post<LoginResponse>(this.apiUrl, { email, senha })
       .pipe(
         tap((value) => {
-          sessionStorage.setItem('token', value.token);
-          sessionStorage.setItem('email', value.email);
-          sessionStorage.setItem('nome', value.nome);
+          sessionStorage.setItem('token', value.accessToken);
         })
       );
   }
 }
 
 export type LoginResponse = {
-  token: string;
-  email: string;
-  nome: string;
+  accessToken: string;
 };
