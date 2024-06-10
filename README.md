@@ -33,6 +33,10 @@ cd backend
 ```
 
 ```
+npm i -g @nestjs/cli
+```
+
+```
 nest start
 ```
 

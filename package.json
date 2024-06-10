@@ -32,6 +32,7 @@
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "D": "^1.0.0",
+    "dependencies": "^0.0.1",
     "jwt-decode": "^4.0.0",
     "mysql2": "^3.9.6",
     "ngx-mask": "^17.0.8",
