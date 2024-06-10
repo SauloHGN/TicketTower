@@ -5,6 +5,7 @@ import { Clientes } from '../entity/clientes.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as crypto from 'crypto';
+import { padrao } from 'src/enums/padrao';
 
 @Injectable()
 export class AuthService {
@@ -29,7 +30,8 @@ export class AuthService {
         nome: user.nome,
         email: user.email,
         tipo: user instanceof Funcionarios ? 'funcionario' : 'cliente',
-        permissao: user instanceof Funcionarios ? user.permissao : null,
+        permissao: user instanceof Funcionarios ? user.permissao : 'cliente',
+        defaultPass: user.senha == padrao.SENHA ? true : false,
       });
 
       return { accessToken };

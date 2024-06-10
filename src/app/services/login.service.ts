@@ -15,27 +15,12 @@ export class LoginService {
       .post<LoginResponse>(this.apiUrl, { email, senha })
       .pipe(
         tap((value) => {
-          sessionStorage.setItem('token', value.token);
-          sessionStorage.setItem('email', value.email);
-          sessionStorage.setItem('nome', value.nome);
-          sessionStorage.setItem('tipo', value.tipo);
+          sessionStorage.setItem('token', value.accessToken);
         })
       );
   }
 }
 
 export type LoginResponse = {
-  token: string;
-  email: string;
-  nome: string;
-  tipo: string;
+  accessToken: string;
 };
-
-interface DecodedToken {
-  id: string;
-  nome: string;
-  email: string;
-  tipo: string;
-  permissao: string;
-  // Outras propriedades, se houver
-}

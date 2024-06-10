@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { Permissao } from '../../enum/permissao';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cadastro',
@@ -11,7 +13,9 @@ import { Permissao } from '../../enum/permissao';
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit {
+  constructor(private http: HttpClient, private toastService: ToastrService) {}
+
   selectedType: string = ''; // Atributo que armazena o tipo selecionado
 
   // Métodos para verificar qual formulário deve ser mostrado com base no tipo selecionado
@@ -34,4 +38,194 @@ export class CadastroComponent {
   valorPermissao: any = Permissao; // Propriedade para armazenar o valor selecionado
   enumValues = Object.values(Permissao); // Array com os valores do enum
   enum = Permissao;
+
+  //----  DADOS COMBO BOX ------//
+  setores?: any[];
+  selectedSetor: any;
+
+  empresas?: any[];
+  selectedEmpresa: any;
+
+  ngOnInit(): void {
+    this.http.get<any[]>('http://localhost:3000/setores').subscribe((data) => {
+      this.setores = data;
+    });
+
+    this.http.get<any[]>('http://localhost:3000/empresas').subscribe((data) => {
+      this.empresas = data;
+    });
+  }
+
+  //----- Cadastro -----//
+  Cadastro() {
+    if (this.selectedType === 'empresa') {
+      this.CadastrarEmpresa();
+    }
+    if (this.selectedType === 'cliente') {
+      this.CadastrarCliente();
+    }
+    if (this.selectedType === 'setor') {
+      this.CadastrarSetor();
+    }
+    if (this.selectedType === 'funcionario') {
+      this.CadastrarFuncionario();
+    }
+  }
+
+  CadastrarEmpresa() {
+    try {
+      const enderecoData = {
+        cidade: (document.getElementById('empresa-cidade') as HTMLInputElement)
+          .value,
+        numero: (document.getElementById('empresa-numero') as HTMLInputElement)
+          .value,
+        bairro: (document.getElementById('empresa-bairro') as HTMLInputElement)
+          .value,
+        cep: (document.getElementById('empresa-cep') as HTMLInputElement).value,
+        rua: (document.getElementById('empresa-rua') as HTMLInputElement).value,
+        estado: (document.getElementById('empresa-estado') as HTMLInputElement)
+          .value,
+      };
+      this.http
+        .post('http://localhost:3000/cadastro/endereco', enderecoData)
+        .subscribe((response: any) => {
+          console.log(response); //Excluir
+          const idEndereco = response.id;
+
+          const empresaData = {
+            nome: (document.getElementById('empresa-nome') as HTMLInputElement)
+              .value,
+            cnpj: (document.getElementById('empresa-cnpj') as HTMLInputElement)
+              .value,
+            id_endereco: idEndereco,
+          };
+          this.http
+            .post('http://localhost:3000/cadastro/empresa', empresaData)
+            .subscribe((response) => {
+              console.log(response); //Excluir
+              this.toastService.success('Empresa Cadastrada com sucesso');
+
+              (
+                document.getElementById('empresa-nome') as HTMLInputElement
+              ).value = '';
+              (
+                document.getElementById('empresa-cnpj') as HTMLInputElement
+              ).value = '';
+              (
+                document.getElementById('empresa-cidade') as HTMLInputElement
+              ).value = '';
+              (
+                document.getElementById('empresa-numero') as HTMLInputElement
+              ).value = '';
+              (
+                document.getElementById('empresa-bairro') as HTMLInputElement
+              ).value = '';
+              (
+                document.getElementById('empresa-cep') as HTMLInputElement
+              ).value = '';
+              (
+                document.getElementById('empresa-rua') as HTMLInputElement
+              ).value = '';
+              (
+                document.getElementById('empresa-estado') as HTMLInputElement
+              ).value = '';
+            });
+        });
+    } catch (error) {
+      this.toastService.error('Ops, Erro no cadastro');
+    }
+  }
+
+  CadastrarCliente() {
+    const userInfo = sessionStorage.getItem('userInfo');
+    if (userInfo) {
+      var user = JSON.parse(userInfo);
+    }
+
+    const clienteData = {
+      nome: (document.getElementById('cliente-nome') as HTMLInputElement).value,
+      email: (document.getElementById('cliente-email') as HTMLInputElement)
+        .value,
+      celular: (document.getElementById('cliente-celular') as HTMLInputElement)
+        .value,
+      empresa: (document.getElementById('cliente-empresa') as HTMLInputElement)
+        .value,
+    };
+    this.http
+      .post(`http://localhost:3000/cadastro/${user.id}/cliente`, clienteData)
+      .subscribe((response) => {
+        console.log(response); //Excluir
+
+        // Limpar os campos após o cadastro
+        (document.getElementById('cliente-nome') as HTMLInputElement).value =
+          '';
+        (document.getElementById('cliente-email') as HTMLInputElement).value =
+          '';
+        (document.getElementById('cliente-celular') as HTMLInputElement).value =
+          '';
+        (document.getElementById('cliente-empresa') as HTMLInputElement).value =
+          '';
+      });
+  }
+
+  CadastrarSetor() {
+    const setorData = {
+      nome: (document.getElementById('setor-nome') as HTMLInputElement).value,
+    };
+    this.http
+      .post(`http://localhost:3000/cadastro/setor`, setorData)
+      .subscribe((response) => {
+        console.log(response); //Excluir
+
+        // Limpar os campos após o cadastro
+        (document.getElementById('setor-nome') as HTMLInputElement).value = '';
+      });
+  }
+
+  CadastrarFuncionario() {
+    const userInfo = sessionStorage.getItem('userInfo');
+    if (userInfo) {
+      var user = JSON.parse(userInfo);
+    }
+
+    const funcionarioData = {
+      nome: (document.getElementById('funcionario-nome') as HTMLInputElement)
+        .value,
+      email: (document.getElementById('funcionario-email') as HTMLInputElement)
+        .value,
+      permissao: (
+        document.getElementById('funcionario-permissao') as HTMLInputElement
+      ).value,
+      celular: (
+        document.getElementById('funcionario-celular') as HTMLInputElement
+      ).value,
+      setor: (document.getElementById('funcionario-setor') as HTMLInputElement)
+        .value,
+    };
+    this.http
+      .post(
+        `http://localhost:3000/cadastro/${user.id}/funcionario`,
+        funcionarioData
+      )
+      .subscribe((response) => {
+        console.log(response); //Excluir
+
+        // Limpar os campos após o cadastro
+        (
+          document.getElementById('funcionario-nome') as HTMLInputElement
+        ).value = '';
+        (
+          document.getElementById('funcionario-email') as HTMLInputElement
+        ).value = '';
+        (
+          document.getElementById('funcionario-permissao') as HTMLInputElement
+        ).value = '';
+        (
+          document.getElementById('funcionario-celular') as HTMLInputElement
+        ).value = '';
+        (
+          document.getElementById('funcionario-setor') as HTMLInputElement
+        ).value = '';
+      });
+  }
 }

@@ -1,4 +1,4 @@
-export class EmpresaDTO {
+export class EnderecoDto {
   id: number;
   numero: string;
   rua: string;

@@ -4,12 +4,13 @@ import { ClienteDTO } from '../dto/ClienteDto';
 import { CadastroService } from './cadastro.service';
 import { EmpresaDTO } from 'src/dto/EmpresaDto';
 import { SetorDTO } from 'src/dto/SetorDto';
+import { EnderecoDto } from 'src/dto/EnderecoDto';
 
 @Controller('cadastro')
 export class CadastroController {
   constructor(private readonly cadastroService: CadastroService) {}
 
-  @Post(':funcionarioId/CadastrarCliente')
+  @Post(':funcionarioId/cliente')
   cadastrarCliente(
     @Param('funcionarioId') funcionarioId: string,
     @Body() clienteDto: ClienteDTO,
@@ -20,7 +21,7 @@ export class CadastroController {
     );
   }
 
-  @Post(':funcionarioId/CadastrarFuncionario')
+  @Post(':funcionarioId/funcionario')
   cadastrarFuncionario(
     @Param('funcionarioId') funcionarioId: string,
     @Body() funcionarioDto: FuncionarioDTO,
@@ -29,6 +30,11 @@ export class CadastroController {
       Number(funcionarioId),
       funcionarioDto,
     );
+  }
+
+  @Post('endereco')
+  cadastrarEndereco(@Body() enderecoDto: EnderecoDto) {
+    return this.cadastroService.cadastrarEndereco(enderecoDto);
   }
 
   @Post('empresa')

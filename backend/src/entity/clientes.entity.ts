@@ -4,6 +4,8 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { Empresas } from './empresas.entity';
 
@@ -24,7 +26,7 @@ export class Clientes {
   @Column({ name: 'celular', nullable: false })
   celular: string;
 
-  @OneToOne(() => Empresas)
+  @ManyToOne(() => Empresas)
   @JoinColumn({ name: 'id_empresa' })
   id_empresa: Empresas;
 }

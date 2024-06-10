@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { ToastrService } from 'ngx-toastr';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,20 @@ export class LoginComponent {
         .Entrar(this.loginObj.email, this.loginObj.senha)
         .subscribe({
           next: (LoginResponse) => {
+            const tokenJWT = LoginResponse.accessToken;
+            const decode = this.decodeJWT(tokenJWT);
+            sessionStorage.setItem('userInfo', JSON.stringify(decode));
+
+            const userInfo = sessionStorage.getItem('userInfo');
+            if (userInfo) {
+              const user = JSON.parse(userInfo);
+
+              if (user.defaultPass == true) {
+                this.router.navigate([]);
+                return;
+              }
+            }
+
             this.toastService.success('Login feito com sucesso!');
             this.router.navigate(['/home']);
           },
@@ -45,6 +60,15 @@ export class LoginComponent {
     this.loginObj.email = '';
     this.loginObj.senha = '';
     return;
+  }
+
+  decodeJWT(token: string) {
+    try {
+      return jwtDecode(token);
+    } catch (error) {
+      console.error('Erro ao decodificar o token JWT', error);
+      return null;
+    }
   }
 }
 
