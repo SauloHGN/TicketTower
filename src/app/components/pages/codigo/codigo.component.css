@@ -1,0 +1,112 @@
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(240, 248, 255);
+  }
+  
+  .flex {
+    text-align: center;
+    max-width: 400px;
+    max-height: 380px;
+    padding: 20px;
+    background-color: rgb(246, 250, 253);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 40px;
+  }
+  
+  .form-control {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .form-control input {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 16px;
+    color: black;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px lightblue solid;
+    outline: none;
+    transition: border-bottom-color 0.3s ease;
+  }
+  
+  .form-control input:focus,
+  .form-control input:valid {
+    border-bottom-color: rgb(0, 174, 255);
+  }
+  
+  .form-control label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    pointer-events: none;
+    color: lightblue;
+    transition: 0.01s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .form-control input:focus + label,
+  .form-control input:valid + label {
+    top: -10px;
+    font-size: 14px;
+    color: rgb(0, 174, 255);
+  }
+  
+  .container-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  button {
+    width: 160px;
+  }
+  
+  .toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .recovery-text {
+    color: rgba(128, 128, 128); /* Cinza claro com opacidade reduzida */
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .password input {
+    width: 30px;
+    height: 40px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 2px rgb(20, 181, 230);
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    outline: none;
+    margin-bottom: 20px;
+  }
+  
