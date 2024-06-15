@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Router, RouterModule } from '@angular/router';
-import { LogoutService } from '../../services/logout.service';
+import { AuthService } from '../../auth/auth.service';
 import {
   lucideBarChart4,
   lucideNotepadText,
@@ -39,7 +39,7 @@ import { userInfo } from '../../enum/userInfo';
 export class SidebarComponent implements OnInit {
   title = '';
   userInfo: userInfo | null = null;
-  constructor(private router: Router, private logoutService: LogoutService) {}
+  constructor(private router: Router, private AuthService: AuthService) {}
 
   ngOnInit(): void {
     const userInfo = sessionStorage.getItem('userInfo');
@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    this.logoutService.Logout();
+    this.AuthService.Logout();
     this.router.navigate(['/']); // Redirecionar para a landing page
   }
 }

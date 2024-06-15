@@ -15,7 +15,7 @@ export class LoginService {
       .post<LoginResponse>(this.apiUrl, { email, senha })
       .pipe(
         tap((value) => {
-          sessionStorage.setItem('token', value.accessToken);
+          sessionStorage.setItem('token', value.accessToken); // acesso
         })
       );
   }

@@ -7,6 +7,7 @@ import { ConfiguracaoComponent } from './components/configuracao/configuracao.co
 import { CriarTicketComponent } from './components/criarticket/criarticket.component';
 import { NgModule } from '@angular/core';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
     path: 'home',
     title: 'Página Inicial',
     component: HomeComponent,
+    canActivate: [AuthGuard],
 
     children: [
       {
@@ -22,6 +24,7 @@ export const routes: Routes = [
         title: 'Fila de Tickets',
         component: TarefasComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
 
       {
@@ -29,6 +32,7 @@ export const routes: Routes = [
         title: 'Cadastro',
         component: CadastroComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
 
       {
@@ -36,6 +40,7 @@ export const routes: Routes = [
         title: 'Criar Ticket',
         component: CriarTicketComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
 
       {
@@ -43,53 +48,10 @@ export const routes: Routes = [
         title: 'Configurações',
         component: ConfiguracaoComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
     ],
   },
-
-  // {
-  //   path: 'homeCliente',
-  //   title: 'Página Inicial',
-  //   component: HomeClienteComponent,
-
-  //   children: [
-  //     {
-  //       path: 'tarefas',
-  //       title: 'Fila de Tickets',
-  //       component: TarefasComponent,
-  //       outlet: 'secundary',
-  //     },
-
-  //     {
-  //       path: 'configuracoes',
-  //       title: 'Configurações',
-  //       component: ConfiguracaoComponent,
-  //       outlet: 'secundary',
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   path: 'homeFuncionario',
-  //   title: 'Página Inicial',
-  //   component: HomeFuncionarioComponent,
-
-  //   children: [
-  //     {
-  //       path: 'tarefas',
-  //       title: 'Fila de Tickets',
-  //       component: TarefasComponent,
-  //       outlet: 'secundary',
-  //     },
-
-  //     {
-  //       path: 'configuracoes',
-  //       title: 'Configurações',
-  //       component: ConfiguracaoComponent,
-  //       outlet: 'secundary',
-  //     },
-  //   ],
-  // },
 ];
 
 @NgModule({
