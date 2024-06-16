@@ -1,15 +1,12 @@
 <div class="flex">
   <section class="flex h-screen w-screen min-w-60">
-    <aside class="border-border border-r w-60">
-      <app-sidebar class="flex flex-col"></app-sidebar>
+    <aside class="border-border" style="width: 17rem">
+      <app-sidebar class="flex flex-col fixed border-r"></app-sidebar>
     </aside>
 
     <header class="flex flex-col flex-grow border-border border-b h-10">
       <app-header class="flex col-auto"></app-header>
       <main id="main-content" class="p-3">
-        <!-- <app-tarefas
-          style="text-align: center; font-weight: 900; margin-top: 50px"
-        ></app-tarefas> -->
         <router-outlet name="secundary"></router-outlet>
       </main>
     </header>

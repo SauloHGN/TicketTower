@@ -15,13 +15,13 @@ import { NovaSenhaComponent } from './components/pages/novasenha/novasenha.compo
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
-  { path: 'senha', title: 'Esqueci a senha', component: SenhaComponent },
   { path: 'codigo', title: 'Esqueci a senha', component: CodigoComponent },
-  {
-    path: 'novasenha',
-    title: 'Esqueci a senha',
-    component: NovaSenhaComponent,
-  },
+  // { path: 'codigo', title: 'Esqueci a senha', component: CodigoComponent },
+  // {
+  //   path: 'novasenha',
+  //   title: 'Esqueci a senha',
+  //   component: NovaSenhaComponent,
+  // },
   {
     path: 'home',
     title: 'Página Inicial',

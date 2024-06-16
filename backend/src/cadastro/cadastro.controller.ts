@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, Query } from '@nestjs/common';
 import { FuncionarioDTO } from '../dto/FuncionarioDto';
 import { ClienteDTO } from '../dto/ClienteDto';
 import { CadastroService } from './cadastro.service';
@@ -15,6 +15,7 @@ export class CadastroController {
     @Param('funcionarioId') funcionarioId: string,
     @Body() clienteDto: ClienteDTO,
   ) {
+    console.log(clienteDto);
     return this.cadastroService.cadastrarCliente(
       Number(funcionarioId),
       clienteDto,
@@ -45,5 +46,10 @@ export class CadastroController {
   @Post('setor')
   cadastrarSetor(@Body() setorDto: SetorDTO) {
     return this.cadastroService.cadastrarSetor(setorDto);
+  }
+
+  @Get('nomeEmpresa')
+  obterIdEmpresa(@Query('nome') nome: string) {
+    return this.cadastroService.obterIdEmpresaPorNome(nome);
   }
 }
