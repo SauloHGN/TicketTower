@@ -13,6 +13,8 @@ import { EmpresasModule } from './empresas/empresas.module';
 import { SetoresModule } from './setores/setores.module';
 import { CadastroModule } from './cadastro/cadastro.module';
 import { Enderecos } from './entity/enderecos.entity';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -38,7 +40,7 @@ import { Enderecos } from './entity/enderecos.entity';
       Enderecos,
     ]),
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

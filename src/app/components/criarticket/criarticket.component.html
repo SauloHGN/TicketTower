@@ -1,7 +1,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abrir um chamado</title>
 </head>
 <body>
   <form action="/submit-ticket" method="post" enctype="multipart/form-data">
@@ -22,21 +21,18 @@
         <label for="setor">Setor</label>
         <select id="setor" name="setor" required>
           <option value="">Selecione o setor</option>
-          <option value="Pedro">Pedro</option>
-          <option value="Lucas">Lucas</option>
-          <option value="Grundler">Grundler</option>
-          <option value="De">De</option>
-          <option value="Carvalho">Carvalho</option>
-          <option value="Moreira">Moreira</option>
+          <option *ngFor="let setor of setores" [value]="setor.id">
+            {{ setor.nome }}
+          </option>
         </select>
       </div>
       <div class="select-container">
         <label for="prioridade">Prioridade</label>
         <select id="prioridade" name="prioridade" required>
           <option value="">Selecione a prioridade</option>
-          <option value="Baixa">Baixa</option>
-          <option value="Média">Média</option>
-          <option value="Alta">Alta</option>
+          <option *ngFor="let valor of enumValues" [value]="valor">
+            {{ valor }}
+          </option>
         </select>
       </div>
     </div>
@@ -66,7 +62,13 @@
         </div>
         <input type="file" id="file" />
       </label>
-      <button type="submit" class="send">Enviar</button>
+      <button
+        type="submit"
+        id="send"
+        class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
+      >
+        Enviar
+      </button>
     </div>
   </form>
 </body>

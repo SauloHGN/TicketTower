@@ -7,6 +7,7 @@ import { ConfiguracaoComponent } from './components/configuracao/configuracao.co
 import { CriarTicketComponent } from './components/criarticket/criarticket.component';
 import { NgModule } from '@angular/core';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { AuthGuard } from './auth/auth.guard';
 import { SenhaComponent } from './components/pages/senha/senha.component';
 import { CodigoComponent } from './components/pages/codigo/codigo.component';
 import { NovaSenhaComponent } from './components/pages/novasenha/novasenha.component';
@@ -14,13 +15,18 @@ import { NovaSenhaComponent } from './components/pages/novasenha/novasenha.compo
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
-  { path: 'senha', title: 'Esqueci a senha', component: SenhaComponent },
   { path: 'codigo', title: 'Esqueci a senha', component: CodigoComponent },
-  { path: 'novasenha', title: 'Esqueci a senha', component: NovaSenhaComponent },
+  // { path: 'codigo', title: 'Esqueci a senha', component: CodigoComponent },
+  // {
+  //   path: 'novasenha',
+  //   title: 'Esqueci a senha',
+  //   component: NovaSenhaComponent,
+  // },
   {
     path: 'home',
     title: 'Página Inicial',
     component: HomeComponent,
+    canActivate: [AuthGuard],
 
     children: [
       {
@@ -28,6 +34,7 @@ export const routes: Routes = [
         title: 'Fila de Tickets',
         component: TarefasComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
 
       {
@@ -35,6 +42,7 @@ export const routes: Routes = [
         title: 'Cadastro',
         component: CadastroComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
 
       {
@@ -42,6 +50,7 @@ export const routes: Routes = [
         title: 'Criar Ticket',
         component: CriarTicketComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
 
       {
@@ -49,53 +58,10 @@ export const routes: Routes = [
         title: 'Configurações',
         component: ConfiguracaoComponent,
         outlet: 'secundary',
+        canActivate: [AuthGuard],
       },
     ],
   },
-
-  // {
-  //   path: 'homeCliente',
-  //   title: 'Página Inicial',
-  //   component: HomeClienteComponent,
-
-  //   children: [
-  //     {
-  //       path: 'tarefas',
-  //       title: 'Fila de Tickets',
-  //       component: TarefasComponent,
-  //       outlet: 'secundary',
-  //     },
-
-  //     {
-  //       path: 'configuracoes',
-  //       title: 'Configurações',
-  //       component: ConfiguracaoComponent,
-  //       outlet: 'secundary',
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   path: 'homeFuncionario',
-  //   title: 'Página Inicial',
-  //   component: HomeFuncionarioComponent,
-
-  //   children: [
-  //     {
-  //       path: 'tarefas',
-  //       title: 'Fila de Tickets',
-  //       component: TarefasComponent,
-  //       outlet: 'secundary',
-  //     },
-
-  //     {
-  //       path: 'configuracoes',
-  //       title: 'Configurações',
-  //       component: ConfiguracaoComponent,
-  //       outlet: 'secundary',
-  //     },
-  //   ],
-  // },
 ];
 
 @NgModule({
