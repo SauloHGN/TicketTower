@@ -51,13 +51,55 @@
     <span class="text-xl font-bold mb-4">Codigo de verificação</span>
     <div class="flex flex-col w-full max-w-sm">
       <p class="recovery-text">Informe o código enviado para o email</p>
-      <div class="password">
-        <input maxlength="1" class="input" name="text" type="text" />
-        <input maxlength="1" class="input" name="text" type="text" />
-        <input maxlength="1" class="input" name="text" type="text" />
-        <input maxlength="1" class="input" name="text" type="text" />
-        <input maxlength="1" class="input" name="text" type="text" />
-        <input maxlength="1" class="input" name="text" type="text" />
+      <div class="password" #passwordContainer>
+        <input
+          (input)="onInput($event, 0)"
+          (keydown)="onKeyDown($event, 0)"
+          maxlength="1"
+          class="input"
+          name="text"
+          type="text"
+        />
+        <input
+          (input)="onInput($event, 1)"
+          (keydown)="onKeyDown($event, 1)"
+          maxlength="1"
+          class="input"
+          name="text"
+          type="text"
+        />
+        <input
+          (input)="onInput($event, 2)"
+          (keydown)="onKeyDown($event, 2)"
+          maxlength="1"
+          class="input"
+          name="text"
+          type="text"
+        />
+        <input
+          (input)="onInput($event, 3)"
+          (keydown)="onKeyDown($event, 3)"
+          maxlength="1"
+          class="input"
+          name="text"
+          type="text"
+        />
+        <input
+          (input)="onInput($event, 4)"
+          (keydown)="onKeyDown($event, 4)"
+          maxlength="1"
+          class="input"
+          name="text"
+          type="text"
+        />
+        <input
+          (input)="onInput($event, 5)"
+          (keydown)="onKeyDown($event, 5)"
+          maxlength="1"
+          class="input"
+          name="text"
+          type="text"
+        />
       </div>
       <div class="container-button">
         <button

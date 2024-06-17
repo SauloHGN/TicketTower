@@ -1,0 +1,21 @@
+.container-conteudo {
+  width: 88%;
+}
+
+@media screen and (max-width: 1660px) {
+  .container-conteudo {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .container-conteudo {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .container-conteudo {
+    width: 75%;
+  }
+}

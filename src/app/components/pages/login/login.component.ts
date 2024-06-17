@@ -29,9 +29,9 @@ export class LoginComponent {
       this.loginService
         .Entrar(this.loginObj.email, this.loginObj.senha)
         .subscribe({
-          next: (LoginResponse) => {
+          next: async (LoginResponse) => {
             const tokenJWT = LoginResponse.accessToken;
-            const decode = this.decodeJWT(tokenJWT);
+            const decode = await this.decodeJWT(tokenJWT);
             sessionStorage.setItem('userInfo', JSON.stringify(decode));
 
             const userInfo = sessionStorage.getItem('userInfo');
@@ -39,12 +39,14 @@ export class LoginComponent {
               const user = JSON.parse(userInfo);
 
               if (user.defaultPass == true) {
-                this.router.navigate([]);
+                console.log(user.defaultPass);
+                this.router.navigate(['/redefinir']);
                 return;
               }
             }
 
             this.toastService.success('Login feito com sucesso!');
+
             this.router.navigate(['/home']);
           },
           error: () => {
