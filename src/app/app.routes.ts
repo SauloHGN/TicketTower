@@ -8,14 +8,12 @@ import { CriarTicketComponent } from './components/criarticket/criarticket.compo
 import { NgModule } from '@angular/core';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { AuthGuard } from './auth/auth.guard';
-import { SenhaComponent } from './components/pages/senha/senha.component';
 import { CodigoComponent } from './components/pages/codigo/codigo.component';
-import { NovaSenhaComponent } from './components/pages/novasenha/novasenha.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
-  { path: 'codigo', title: 'Esqueci a senha', component: CodigoComponent },
+  { path: 'redefinir', title: 'Esqueci a senha', component: CodigoComponent },
   // { path: 'codigo', title: 'Esqueci a senha', component: CodigoComponent },
   // {
   //   path: 'novasenha',

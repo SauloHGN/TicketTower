@@ -4,11 +4,13 @@
       <app-sidebar class="flex flex-col fixed border-r"></app-sidebar>
     </aside>
 
-    <header class="flex flex-col flex-grow border-border border-b h-10">
-      <app-header class="flex col-auto"></app-header>
-      <main id="main-content" class="p-3">
-        <router-outlet name="secundary"></router-outlet>
-      </main>
-    </header>
+    <section class="container-conteudo flex flex-wrap w-11/12">
+      <header class="flex flex-col flex-grow border-border border-b h-10">
+        <app-header class="flex col-auto"></app-header>
+        <main id="main-content" class="p-3 max">
+          <router-outlet name="secundary"></router-outlet>
+        </main>
+      </header>
+    </section>
   </section>
 </div>

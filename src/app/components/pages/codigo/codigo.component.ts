@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -9,35 +9,30 @@ import { Router } from '@angular/router';
   styleUrl: './codigo.component.css',
   imports: [CommonModule],
 })
-export class CodigoComponent implements AfterViewInit {
+export class CodigoComponent {
   telaAtual: number = 1;
+  inputValues: string[] = ['', '', '', '', '', ''];
+  @ViewChild('passwordContainer', { static: false })
+  passwordContainer!: ElementRef;
 
   constructor(private router: Router) {}
 
-  ngAfterViewInit() {
+  onInput(event: Event, index: number) {
     const inputs = document.querySelectorAll('.password .input');
+    const input = event.target as HTMLInputElement;
 
-    inputs.forEach((input, index) => {
-      input.addEventListener('input', () => {
-        if (
-          (<HTMLInputElement>input).value.length === 1 &&
-          index < inputs.length - 1
-        ) {
-          (<HTMLInputElement>inputs[index + 1]).focus();
-        }
-      });
+    if (input.value.length === 1 && index < inputs.length - 1) {
+      (inputs[index + 1] as HTMLInputElement).focus();
+    }
+  }
 
-      input.addEventListener('keydown', (event: Event) => {
-        const keyboardEvent = event as KeyboardEvent;
-        if (
-          keyboardEvent.key === 'Backspace' &&
-          (<HTMLInputElement>input).value.length === 0 &&
-          index > 0
-        ) {
-          (<HTMLInputElement>inputs[index - 1]).focus();
-        }
-      });
-    });
+  onKeyDown(event: KeyboardEvent, index: number) {
+    const inputs = document.querySelectorAll('.password .input');
+    const input = event.target as HTMLInputElement;
+
+    if (event.key === 'Backspace' && input.value.length === 0 && index > 0) {
+      (inputs[index - 1] as HTMLInputElement).focus();
+    }
   }
 
   voltar() {
@@ -52,6 +47,16 @@ export class CodigoComponent implements AfterViewInit {
   }
 
   verificarCodigo() {
+    const inputs =
+      this.passwordContainer.nativeElement.querySelectorAll('.input');
+    let codigo = '';
+
+    inputs.forEach((input: HTMLInputElement) => {
+      codigo += input.value;
+    });
+
+    console.log('Código completo:', codigo);
+
     this.telaAtual++;
   }
 
