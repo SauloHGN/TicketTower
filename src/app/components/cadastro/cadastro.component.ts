@@ -224,7 +224,7 @@ export class CadastroComponent implements OnInit {
         celular: (
           document.getElementById('funcionario-celular') as HTMLInputElement
         ).value,
-        setor: (
+        id_setor: (
           document.getElementById('funcionario-setor') as HTMLInputElement
         ).value,
       };

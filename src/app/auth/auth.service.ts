@@ -13,11 +13,6 @@ export class AuthService {
     var token = sessionStorage.getItem('token');
     console.log(token);
     if (token != null) {
-      console.log('true');
-
-      if (sessionStorage.getItem('defaultPass')) {
-        this.router.navigateByUrl('/redefinir');
-      }
       return true;
     } else {
       this.router.navigateByUrl('/login');

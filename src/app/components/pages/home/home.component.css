@@ -1,9 +1,15 @@
 .container-conteudo {
   width: 88%;
 }
+app-sidebar {
+  width: 88%;
+}
 
 @media screen and (max-width: 1660px) {
   .container-conteudo {
+    width: 85%;
+  }
+  app-sidebar {
     width: 85%;
   }
 }
@@ -12,10 +18,16 @@
   .container-conteudo {
     width: 80%;
   }
+  app-sidebar {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 1200px) {
   .container-conteudo {
+    width: 75%;
+  }
+  app-sidebar {
     width: 75%;
   }
 }

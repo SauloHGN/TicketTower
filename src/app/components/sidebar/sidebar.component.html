@@ -40,8 +40,9 @@
           >Criar Ticket</a
         >
         <a
-          href="/home"
           class="flex-1 items-center, text-base, px-2 py-2 hover:bg-zinc-200 rounded-md"
+          [routerLink]="[{ outlets: { secundary: ['relatorio'] } }]"
+          routerLinkActive="active"
         >
           <ng-icon
             name="lucideBarChart4"
@@ -106,8 +107,9 @@
         >
 
         <a
-          href="/home"
           class="flex-1 items-center, text-base, px-2 py-2 hover:bg-zinc-200 rounded-md"
+          [routerLink]="[{ outlets: { secundary: ['relatorio'] } }]"
+          routerLinkActive="active"
         >
           <ng-icon
             name="lucideBarChart4"
@@ -153,8 +155,9 @@
           >Criar Ticket</a
         >
         <a
-          href="/home"
           class="flex-1 items-center, text-base, px-2 py-2 hover:bg-zinc-200 rounded-md"
+          [routerLink]="[{ outlets: { secundary: ['relatorio'] } }]"
+          routerLinkActive="active"
         >
           <ng-icon
             name="lucideBarChart4"
