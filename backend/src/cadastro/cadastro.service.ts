@@ -71,11 +71,18 @@ export class CadastroService {
         throw new Error('Permissão negada'); // Se não for admin, terá permissao negada
       }
 
+      console.log(funcionarioDto);
+
+      const permissao = funcionarioDto.permissao;
+
+      console.log(permissao);
+
       funcionarioDto.senha = padrao.SENHA;
       const senhaHash = await this.GerarHash(funcionarioDto.senha);
 
       const funcionario = this.funcionariosRepository.create({
         ...funcionarioDto,
+        permissao: funcionarioDto.permissao,
         senha: senhaHash,
       });
       return this.funcionariosRepository.save(funcionario);
