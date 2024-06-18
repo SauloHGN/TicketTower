@@ -227,6 +227,10 @@ export class CadastroComponent implements OnInit {
         id_setor: (
           document.getElementById('funcionario-setor') as HTMLInputElement
         ).value,
+
+        cargo: (
+          document.getElementById('funcionario-cargo') as HTMLInputElement
+        ).value,
       };
       this.http
         .post(

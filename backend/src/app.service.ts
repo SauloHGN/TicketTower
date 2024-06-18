@@ -47,6 +47,7 @@ export class AppService implements OnApplicationBootstrap {
       insertDefaultUser.senha = await this.GerarHash(padrao.SENHA);
       insertDefaultUser.cargo = padrao.CARGO;
       insertDefaultUser.permissao = Permissao.ADMIN;
+      insertDefaultUser.celular = "(00) 00000-0000";
       insertDefaultUser.id_setor = setorPadrao;
 
       this.funcionariosRepository.save(insertDefaultUser);
