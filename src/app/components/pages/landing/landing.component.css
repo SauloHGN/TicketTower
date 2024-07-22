@@ -1,7 +1,6 @@
 body {
   background-color: aliceblue;
   color: black;
-  font-family: poppinsregular;
   max-width: 1920px;
   margin: 0 auto;
   padding: 15px;
@@ -59,8 +58,7 @@ a:hover {
 }
 
 h1 {
-  font-size: 60px;
-  font-weight: 1500;
+  font-size: 3.5rem;
   margin-left: 200px;
   text-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
@@ -150,10 +148,9 @@ main {
     margin-left: 55px;
     padding-left: 25px;
     opacity: 100;
-    transition: all 3s ease;
   }
 
-  details[open] summary:after {
+  details[open] summary:before {
     content: "-";
     font-size: 3.2em;
     margin: -33px 0.35em 0 0;
@@ -170,7 +167,7 @@ main {
     display: none;
   }
 
-  summary:after {
+  summary:before {
     background: transparent;
     border-radius: 0.3em;
     content: "+";
@@ -207,7 +204,6 @@ span {
 p {
   line-height: 30px;
   max-width: 800px;
-  font-family: poppinslight;
 }
 
 aside {
@@ -217,3 +213,201 @@ aside {
 img {
   width: 700px;
 }
+
+/* START RESPONSIVIDADE */
+
+@media screen and (max-width: 1200px) {
+  header {
+    justify-content: space-around;
+  }
+
+  h1 {
+    margin-left: 10px;
+  }
+
+  ul {
+    margin-right: 10px;
+  }
+
+  li {
+    margin-inline: 20px;
+  }
+
+  #imagem1 {
+    margin-right: 35px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  #primeira {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  #imagem1 {
+    margin-right: 0;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  #imagem1 img {
+    width: 450px;
+  }
+
+  h2 {
+    margin-left: 0px;
+  }
+
+  p {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  #terceira {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #terceira .faq-title {
+    margin-left: 0px;
+  }
+
+  #terceira .faq-list {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+    margin-left: 0px;
+  }
+
+  header {
+    justify-content: space-between;
+  }
+
+  ul {
+    margin-right: 0px;
+  }
+
+  li {
+    margin-inline: 12px;
+  }
+
+  #title {
+    line-height: 30px;
+  }
+
+  #imagenzinha {
+    width: 60px;
+    object-fit: contain;
+  }
+
+  .container-logo {
+    display: flex;
+  }
+
+  main {
+    margin-top: 30px;
+  }
+
+  aside {
+    margin-top: 30px;
+  }
+
+  #imagem1 {
+    width: 300px;
+  }
+
+  h2 {
+    font-size: 65px;
+    line-height: 40px;
+  }
+
+  #primeira {
+    margin-bottom: 80px;
+  }
+
+  #terceira .faq-title {
+    font-size: 60px;
+    line-height: 45px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    padding: 5px 10px;
+  }
+
+  header {
+    padding-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  #title {
+    line-height: 20px;
+  }
+
+  #imagenzinha {
+    width: 45px;
+  }
+
+  #loginbtn {
+    margin-right: 0px;
+  }
+
+  ul {
+    font-size: 16px;
+  }
+
+  li {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  header {
+    justify-content: none;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  ul {
+    font-size: 16px;
+  }
+
+  li {
+    margin-inline: 5px;
+  }
+
+  #imagenzinha {
+    width: 35px;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 25px;
+  }
+
+  #terceira details[open] p {
+    margin-left: 10px;
+  }
+
+  #terceira summary {
+    font-size: 0.9rem;
+  }
+
+  .faq-content {
+    font-size: 0.9rem;
+  }
+}
+/* END RESPONSIVIDADE*/
