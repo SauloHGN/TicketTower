@@ -4,13 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-relatorio',
+  selector: 'app-dashboard',
   standalone: true,
-  imports: [
-  ],
-  templateUrl: './relatorio.component.html',
-  styleUrl: './relatorio.component.css',
+  imports: [],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.css',
 })
-export class RelatorioComponent {
-
-}
+export class DashboardComponent {}

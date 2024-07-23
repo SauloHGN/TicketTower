@@ -239,6 +239,10 @@ img {
 }
 
 @media screen and (max-width: 1024px) {
+  main {
+    margin-top: 50px;
+  }
+
   #primeira {
     display: flex;
     flex-direction: column-reverse;
@@ -278,9 +282,17 @@ img {
   #terceira .faq-list {
     width: 100%;
   }
+
+  .faq-body {
+    width: 90%;
+  }
 }
 
 @media screen and (max-width: 768px) {
+  aside {
+    width: 90%;
+  }
+
   h1 {
     font-size: 2.5rem;
     margin-left: 0px;
@@ -336,6 +348,11 @@ img {
     font-size: 60px;
     line-height: 45px;
   }
+
+  #terceira summary,
+  #terceira p {
+    font-size: 1.2rem;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -381,6 +398,16 @@ img {
     font-size: 1.3rem;
   }
 
+  h2 {
+    font-size: 50px;
+    line-height: 30px;
+  }
+
+  #terceira .faq-title {
+    font-size: 50px;
+    line-height: 30px;
+  }
+
   ul {
     font-size: 16px;
   }
@@ -394,7 +421,7 @@ img {
   }
 
   p {
-    font-size: 18px;
+    font-size: 1rem;
     line-height: 25px;
   }
 
@@ -403,11 +430,11 @@ img {
   }
 
   #terceira summary {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .faq-content {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 /* END RESPONSIVIDADE*/

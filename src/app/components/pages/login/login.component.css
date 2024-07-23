@@ -84,3 +84,9 @@ button {
   right: 20px;
   z-index: 1000;
 }
+
+@media screen and (max-width: 1024px) {
+  .container-login {
+    min-width: 340px;
+  }
+}

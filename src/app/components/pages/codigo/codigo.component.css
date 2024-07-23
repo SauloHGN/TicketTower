@@ -6,6 +6,10 @@ section {
   background-color: rgb(240, 248, 255);
 }
 
+.container-content {
+  min-width: 350px;
+}
+
 .flex {
   text-align: center;
   max-width: 400px;
