@@ -1,6 +1,6 @@
 body {
-  background-color: aliceblue;
-  color: black;
+  background-color: var(--primary-background-color);
+  color: var(--primary-font-color);
   max-width: 1920px;
   margin: 0 auto;
   padding: 15px;
@@ -33,17 +33,17 @@ li {
 }
 
 a {
-  color: rgb(0, 0, 0);
+  color: var(--primary-font-color);
   text-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 a:hover {
-  color: rgb(0, 174, 255);
+  color: var(--secundary-font-color);
   transition: 0.3ms all;
 }
 
 #loginbtn {
-  border: 2px solid rgb(0, 174, 255);
+  border: 2px solid var(--secundary-font-color);
   margin-right: 10px;
   padding: 10px;
   border-radius: 20px;
@@ -52,8 +52,8 @@ a:hover {
 }
 
 #loginbtn:hover {
-  background-color: rgb(0, 174, 255);
-  color: black;
+  background-color: var(--secundary-font-color);
+  color: var(--primary-font-color);
   transition: 0.3ms all;
 }
 
@@ -82,20 +82,24 @@ main {
 }
 
 #terceira {
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  width: 1120px;
+
   p {
     line-height: 1.4em;
-    color: #000000;
+    color: var(--primary-font-color);
   }
 
   .faq-title {
-    margin-left: 150px;
     font-size: 76px;
     line-height: 65px;
     text-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   }
 
   .faq-list > div {
-    border-bottom: 0.07em solid #000000;
+    border-bottom: 0.07em solid var(--primary-font-color);
     padding: 1.5em 0em;
   }
 
@@ -125,7 +129,22 @@ main {
   }
 
   summary:hover {
-    color: rgb(0, 174, 255);
+    color: var(--secundary-font-color);
+  }
+
+  .faq-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .faq-list {
+    width: 100%;
   }
 
   @keyframes sweep {
@@ -140,11 +159,11 @@ main {
   }
 
   details[open] summary {
-    color: rgb(0, 174, 255);
+    color: var(--secundary-font-color);
   }
 
   details[open] p {
-    border-left: 2px solid rgb(0, 174, 255);
+    border-left: 2px solid var(--secundary-font-color);
     margin-left: 55px;
     padding-left: 25px;
     opacity: 100;
@@ -171,7 +190,7 @@ main {
     background: transparent;
     border-radius: 0.3em;
     content: "+";
-    color: rgb(0, 174, 255);
+    color: var(--secundary-font-color);
     float: left;
     font-size: 1.8em;
     font-weight: bold;
@@ -197,13 +216,14 @@ h2 {
 }
 
 span {
-  color: rgb(0, 174, 255);
+  color: var(--secundary-font-color);
   max-width: 800px;
 }
 
 p {
   line-height: 30px;
   max-width: 800px;
+  margin-top: 32px;
 }
 
 aside {
@@ -235,6 +255,10 @@ img {
 
   #imagem1 {
     margin-right: 35px;
+  }
+
+  #terceira {
+    width: 100%;
   }
 }
 
@@ -405,7 +429,7 @@ img {
 
   #terceira .faq-title {
     font-size: 50px;
-    line-height: 30px;
+    line-height: 40px;
   }
 
   ul {
@@ -427,6 +451,7 @@ img {
 
   #terceira details[open] p {
     margin-left: 10px;
+    font-size: 1rem;
   }
 
   #terceira summary {
@@ -435,6 +460,15 @@ img {
 
   .faq-content {
     font-size: 1rem;
+  }
+
+  .faq-body {
+    width: 100%;
+  }
+
+  #terceira details[open] summary:before,
+  #terceira summary:before {
+    margin: -0.3em 0.15em 0 0;
   }
 }
 /* END RESPONSIVIDADE*/

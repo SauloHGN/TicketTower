@@ -20,68 +20,13 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: "poppinsblack";
-  src: url("/src/app/components/pages/landing/fonts/Poppins/poppins-black-webfont.woff2")
-      format("woff2"),
-    url("/src/app/components/pages/landing/fonts/Poppins/poppins-black-webfont.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "poppinsbold";
-  src: url("/src/app/components/pages/landing/fonts/Poppins/poppins-bold-webfont.woff2")
-      format("woff2"),
-    url("/src/app/components/pages/landing/fonts/Poppins/poppins-bold-webfont.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "poppinslight";
-  src: url("/src/app/components/pages/landing/fonts/Poppins/poppins-light-webfont.woff2")
-      format("woff2"),
-    url("/src/app/components/pages/landing/fonts/Poppins/poppins-light-webfont.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "poppinsmedium";
-  src: url("/src/app/components/pages/landing/fonts/Poppins/poppins-medium-webfont.woff2")
-      format("woff2"),
-    url("/src/app/components/pages/landing/fonts/Poppins/poppins-medium-webfont.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "poppinsregular";
-  src: url("/src/app/components/pages/landing/fonts/Poppins/poppins-regular-webfont.woff2")
-      format("woff2"),
-    url("/src/app/components/pages/landing/fonts/Poppins/poppins-regular-webfont.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "poppinssemibold";
-  src: url("/src/app/components/pages/landing/fonts/Poppins/poppins-semibold-webfont.woff2")
-      format("woff2"),
-    url("/src/app/components/pages/landing/fonts/Poppins/poppins-semibold-webfont.woff")
-      format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
 * {
   font-family: "Roboto Mono", "Poppins", sans-serif;
   font-size: 0.97rem;
 }
 
 :root {
-  --font-sans: "";
+  --font-sans: "Roboto Mono, " Poppins ", sans-serif";
 }
 
 :root {
@@ -105,6 +50,16 @@
   --input: 240 5.9% 90%;
   --ring: 240 5.9% 10%;
   --radius: 0.5rem;
+
+  --primary-background-color: aliceblue;
+  --secundary-background-color: #ffffff;
+  --tertiary-background-color: lightblue;
+
+  --primary-font-color: #0c0c14;
+  --secundary-font-color: #00aeff;
+  --tertiary-font-color: #5c5958;
+
+  --placeholder-default: lightblue;
 }
 
 .dark {
@@ -127,4 +82,14 @@
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
   --ring: 240 4.9% 83.9%;
+
+  --primary-background-color: #181818;
+  --secundary-background-color: #0499ff;
+  --tertiary-background-color: #333333;
+
+  --primary-font-color: #898989;
+  --secundary-font-color: #0499ff;
+  --tertiary-font-color: #ffffff;
 }
+
+/*https://account.proton.me/pt-br/mail*/

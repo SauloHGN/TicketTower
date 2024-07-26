@@ -43,6 +43,9 @@ export class CodigoComponent {
   }
 
   enviarEmail() {
+    const email = document.querySelector('.email') as HTMLInputElement;
+
+    console.log(email.value);
     this.telaAtual++;
   }
 
