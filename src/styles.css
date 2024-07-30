@@ -4,12 +4,12 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
-/* @import "tailwindcss/base";
+@import "tailwindcss/base";
 @import "tailwindcss/components";
-@import "tailwindcss/utilities"; */
-@tailwind base;
+@import "tailwindcss/utilities";
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 @font-face {
   font-family: "Roboto Mono", "Poppins", sans-serif;
@@ -29,7 +29,8 @@
   --font-sans: "Roboto Mono, " Poppins ", sans-serif";
 }
 
-:root {
+/*root*/
+.dark {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
   --card: 0 0% 100%;
@@ -53,16 +54,19 @@
 
   --primary-background-color: aliceblue;
   --secundary-background-color: #ffffff;
-  --tertiary-background-color: lightblue;
+  --tertiary-background-color: rgb(226 232 240);
 
   --primary-font-color: #0c0c14;
   --secundary-font-color: #00aeff;
   --tertiary-font-color: #5c5958;
 
+  --primary-border-color: #898989;
+
   --placeholder-default: lightblue;
 }
 
-.dark {
+/*.dark */
+:root {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
   --card: 240 10% 3.9%;
@@ -83,13 +87,19 @@
   --input: 240 3.7% 15.9%;
   --ring: 240 4.9% 83.9%;
 
-  --primary-background-color: #181818;
+  /* --primary-background-color: #181818;  */
+  --primary-background-color: #121212;
   --secundary-background-color: #0499ff;
   --tertiary-background-color: #333333;
 
-  --primary-font-color: #898989;
+  --primary-font-color: #a5a5a5;
   --secundary-font-color: #0499ff;
-  --tertiary-font-color: #ffffff;
+  --tertiary-font-color: #eeeeee;
+
+  --primary-border-color: #292929;
+
+  --tertiary-button-text-color: #f15263;
+  --tertiary-button-background-color: #f15263;
 }
 
 /*https://account.proton.me/pt-br/mail*/

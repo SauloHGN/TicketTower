@@ -1,21 +1,11 @@
-<body style="width: 100vw; height: 100vh">
-  <!-- <app-header></app-header>
-  <app-sidebar class="flex flex-col fixed border-r border-border"></app-sidebar> -->
-  <aside style="background-color: blue; width: 30%; height: 100%"></aside>
+<body class="flex h-screen w-screen flex-row">
+  <app-sidebar class="flex flex-col border-r border-border w-1/5"></app-sidebar>
 
-  <main style="display: flex; flex-direction: column; width: 70%; height: auto">
-    <header
-      style="background-color: brown; width: 70%; height: 10%; display: flex"
-    ></header>
+  <main class="flex w-full h-full flex-col">
+    <app-header class="flex bg-black-800 h-10 w-full"></app-header>
     <content
-      style="
-        background-color: chartreuse;
-        width: 70%;
-        height: auto;
-        display: flex;
-      "
-    >
-    </content>
+      class="flex h-full bg-blue-100 w-full bg-primary-background"
+    ></content>
   </main>
 
   <!-- <router-outlet name="secundary"></router-outlet> -->

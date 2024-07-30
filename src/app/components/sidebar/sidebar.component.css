@@ -1,0 +1,35 @@
+section {
+  background-color: var(--primary-background-color);
+}
+
+a {
+  color: var(--primary-font-color);
+}
+
+a:hover {
+  background-color: var(--tertiary-background-color);
+}
+
+ng-icon {
+  color: var(--primary-font-color);
+}
+
+.container-logo {
+  border-bottom: solid 1px var(--primary-border-color);
+}
+
+.extra-links {
+  color: var(--tertiary-font-color);
+}
+
+footer {
+  border-top: solid 1px var(--primary-border-color);
+}
+
+.button-logout {
+  color: var(--tertiary-button-text-color);
+}
+
+.button-logout:hover {
+  background-color: var(--tertiary-button-background-color);
+}
