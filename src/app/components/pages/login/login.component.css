@@ -13,7 +13,7 @@ section {
   padding: 20px;
   background-color: var(--primary-background-color);
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px var(--primary-shadow-color);
   margin-bottom: 50px;
 }
 
@@ -42,7 +42,7 @@ h2 {
   color: var(--primary-font-color);
   background-color: transparent;
   border: 0;
-  border-bottom: 2px solid var(--tertiary-background-color);
+  border-bottom: 2px solid var(--secundary-border-color);
   outline: none;
   transition: border-bottom-color 0.3s ease;
 }
@@ -103,4 +103,17 @@ button {
   .flex {
     margin-bottom: 0px;
   }
+}
+
+.title {
+  color: var(--primary-highlighted-text-color);
+}
+
+.text-esqueceu {
+  color: var(--primary-font-color);
+}
+
+.redirect:hover {
+  color: var(--secundary-font-color);
+  transition: all 0.4s;
 }

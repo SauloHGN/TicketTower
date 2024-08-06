@@ -1,0 +1,76 @@
+* {
+  font-family: var(--font-sans);
+}
+
+main {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-background-color);
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.container-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 350px;
+}
+
+.title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  text-align: left;
+  text-wrap: nowrap;
+  color: var(--primary-font-color);
+}
+
+.sub-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: left;
+  text-wrap: nowrap;
+  color: var(--secundary-font-color);
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: 0.9rem;
+  color: var(--tertiary-font-color);
+  text-align: left;
+}
+
+.container-button {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  width: 130px;
+  height: 45px;
+  text-wrap: nowrap;
+  text-align: center;
+  background-color: var(--tertiary-button-background-color);
+  color: var(--primary-font-color);
+  margin: 20px 0;
+}
+
+button svg {
+  margin: 0px 8px;
+}
+
+button:hover {
+  border-color: var(--primary-button-background-color);
+}

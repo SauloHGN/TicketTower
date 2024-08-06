@@ -10,11 +10,13 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { AuthGuard } from './auth/auth.guard';
 import { CodigoComponent } from './components/pages/codigo/codigo.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
   { path: 'redefinir', title: 'Esqueci a senha', component: CodigoComponent },
+  { path: '**', title: '404 Error', component: NotFoundComponent },
   {
     path: 'home',
     title: 'Página Inicial',

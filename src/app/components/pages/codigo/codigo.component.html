@@ -16,9 +16,7 @@
       </p>
       <div class="form-control">
         <input type="text" name="email" class="email" required />
-        <label>
-          <span>Email de recuperação</span>
-        </label>
+        <label> Email de recuperação </label>
       </div>
       <div class="container-button">
         <button
@@ -61,6 +59,7 @@
           class="input"
           name="text"
           type="text"
+          autocomplete="off"
         />
         <input
           (input)="onInput($event, 1)"
@@ -69,6 +68,7 @@
           class="input"
           name="text"
           type="text"
+          autocomplete="off"
         />
         <input
           (input)="onInput($event, 2)"
@@ -77,6 +77,7 @@
           class="input"
           name="text"
           type="text"
+          autocomplete="off"
         />
         <input
           (input)="onInput($event, 3)"
@@ -85,6 +86,7 @@
           class="input"
           name="text"
           type="text"
+          autocomplete="off"
         />
         <input
           (input)="onInput($event, 4)"
@@ -93,6 +95,7 @@
           class="input"
           name="text"
           type="text"
+          autocomplete="off"
         />
         <input
           (input)="onInput($event, 5)"
@@ -101,6 +104,7 @@
           class="input"
           name="text"
           type="text"
+          autocomplete="off"
         />
       </div>
       <div class="container-button">
@@ -136,16 +140,12 @@
     <span class="text-xl font-bold mb-4">Redefinir senha</span>
     <div class="flex flex-col w-full max-w-sm">
       <div class="form-control">
-        <input type="password" name="senha" required />
-        <label>
-          <span>Nova senha</span>
-        </label>
+        <input type="password" name="senha" class="novaSenha" required />
+        <label> Nova senha </label>
       </div>
       <div class="form-control">
-        <input type="password" name="senha" required />
-        <label>
-          <span>Confirme a senha</span>
-        </label>
+        <input type="password" name="senha" class="confirmarSenha" required />
+        <label> Confirme a senha </label>
       </div>
       <div class="container-button">
         <button

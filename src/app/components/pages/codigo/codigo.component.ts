@@ -12,6 +12,12 @@ import { Router } from '@angular/router';
 export class CodigoComponent {
   telaAtual: number = 1;
   inputValues: string[] = ['', '', '', '', '', ''];
+
+  codigo: string = '';
+  email: string = '';
+  novaSenha: string = '';
+  confirmarSenha: string = '';
+
   @ViewChild('passwordContainer', { static: false })
   passwordContainer!: ElementRef;
 
@@ -45,6 +51,8 @@ export class CodigoComponent {
   enviarEmail() {
     const email = document.querySelector('.email') as HTMLInputElement;
 
+    this.email = email.value;
+
     console.log(email.value);
     this.telaAtual++;
   }
@@ -52,18 +60,28 @@ export class CodigoComponent {
   verificarCodigo() {
     const inputs =
       this.passwordContainer.nativeElement.querySelectorAll('.input');
-    let codigo = '';
 
     inputs.forEach((input: HTMLInputElement) => {
-      codigo += input.value;
+      this.codigo += input.value;
     });
 
-    console.log('Código completo:', codigo);
+    console.log('Código completo:', this.codigo);
 
     this.telaAtual++;
   }
 
   redefinirSenha() {
+    const novaSenha = document.querySelector('.novaSenha') as HTMLInputElement;
+    const confirmarSenha = document.querySelector(
+      '.confirmarSenha'
+    ) as HTMLInputElement;
+
+    this.novaSenha = novaSenha.value;
+    this.confirmarSenha = confirmarSenha.value;
+
+    console.log('senha: ', novaSenha.value);
+    console.log('Confirmar Senha: ', confirmarSenha.value);
+
     this.router.navigate(['/login']);
   }
 }
