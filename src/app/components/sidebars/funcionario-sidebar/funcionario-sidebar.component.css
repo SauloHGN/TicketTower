@@ -1,0 +1,107 @@
+section {
+  background-color: var(--primary-background-color);
+}
+
+a {
+  color: var(--primary-font-color);
+}
+
+a:hover {
+  background-color: var(--tertiary-background-color);
+}
+
+ng-icon {
+  color: var(--primary-font-color);
+}
+
+.container-logo {
+  border-bottom: solid 1px var(--primary-border-color);
+}
+
+.extra-links {
+  color: var(--tertiary-font-color);
+}
+
+footer {
+  border-top: solid 1px var(--primary-border-color);
+}
+
+.button-logout {
+  color: var(--tertiary-button-text-color);
+}
+
+.button-logout:hover {
+  background-color: var(--tertiary-button-background-color);
+}
+
+/* Responsividade */
+
+@media screen and (max-width: 1200px) {
+  aside {
+    width: 100px;
+  }
+
+  .container-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    font-size: 10px;
+    text-wrap: nowrap;
+  }
+
+  ng-icon .flex.items-center,
+  ng-icon {
+    --ng-icon__size: 20px !important;
+  }
+
+  button {
+    margin: 0px;
+    width: 100%;
+  }
+
+  .content-footer-sidebar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text-extra-links {
+    text-wrap: nowrap;
+    font-size: 10px;
+    margin-left: 0px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  aside {
+    width: 60px;
+    padding: 0px;
+  }
+
+  a {
+    font-size: 8px;
+    padding: 5px 0px;
+  }
+
+  ng-icon .flex.items-center,
+  ng-icon {
+    --ng-icon__size: 18px !important;
+  }
+
+  .text-extra-links {
+    display: none;
+  }
+
+  .extra-links {
+    padding: 0px 0.25rem;
+  }
+}

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../../auth/auth.service';
 import {
   lucideBarChart4,
   lucideNotepadText,
@@ -14,14 +14,14 @@ import {
   lucideMenuSquare,
   lucideTicketPlus,
 } from '@ng-icons/lucide';
-import { userInfo } from '../../enum/userInfo';
+import { userInfo } from '../../../enum/userInfo';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'admin-sidebar',
   standalone: true,
   imports: [NgIconComponent, RouterModule, CommonModule],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css',
+  templateUrl: './admin-sidebar.component.html',
+  styleUrl: './admin-sidebar.component.css',
   viewProviders: [
     provideIcons({
       lucideBarChart4,
@@ -36,7 +36,7 @@ import { userInfo } from '../../enum/userInfo';
     }),
   ],
 })
-export class SidebarComponent implements OnInit {
+export class AdminSidebarComponent implements OnInit {
   title = '';
   userInfo: userInfo | null = null;
   constructor(private router: Router, private AuthService: AuthService) {}

@@ -16,7 +16,7 @@ export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
   { path: 'redefinir', title: 'Esqueci a senha', component: CodigoComponent },
-  { path: '**', title: '404 Error', component: NotFoundComponent },
+  { path: '*', title: 'Página não encontrada', component: NotFoundComponent },
   {
     path: 'home',
     title: 'Página Inicial',

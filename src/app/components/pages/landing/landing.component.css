@@ -459,12 +459,25 @@ img {
 }
 
 @media screen and (max-width: 450px) {
+  body {
+    padding: 5px 5px;
+  }
+
   header {
     justify-content: none;
   }
 
+  #loginbtn li {
+    margin-inline: 16px;
+  }
+
+  #loginbtn {
+    padding: 6px;
+  }
+
   h1 {
-    font-size: 1.3rem;
+    font-size: 1rem;
+    line-height: 16px;
   }
 
   h2 {
