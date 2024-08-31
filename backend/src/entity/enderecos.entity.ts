@@ -8,7 +8,7 @@ import {
 
 @Entity()
 export class Enderecos {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ name: 'numero', nullable: false })

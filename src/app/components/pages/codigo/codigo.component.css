@@ -3,7 +3,11 @@ section {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgb(240, 248, 255);
+  background-color: var(--primary-background-color);
+}
+
+.container-content {
+  min-width: 350px;
 }
 
 .flex {
@@ -11,9 +15,9 @@ section {
   max-width: 400px;
   max-height: 440px;
   padding: 20px;
-  background-color: rgb(246, 250, 253);
+  background-color: var(--primary-background-color);
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px var(--primary-shadow-color);
   margin-bottom: 50px;
 }
 
@@ -26,7 +30,7 @@ img {
 h2 {
   font-size: 24px;
   font-weight: bold;
-  color: #2d3748;
+  color: var(--primary-font-color);
   margin-bottom: 40px;
 }
 
@@ -39,17 +43,17 @@ h2 {
   width: 100%;
   padding: 15px 0;
   font-size: 16px;
-  color: black;
+  color: var(--primary-font-color);
   background-color: transparent;
   border: 0;
-  border-bottom: 2px lightblue solid;
+  border-bottom: 2px solid var(--secundary-border-color);
   outline: none;
   transition: border-bottom-color 0.3s ease;
 }
 
 .form-control input:focus,
 .form-control input:valid {
-  border-bottom-color: rgb(0, 174, 255);
+  border-bottom-color: var(--secundary-font-color);
 }
 
 .form-control label {
@@ -57,7 +61,7 @@ h2 {
   top: 15px;
   left: 0;
   pointer-events: none;
-  color: lightblue;
+  color: var(--placeholder-default);
   transition: 0.01s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -65,7 +69,7 @@ h2 {
 .form-control input:valid + label {
   top: -10px;
   font-size: 14px;
-  color: rgb(0, 174, 255);
+  color: var(--secundary-font-color);
 }
 
 .container-button {
@@ -89,6 +93,10 @@ a:hover {
   z-index: 1000;
 }
 
+span {
+  color: var(--primary-font-color);
+}
+
 .recovery-text {
   color: rgba(128, 128, 128); /* Cinza claro com opacidade reduzida */
   margin-bottom: 10px;
@@ -109,7 +117,21 @@ a:hover {
   border: none;
   border-bottom: solid 2px rgb(20, 181, 230);
   font-size: 20px;
-  color: rgb(0, 0, 0);
+  color: var(--primary-font-color);
   outline: none;
   margin-bottom: 20px;
+}
+
+@media screen and (max-width: 450px) {
+  .container-content {
+    max-width: 100%;
+    max-height: 100%;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .flex {
+    margin-bottom: 0px;
+  }
 }

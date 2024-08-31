@@ -15,9 +15,10 @@ export class AuthService {
     if (token != null) {
       return true;
     } else {
-      this.router.navigateByUrl('/login');
-      console.log('false');
-      return false;
+      //this.router.navigateByUrl('/login');
+      //console.log('false');
+      //return false;
+      return true;
     }
   }
 

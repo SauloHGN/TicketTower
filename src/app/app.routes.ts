@@ -9,12 +9,14 @@ import { NgModule } from '@angular/core';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { AuthGuard } from './auth/auth.guard';
 import { CodigoComponent } from './components/pages/codigo/codigo.component';
-import { RelatorioComponent } from './components/relatorio/relatorio.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
   { path: 'redefinir', title: 'Esqueci a senha', component: CodigoComponent },
+  { path: '*', title: 'Página não encontrada', component: NotFoundComponent },
   {
     path: 'home',
     title: 'Página Inicial',
@@ -47,9 +49,9 @@ export const routes: Routes = [
       },
 
       {
-        path: 'relatorio',
-        title: 'relatorio',
-        component: RelatorioComponent,
+        path: 'dashboard',
+        title: 'Dashboard',
+        component: DashboardComponent,
         outlet: 'secundary',
         canActivate: [AuthGuard],
       },

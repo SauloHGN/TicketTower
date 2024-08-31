@@ -1,19 +1,24 @@
-<div class="flex">
-  <section class="flex h-screen w-screen min-w-60">
-    <aside class="border-border" style="width: 17rem">
-      <app-sidebar
-        class="flex flex-col fixed border-r"
-        style="width: 17rem"
-      ></app-sidebar>
-    </aside>
+<body class="flex h-screen w-screen flex-row">
+  <!-- <app-sidebar class="flex flex-col border-r border-border w-1/5"></app-sidebar> -->
 
-    <section class="container-conteudo flex flex-wrap w-11/12">
-      <header class="flex flex-col flex-grow border-border border-b h-10">
-        <app-header class="flex col-auto"></app-header>
-        <main id="main-content" class="p-3 max">
-          <router-outlet name="secundary"></router-outlet>
-        </main>
-      </header>
-    </section>
-  </section>
-</div>
+  <!-- <admin-sidebar
+    class="flex flex-col border-r border-border w-1/5"
+  ></admin-sidebar> -->
+
+  <funcionario-sidebar
+    class="flex flex-col border-r border-border w-1/5"
+  ></funcionario-sidebar>
+
+  <!-- <cliente-sidebar
+    class="flex flex-col border-r border-border w-1/5"
+  ></cliente-sidebar> -->
+
+  <main class="flex w-full h-full flex-col">
+    <app-header class="flex bg-black-800 h-10 w-full"></app-header>
+    <content
+      class="flex h-full bg-blue-100 w-full bg-primary-background"
+    ></content>
+  </main>
+
+  <!-- <router-outlet name="secundary"></router-outlet> -->
+</body>

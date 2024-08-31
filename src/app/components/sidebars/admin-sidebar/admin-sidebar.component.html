@@ -1,0 +1,127 @@
+<section class="h-screen">
+  <body>
+    <aside class="flex flex-col h-screen p-1.5">
+      <div class="container-logo border-b">
+        <img
+          src="../../../assets/images/icone.ico"
+          width="36"
+          height="36"
+          class="flex py-1"
+        />
+      </div>
+
+      <!-- opções admin -->
+      <div class="flex flex-col px-1 mt-6">
+        <a
+          [routerLink]="[{ outlets: { secundary: ['tarefas'] } }]"
+          routerLinkActive="active"
+          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+        >
+          <ng-icon
+            name="lucideNotepadText"
+            strokeWidth="1.8"
+            size="18"
+            class="flex items-center"
+          ></ng-icon>
+          Fila de Tickets</a
+        >
+        <a
+          [routerLink]="[{ outlets: { secundary: ['CriarTicket'] } }]"
+          routerLinkActive="active"
+          href="/home"
+          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+        >
+          <ng-icon
+            name="lucideTicketPlus"
+            strokeWidth="1.8"
+            size="18"
+            class="flex items-center"
+          ></ng-icon
+          >Criar Ticket</a
+        >
+        <a
+          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+          [routerLink]="[{ outlets: { secundary: ['dashboard'] } }]"
+          routerLinkActive="active"
+        >
+          <ng-icon
+            name="lucideBarChart4"
+            strokeWidth="1.8"
+            size="18"
+            class="flex items-center"
+          ></ng-icon
+          >Relátorios</a
+        >
+
+        <a
+          [routerLink]="[{ outlets: { secundary: ['cadastro'] } }]"
+          routerLinkActive="active"
+          href="/home"
+          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+        >
+          <ng-icon
+            name="lucideUserPlus"
+            strokeWidth="1.8"
+            size="18"
+            class="flex items-center"
+          ></ng-icon
+          >Cadastro</a
+        >
+
+        <a
+          [routerLink]="[{ outlets: { secundary: ['tarefas'] } }]"
+          routerLinkActive="active"
+          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+        >
+          <ng-icon
+            name="lucideUsers"
+            strokeWidth="1.8"
+            size="18"
+            class="flex items-center"
+          ></ng-icon>
+          Gerenciamento de usuários</a
+        >
+      </div>
+      <div class="extra-links flex flex-col flex-grow">
+        <span class="text-extra-links uppercase ml-2 mt-auto text-xs rounded-md"
+          >Links Extras</span
+        >
+
+        <a
+          [routerLink]="[{ outlets: { secundary: ['configuracoes'] } }]"
+          routerLinkActive="active"
+          class="flex px-2 p-2 my-1 gap-x-2 hover:bg-zinc-200 rounded-md"
+        >
+          <ng-icon
+            name="lucideSettings2"
+            strokeWidth="1.8"
+            size="18"
+            class="flex items-center"
+          ></ng-icon
+          >Configurações
+        </a>
+      </div>
+      <footer class="p-2 my-1 border-t border-border">
+        <div class="content-footer-sidebar flex flex-grow">
+          <div class="flex flex-col">
+            <span class="text-justify">{{ userInfo?.nome }}</span>
+            <span class="text-justify text-gray-500 text-sm">{{
+              userInfo?.email
+            }}</span>
+          </div>
+          <button
+            class="button-logout flex ml-auto w-10 justify-center content-center hover:bg-red-200 rounded-md py-2"
+            (click)="logout()"
+          >
+            <ng-icon
+              name="lucideLogOut"
+              color="#D93036"
+              strokeWidth="2"
+              class="flex justify-center items-center content-center"
+            ></ng-icon>
+          </button>
+        </div>
+      </footer>
+    </aside>
+  </body>
+</section>

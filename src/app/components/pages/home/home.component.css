@@ -1,33 +1,24 @@
-.container-conteudo {
-  width: 88%;
-}
-app-sidebar {
-  width: 88%;
-}
-
-@media screen and (max-width: 1660px) {
-  .container-conteudo {
-    width: 85%;
-  }
-  app-sidebar {
-    width: 85%;
-  }
-}
-
-@media screen and (max-width: 1440px) {
-  .container-conteudo {
-    width: 80%;
-  }
-  app-sidebar {
-    width: 80%;
-  }
+app-sidebar,
+admin-sidebar,
+funcionario-sidebar,
+cliente-sidebar {
+  border-right: solid 1px var(--primary-border-color);
 }
 
 @media screen and (max-width: 1200px) {
-  .container-conteudo {
-    width: 75%;
+  app-sidebar,
+  admin-sidebar,
+  funcionario-sidebar,
+  cliente-sidebar {
+    width: 100px;
   }
-  app-sidebar {
-    width: 75%;
+}
+
+@media screen and (max-width: 520px) {
+  app-sidebar,
+  admin-sidebar,
+  funcionario-sidebar,
+  cliente-sidebar {
+    width: 60px;
   }
 }

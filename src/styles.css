@@ -4,12 +4,12 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
-/* @import "tailwindcss/base";
+@import "tailwindcss/base";
 @import "tailwindcss/components";
-@import "tailwindcss/utilities"; */
-@tailwind base;
+@import "tailwindcss/utilities";
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 @font-face {
   font-family: "Roboto Mono", "Poppins", sans-serif;
@@ -26,10 +26,10 @@
 }
 
 :root {
-  --font-sans: "";
+  --font-sans: "Roboto Mono, " Poppins ", sans-serif";
 }
 
-:root {
+.dark {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
   --card: 0 0% 100%;
@@ -50,9 +50,30 @@
   --input: 240 5.9% 90%;
   --ring: 240 5.9% 10%;
   --radius: 0.5rem;
+
+  --primary-background-color: aliceblue;
+  --secundary-background-color: #ffffff;
+  --tertiary-background-color: rgb(226 232 240);
+
+  --primary-font-color: #0c0c14;
+  --secundary-font-color: #00aeff;
+  --tertiary-font-color: #5c5958;
+
+  --primary-button-text-color: #fff;
+
+  --primary-highlighted-text-color: #0c0c14;
+  --secundary-highlighted-text-color: #0499ff;
+
+  --primary-border-color: #898989;
+  --secundary-border-color: lightblue;
+  --tertiary-border-color: rgba(0, 0, 0, 0.1);
+
+  --placeholder-default: lightblue;
+
+  --primary-shadow-color: rgba(0, 0, 0, 0.1);
 }
 
-.dark {
+:root {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
   --card: 240 10% 3.9%;
@@ -72,4 +93,32 @@
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
   --ring: 240 4.9% 83.9%;
+
+  /* --primary-background-color: #181818;  */
+  --primary-background-color: #121212;
+  --secundary-background-color: #0499ff;
+  --tertiary-background-color: #333333;
+
+  --primary-font-color: #eee;
+  --secundary-font-color: #0499ff;
+  --tertiary-font-color: #d7d7d7;
+
+  --primary-border-color: #292929;
+  --secundary-border-color: lightblue;
+  --tertiary-border-color: rgba(75, 75, 75, 0.541);
+
+  --primary-highlighted-text-color: #fff;
+  --secundary-highlighted-text-color: #0499ff;
+
+  --primary-button-background-color: #0499ff;
+  --primary-button-text-color: #fff;
+
+  --tertiary-button-text-color: #f15263;
+  --tertiary-button-background-color: rgba(54, 54, 54, 0.897);
+
+  --placeholder-default: #d7d7d7;
+
+  --primary-shadow-color: rgba(0, 0, 0, 0);
 }
+
+/*https://account.proton.me/pt-br/mail*/
