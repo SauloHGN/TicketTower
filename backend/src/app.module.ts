@@ -15,6 +15,7 @@ import { CadastroModule } from './cadastro/cadastro.module';
 import { Enderecos } from './entity/enderecos.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { EmailModule } from './email/email.module';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -39,6 +40,7 @@ import { AppService } from './app.service';
       Setores,
       Enderecos,
     ]),
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

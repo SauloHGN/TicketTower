@@ -15,7 +15,7 @@ import { Prioridade } from 'src/enums/prioridade';
 
 @Entity()
 export class Tickets {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ type: 'datetime' })
