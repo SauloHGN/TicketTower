@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 // ----------------------------------------------------------------------
 import { DataBaseConfigService } from './config/bd.config.service';
+import { DataUtilsService } from './repository/DataUtilsService';
 // ----------------------------------------------------------------------
 import { AuthModule } from './auth/auth.module';
 import { Funcionarios } from './entity/funcionarios.entity';
@@ -16,6 +17,7 @@ import { Enderecos } from './entity/enderecos.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EmailModule } from './email/email.module';
+import { CacheModule } from './cache/cache.module';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -25,6 +27,8 @@ import { EmailModule } from './email/email.module';
     EmpresasModule,
     SetoresModule,
     CadastroModule,
+    EmailModule,
+    CacheModule,
 
     ConfigModule.forRoot({
       isGlobal: true,
@@ -40,9 +44,8 @@ import { EmailModule } from './email/email.module';
       Setores,
       Enderecos,
     ]),
-    EmailModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, DataUtilsService],
+  providers: [AppService, DataUtilsService],
 })
 export class AppModule {}

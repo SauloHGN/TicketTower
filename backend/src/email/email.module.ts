@@ -10,7 +10,7 @@ import { join } from 'path';
     MailerModule.forRoot({
       transport: {
         host: process.env.EMAIL_SERVICE, // seu host SMTP
-        port: process.env.EMAIL_PORT,
+        port: parseInt(process.env.EMAIL_PORT, 10),
         secure: false,
 
         // autenticação do email remetente
