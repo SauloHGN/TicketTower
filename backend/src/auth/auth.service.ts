@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Funcionarios } from '../entity/funcionarios.entity';
 import { Clientes } from '../entity/clientes.entity';
@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as crypto from 'crypto';
 import { padrao } from 'src/enums/padrao';
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,8 @@ export class AuthService {
     private readonly funcionariosRepository: Repository<Funcionarios>,
     @InjectRepository(Clientes)
     private readonly clientesRepository: Repository<Clientes>,
+
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async login(email: string, senha: string) {
@@ -65,5 +68,32 @@ export class AuthService {
     const senhaHash = crypto.createHash('sha256');
     senhaHash.update(senha);
     return senhaHash.digest('hex');
+  }
+
+  //--------------------------------------------------
+  //  Sessão codigo
+
+  gerarCodigo(lenght: number) {
+    let code = '';
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#%&*';
+    for (let i = 0; i < lenght; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      code += chars[randomIndex];
+    }
+    return code;
+  }
+
+  async salvarCodigo(id: number, codigo: string): Promise<boolean> {
+    const key = `codigo_usuario:${id}`;
+    await this.cacheManager.set(key, codigo, 1200); // Guarda o codigo no cache por 20 minutos~
+    console.log(`Código salvo para ${key}: ${codigo}`);
+    return true;
+  }
+
+  async verificarCodigo(id: number, codigo: string): Promise<boolean> {
+    const key = `codigo_usuario:${id}`;
+    const storedCode = await this.cacheManager.get<string>(key);
+    return storedCode === codigo;
   }
 }

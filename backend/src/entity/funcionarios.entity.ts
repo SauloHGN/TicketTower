@@ -12,7 +12,7 @@ import { Permissao } from 'src/enums/permissao';
 @Entity()
 export class Funcionarios {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ name: 'nome', nullable: false })
   nome: string;

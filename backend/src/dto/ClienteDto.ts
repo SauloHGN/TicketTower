@@ -1,7 +1,7 @@
 import { Empresas } from '../entity/empresas.entity';
 
 export class ClienteDTO {
-  id: number;
+  id: string;
   nome: string;
   email: string;
   senha: string;

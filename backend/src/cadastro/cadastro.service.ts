@@ -13,7 +13,6 @@ import { Funcionarios } from '../entity/funcionarios.entity';
 import { Empresas } from '../entity/empresas.entity';
 import { Setores } from '../entity/setores.entity';
 //------------------------------------------------
-import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { Permissao } from 'src/enums/permissao';
 import { Enderecos } from 'src/entity/enderecos.entity';
@@ -35,7 +34,7 @@ export class CadastroService {
     private readonly setoresRepository: Repository<Setores>,
   ) {}
 
-  async cadastrarCliente(funcionarioId: number, clienteDto: ClienteDTO) {
+  async cadastrarCliente(funcionarioId: string, clienteDto: ClienteDTO) {
     try {
       const authAdmin = await this.funcionariosRepository.findOne({
         where: { id: funcionarioId },
@@ -59,7 +58,7 @@ export class CadastroService {
   }
 
   async cadastrarFuncionario(
-    funcionarioId: number,
+    funcionarioId: string,
     funcionarioDto: FuncionarioDTO,
   ) {
     try {
