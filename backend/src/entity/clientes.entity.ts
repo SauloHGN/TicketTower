@@ -12,7 +12,7 @@ import { Empresas } from './empresas.entity';
 @Entity()
 export class Clientes {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ name: 'nome', nullable: false })
   nome: string;

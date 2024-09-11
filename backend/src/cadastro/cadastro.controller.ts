@@ -17,7 +17,7 @@ export class CadastroController {
   ) {
     console.log(clienteDto);
     return this.cadastroService.cadastrarCliente(
-      Number(funcionarioId),
+      String(funcionarioId),
       clienteDto,
     );
   }
@@ -28,7 +28,7 @@ export class CadastroController {
     @Body() funcionarioDto: FuncionarioDTO,
   ) {
     return this.cadastroService.cadastrarFuncionario(
-      Number(funcionarioId),
+      String(funcionarioId),
       funcionarioDto,
     );
   }

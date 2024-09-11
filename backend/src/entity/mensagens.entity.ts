@@ -10,7 +10,7 @@ import { Anexos } from './anexos.entity';
 
 @Entity()
 export class Mensagens {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Tickets, (Tickets) => Tickets.id)

@@ -17,7 +17,7 @@ export class AuthService {
     @InjectRepository(Clientes)
     private readonly clientesRepository: Repository<Clientes>,
 
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async login(email: string, senha: string) {
@@ -73,21 +73,21 @@ export class AuthService {
   //--------------------------------------------------
   //  Sessão codigo
 
-  async gerarCodigo(lenght: number) {
+  gerarCodigo(lenght: number) {
     let code = '';
     const chars =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#%&*';
-    for (let i = 0; i >= lenght; i++) {
+    for (let i = 0; i < lenght; i++) {
       const randomIndex = Math.floor(Math.random() * chars.length);
       code += chars[randomIndex];
     }
-
     return code;
   }
 
   async salvarCodigo(id: number, codigo: string): Promise<boolean> {
     const key = `codigo_usuario:${id}`;
-    await this.cacheManager.set(key, codigo, 1200); // Guarda o codigo no cache por 20 minutos
+    await this.cacheManager.set(key, codigo, 1200); // Guarda o codigo no cache por 20 minutos~
+    console.log(`Código salvo para ${key}: ${codigo}`);
     return true;
   }
 

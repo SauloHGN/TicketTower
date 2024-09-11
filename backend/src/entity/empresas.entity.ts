@@ -11,7 +11,7 @@ import { Enderecos } from './enderecos.entity';
 
 @Entity()
 export class Empresas {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ name: 'nome', nullable: false })

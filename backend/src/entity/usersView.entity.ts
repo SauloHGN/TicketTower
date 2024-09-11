@@ -1,20 +1,23 @@
-import { Entity, ViewColumn, ViewEntity } from 'typeorm';
+import { Entity, ViewColumn, ViewEntity, Column } from 'typeorm';
 
 @ViewEntity({
   name: 'vw_clientes_funcionarios', // Nome da view no banco de dados
   expression: `
-    SELECT id, nome, email FROM clientes
+    SELECT id, nome, email, 'cliente' AS source FROM clientes
     UNION ALL
-    SELECT id, nome, email FROM funcionarios
+    SELECT id, nome, email, cargo AS source FROM funcionarios
   `,
 })
 export class UsersView {
-  @ViewColumn()
+  @ViewColumn({ name: 'id' })
   id: number;
 
-  @ViewColumn()
+  @ViewColumn({ name: 'nome' })
   nome: string;
 
-  @ViewColumn()
+  @ViewColumn({ name: 'email' })
   email: string;
+
+  @ViewColumn({ name: 'source' })
+  source: string;
 }
