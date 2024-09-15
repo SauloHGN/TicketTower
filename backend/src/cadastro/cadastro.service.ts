@@ -136,20 +136,4 @@ export class CadastroService {
     senhaHash.update(senha);
     return senhaHash.digest('hex');
   }
-
-  async obterIdEmpresaPorNome(nomeEmpresa: any): Promise<number> {
-    try {
-      const empresa = await this.empresasRepository.findOne({
-        where: { nome: nomeEmpresa.nome },
-      });
-
-      if (!empresa) {
-        throw new Error('Empresa não encontrada');
-      }
-
-      return empresa.id;
-    } catch (error) {
-      throw new Error('Erro ao obter ID da empresa');
-    }
-  }
 }

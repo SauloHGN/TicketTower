@@ -17,11 +17,39 @@ export class DataUtilsService {
     private usersViewRepository: Repository<UsersView>,
   ) {}
 
-  async getIdByEmail(email: string): Promise<number | null> {
+  async getIdByEmail(email: string): Promise<string | null> {
     const dados = await this.usersViewRepository.findOne({
       where: { email: email },
     });
 
     return dados ? dados.id : null;
+  }
+
+  async getTableById(id: string): Promise<string> {
+    try {
+      // Verificar na tabela funcionarios
+      const funcionario = await this.funcionarioRepository.findOne({
+        where: { id: id },
+      });
+
+      if (funcionario) {
+        return 'funcionario';
+      }
+
+      // Verificar na tabela clientes
+      const cliente = await this.clienteRepository.findOne({
+        where: { id: id },
+      });
+
+      if (cliente) {
+        return 'cliente';
+      }
+
+      // Se não encontrar em nenhum dos dois
+      return 'não encontrado';
+    } catch (error) {
+      console.error('Erro ao buscar o registro:', error);
+      throw new Error('Erro ao buscar o registro');
+    }
   }
 }

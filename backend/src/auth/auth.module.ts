@@ -6,18 +6,24 @@ import { Funcionarios } from 'src/entity/funcionarios.entity';
 import { Clientes } from 'src/entity/clientes.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from '@nestjs/cache-manager';
+import { UsersView } from 'src/entity/usersView.entity';
+import { DataUtilsService } from 'src/repository/DataUtils.service';
 
 @Module({
   imports: [
-    CacheModule.register(),
-    TypeOrmModule.forFeature([Funcionarios, Clientes]),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 1200,
+      max: 2000,
+    }),
+    TypeOrmModule.forFeature([Funcionarios, Clientes, UsersView]),
     JwtModule.register({
       secret: 'CHAVE DE SEGREDO',
       signOptions: { expiresIn: '1h' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, DataUtilsService],
   exports: [AuthService],
 })
 export class AuthModule {}

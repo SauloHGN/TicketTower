@@ -10,7 +10,7 @@ import { Entity, ViewColumn, ViewEntity, Column } from 'typeorm';
 })
 export class UsersView {
   @ViewColumn({ name: 'id' })
-  id: number;
+  id: string;
 
   @ViewColumn({ name: 'nome' })
   nome: string;

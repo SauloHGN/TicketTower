@@ -26,6 +26,10 @@ footer {
   border-top: solid 1px var(--primary-border-color);
 }
 
+.username {
+  color: var(--primary-font-color);
+}
+
 .button-logout {
   color: var(--tertiary-button-text-color);
 }
@@ -39,6 +43,11 @@ footer {
 @media screen and (max-width: 1200px) {
   aside {
     width: 100px;
+  }
+
+  .username,
+  .email {
+    display: none;
   }
 
   .container-logo {

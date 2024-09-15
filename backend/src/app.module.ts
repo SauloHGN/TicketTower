@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-import { CacheModule } from '@nestjs/cache-manager';
 import { AppService } from './app.service';
 // ----------------------------------------------------------------------
 import { DataBaseConfigService } from './config/bd.config.service';
@@ -31,7 +30,6 @@ import { DataUtilsModule } from './repository/DataUtils.module';
     CadastroModule,
     EmailModule,
     DataUtilsModule,
-    CacheModule.register(),
 
     ConfigModule.forRoot({
       isGlobal: true,

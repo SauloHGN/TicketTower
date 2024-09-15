@@ -23,9 +23,11 @@ export class LoginComponent {
     private toastService: ToastrService //Lib mensagens sucesso e erros
   ) {}
 
+
+
   Login() {
     //Validação
-    if (this.loginObj.email.length > 0 && this.loginObj.senha.length > 6) {
+    if (this.loginObj.email.length > 0 && this.loginObj.senha.length > 8) {
       this.loginService
         .Entrar(this.loginObj.email, this.loginObj.senha)
         .subscribe({
@@ -55,7 +57,7 @@ export class LoginComponent {
         });
     } else {
       this.toastService.error(
-        'Email ou senha inválidos. \nCertifique-se de que o Email é válido e a senha tem pelo menos 6 caracteres.'
+        'Email ou senha inválidos. \nCertifique-se de que o Email é válido e a senha tem pelo menos 8 caracteres.'
       );
     }
 

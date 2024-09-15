@@ -6,7 +6,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as crypto from 'crypto';
 import { padrao } from 'src/enums/padrao';
-import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
+import { DataUtilsService } from 'src/repository/DataUtils.service';
 
 @Injectable()
 export class AuthService {
@@ -16,8 +18,8 @@ export class AuthService {
     private readonly funcionariosRepository: Repository<Funcionarios>,
     @InjectRepository(Clientes)
     private readonly clientesRepository: Repository<Clientes>,
-
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly dataUtilsService: DataUtilsService,
   ) {}
 
   async login(email: string, senha: string) {
@@ -84,16 +86,70 @@ export class AuthService {
     return code;
   }
 
-  async salvarCodigo(id: number, codigo: string): Promise<boolean> {
-    const key = `codigo_usuario:${id}`;
-    await this.cacheManager.set(key, codigo, 1200); // Guarda o codigo no cache por 20 minutos~
-    console.log(`Código salvo para ${key}: ${codigo}`);
-    return true;
+  async salvarCodigo(id: string, codigo: string): Promise<boolean> {
+    try {
+      await this.cacheManager.set(id, codigo, 0); // Guarda o codigo no cache (0 = não expira)
+      console.log(`Código salvo para ${id}: ${codigo}`);
+
+      return true;
+    } catch (error) {
+      console.error(`Erro ao salvar o código para ${id}:`, error);
+      return false;
+    }
   }
 
-  async verificarCodigo(id: number, codigo: string): Promise<boolean> {
-    const key = `codigo_usuario:${id}`;
-    const storedCode = await this.cacheManager.get<string>(key);
-    return storedCode === codigo;
+  async verificarCodigo(id: string, codigo: string): Promise<boolean> {
+    try {
+      const storedCode = await this.cacheManager.get<string>(id);
+
+      return storedCode == codigo;
+    } catch (error) {
+      console.error(`Erro ao verificar o código para ${id}:`, error);
+      return false;
+    }
+  }
+
+  async redefinirSenha(email: string, codigo: string, senha: string) {
+    const id = await this.dataUtilsService.getIdByEmail(email);
+    await this.cacheManager.del(id); // remove o codigo do cache
+    const tabela = await this.dataUtilsService.getTableById(id);
+
+    try {
+      // Hash da nova senha antes de armazenar
+      const hashedPassword = await this.GerarHash(senha);
+
+      if (tabela === 'funcionario') {
+        const funcionario = await this.funcionariosRepository.findOne({
+          where: { id: id },
+        });
+
+        if (!funcionario) {
+          return 'Funcionário não encontrado';
+        }
+
+        funcionario.senha = hashedPassword; // Atualize o campo da senha
+        await this.funcionariosRepository.save(funcionario);
+        return 'Senha atualizada com sucesso';
+      }
+
+      if (tabela === 'cliente') {
+        const cliente = await this.clientesRepository.findOne({
+          where: { id: id },
+        });
+
+        if (!cliente) {
+          return 'Cliente não encontrado';
+        }
+
+        cliente.senha = hashedPassword; // Atualize o campo da senha
+        await this.clientesRepository.save(cliente);
+        return 'Senha atualizada com sucesso';
+      }
+
+      return 'Tipo de tabela inválido';
+    } catch (error) {
+      console.error('Erro ao atualizar a senha:', error);
+      return 'Erro ao atualizar a senha';
+    }
   }
 }
