@@ -6,8 +6,8 @@
       "name": "Attach",
       "port": 9222,
       "request": "attach",
-      "type": "node",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
     },
 
     {

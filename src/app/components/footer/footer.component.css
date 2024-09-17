@@ -1,0 +1,11 @@
+a {
+  color: var(--primary-font-color);
+}
+
+a:hover {
+  color: var(--secundary-highlighted-text-color);
+}
+
+.border-footer {
+  border-color: var(--primary-border-color);
+}

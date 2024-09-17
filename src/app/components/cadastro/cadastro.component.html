@@ -1,10 +1,74 @@
-<head>
-  <link rel="stylesheet" href="cadastro.component.css" />
-  <title>Cadastro</title>
-</head>
 <body>
   <div class="container">
     <!-- <h1>Cadastro</h1> -->
+
+    <div
+      role="tablist"
+      aria-orientation="horizontal"
+      class="flex items-center justify-center px-4 overflow-hidden py-2 overflow-auto"
+      tabindex="1"
+      data-orientation="horizontal"
+      style="outline: none"
+    >
+      <button
+        type="button"
+        role="tab"
+        aria-selected="true"
+        data-state="active"
+        class="relative py-2 px-3 rounded-full text-sm text-zinc-400 hover:text-zinc-100 data-[state=active]:text-zinc-100"
+        tabindex="0"
+        data-orientation="horizontal"
+        data-radix-collection-item=""
+        value="cliente"
+      >
+        <div class="flex items-center gap-x-2 relative z-10">Cliente</div>
+        <span
+          class="absolute inset-0 rounded-full border border-zinc-700 bg-[linear-gradient(185deg,_rgba(39,_39,_42,_0.95)_70%,_rgba(15,_23,_42,_0.00)_140.23%)]"
+          style="transform: none; transform-origin: 50% 50% 0px"
+        ></span></button
+      ><button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-state="inactive"
+        class="relative py-2 px-3 rounded-full text-sm text-zinc-400 hover:text-zinc-100 data-[state=active]:text-zinc-100"
+        tabindex="-1"
+        data-orientation="horizontal"
+        data-radix-collection-item=""
+        value="empresa"
+      >
+        <div class="flex items-center gap-x-2 relative z-10">
+          Empresa
+        </div></button
+      ><button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-state="inactive"
+        class="relative py-2 px-3 rounded-full text-sm text-zinc-400 hover:text-zinc-100 data-[state=active]:text-zinc-100"
+        tabindex="-1"
+        data-orientation="horizontal"
+        data-radix-collection-item=""
+        value="funcionario"
+      >
+        <div class="flex items-center gap-x-2 relative z-10">
+          Funcionario
+        </div></button
+      ><button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-state="inactive"
+        class="relative py-2 px-3 rounded-full text-sm text-zinc-400 hover:text-zinc-100 data-[state=active]:text-zinc-100"
+        tabindex="-1"
+        data-orientation="horizontal"
+        data-radix-collection-item=""
+        value="setor"
+      >
+        <div class="flex items-center gap-x-2 relative z-10">Setor</div>
+      </button>
+    </div>
+
     <form>
       <label for="type" class="text-nowrap text-center"
         >Tipo de cadastro:</label
@@ -212,7 +276,6 @@
                 name="funcionario-cargo"
               />
             </label>
-            
           </div>
         </div>
       </div>

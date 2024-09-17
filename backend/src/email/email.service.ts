@@ -25,17 +25,22 @@ export class EmailService {
   async sendConfirmarRegistro(destinatario: string, senha: string) {
     const year = this.getCurrentYear();
 
-    await this.mailerService.sendMail({
-      to: destinatario,
-      subject: 'Confirmação de Registro',
-      template: './confirmation',
-      context: {
-        senha,
-        remetente: process.env.EMAIL_USER,
-        year,
-        destinatario,
-      },
-    });
+    try {
+      await this.mailerService.sendMail({
+        to: destinatario,
+        subject: 'Confirmação de Registro',
+        template: 'confirmation',
+        context: {
+          senha,
+          remetente: process.env.EMAIL_USER,
+          year,
+          destinatario,
+        },
+      });
+    } catch (error) {
+      console.error('Não foi possivel enviar o email ERROR:', error);
+      throw new Error('Não foi possivel enviar o email');
+    }
   }
 
   sendRecuperarSenha(destinatario: string, codigo: string) {
@@ -45,7 +50,7 @@ export class EmailService {
       this.mailerService.sendMail({
         to: 'Saulohgn@gmail.com',
         subject: 'Recuperação de Senha',
-        template: 'confirmar',
+        template: 'recuperar',
         context: {
           destinatario,
           codigo,
@@ -62,22 +67,22 @@ export class EmailService {
   async initPasswordRecovery(email: string) {
     try {
       console.log('Consultando email:', email);
-      const resultado = this.usersViewRepository.findOne({
+      const resultado = await this.usersViewRepository.findOne({
         where: { email: email },
       });
 
-      if (resultado) {
+      if (resultado != null) {
         const code = this.authService.gerarCodigo(6);
         console.log('Email:', email, 'Código:', code);
         await this.sendRecuperarSenha(email, code);
         const userID = await this.dataUtilsService.getIdByEmail(email);
         console.log('ID USER: ', userID);
         this.authService.salvarCodigo(userID, code);
-      } else {
-        console.log('Nenhum registro encontrado para o email:', email);
+
+        return true;
       }
 
-      return !!resultado; // true ou false
+      return false;
     } catch (error) {
       console.error('Erro ao iniciar a recuperação de senha:', error);
       throw new Error('Erro ao iniciar a recuperação de senha');

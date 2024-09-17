@@ -1,0 +1,46 @@
+.pagination {
+  color: var(--primary-font-color);
+}
+
+.pagination a:hover {
+  background-color: var(--tertiary-background-color);
+}
+
+.pagination a {
+  border-color: var(--primary-border-color);
+}
+
+thead {
+  background-color: var(--primary-background-color);
+}
+
+table {
+  color: var(--primary-font-color);
+  /* border-color: var(--primary-border-color); */
+}
+
+table,
+thead,
+th,
+tr,
+td,
+.table-border {
+  border-color: var(--primary-border-color);
+}
+
+h3 {
+  color: var(--primary-font-color);
+}
+
+.button-edit {
+  color: var(--secundary-button-text-color);
+}
+
+.button-delete {
+  color: var(--tertiary-button-text-color);
+}
+
+.button-edit:hover,
+.button-delete:hover {
+  background-color: var(--tertiary-button-background-color);
+}

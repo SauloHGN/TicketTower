@@ -15,6 +15,7 @@ import {
   lucideTicketPlus,
 } from '@ng-icons/lucide';
 import { userInfo } from '../../../enum/userInfo';
+import { SharedService } from '../../../utils';
 
 @Component({
   selector: 'admin-sidebar',
@@ -39,7 +40,12 @@ import { userInfo } from '../../../enum/userInfo';
 export class AdminSidebarComponent implements OnInit {
   title = '';
   userInfo: userInfo | null = null;
-  constructor(private router: Router, private AuthService: AuthService) {}
+
+  constructor(
+    private router: Router,
+    private AuthService: AuthService,
+    private sharedService: SharedService
+  ) {}
 
   ngOnInit(): void {
     const userInfo = sessionStorage.getItem('userInfo');
@@ -52,5 +58,9 @@ export class AdminSidebarComponent implements OnInit {
   logout() {
     this.AuthService.Logout();
     this.router.navigate(['/']); // Redirecionar para a landing page
+  }
+
+  sendValueToHeader(value: string) {
+    this.sharedService.updateItemName(value);
   }
 }

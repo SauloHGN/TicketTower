@@ -1,34 +1,51 @@
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-<body>
-  <form action="/submit-ticket" method="post" enctype="multipart/form-data">
-    <div class="header">
-      <img src="../../assets/icone.ico" alt="Logo da Empresa" class="logo" />
-      <h1>Abrir um chamado</h1>
-    </div>
-    <div class="title-group">
-      <label for="problema">Título</label>
-      <input type="text" id="problema" name="problema" required />
-    </div>
+<body style="width: 100%">
+  <div class="header">
+    <h2
+      class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl"
+    >
+      Criar Ticket
+    </h2>
+  </div>
 
-    <label for="descricao">Descrição</label>
-    <textarea id="descricao" name="descricao" required></textarea>
+
+  <div class="formulario">
+    <div class="relative w-full">
+      <ng-icon
+        name="lucideBox"
+        strokeWidth="1.5"
+        size="20"
+        class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+      ></ng-icon>
+
+      <input
+        type="text"
+        placeholder="Titulo"
+        class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+      />
+    </div>
 
     <div class="select-group">
       <div class="select-container">
-        <label for="setor">Setor</label>
-        <select id="setor" name="setor" required>
+        <select
+          id="setor"
+          name="setor"
+          class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          required
+        >
           <option value="">Selecione o setor</option>
           <option *ngFor="let setor of setores" [value]="setor.id">
             {{ setor.nome }}
           </option>
         </select>
       </div>
+
       <div class="select-container">
-        <label for="prioridade">Prioridade</label>
-        <select id="prioridade" name="prioridade" required>
+        <select
+          id="prioridade"
+          name="prioridade"
+          class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          required
+        >
           <option value="">Selecione a prioridade</option>
           <option *ngFor="let valor of enumValues" [value]="valor">
             {{ valor }}
@@ -36,6 +53,14 @@
         </select>
       </div>
     </div>
+
+    <label for="descricao">Descrição</label>
+    <textarea
+      id="descricao"
+      name="descricao"
+      class="w-full pl-12 pr-3 py-2 text-gray-500 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+      required
+    ></textarea>
 
     <div class="buttons">
       <label class="custom-file-upload" for="file">
@@ -70,5 +95,5 @@
         Enviar
       </button>
     </div>
-  </form>
+  </div>
 </body>

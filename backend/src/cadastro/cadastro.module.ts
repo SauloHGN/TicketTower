@@ -7,6 +7,7 @@ import { Clientes } from 'src/entity/clientes.entity';
 import { Empresas } from 'src/entity/empresas.entity';
 import { Setores } from 'src/entity/setores.entity';
 import { Enderecos } from 'src/entity/enderecos.entity';
+import { EmpresasService } from 'src/empresas/empresas.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { Enderecos } from 'src/entity/enderecos.entity';
     ]),
   ],
   controllers: [CadastroController],
-  providers: [CadastroService],
+  providers: [CadastroService, EmpresasService],
 })
 export class CadastroModule {}

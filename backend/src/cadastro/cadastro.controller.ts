@@ -5,10 +5,14 @@ import { CadastroService } from './cadastro.service';
 import { EmpresaDTO } from 'src/dto/EmpresaDto';
 import { SetorDTO } from 'src/dto/SetorDto';
 import { EnderecoDto } from 'src/dto/EnderecoDto';
+import { EmpresasService } from 'src/empresas/empresas.service';
 
 @Controller('cadastro')
 export class CadastroController {
-  constructor(private readonly cadastroService: CadastroService) {}
+  constructor(
+    private readonly cadastroService: CadastroService,
+    private readonly empresaService: EmpresasService,
+  ) {}
 
   @Post(':funcionarioId/cliente')
   cadastrarCliente(
@@ -50,6 +54,6 @@ export class CadastroController {
 
   @Get('nomeEmpresa')
   obterIdEmpresa(@Query('nome') nome: string) {
-    return this.cadastroService.obterIdEmpresaPorNome(nome);
+    return this.empresaService.obterIdEmpresaPorNome(nome);
   }
 }

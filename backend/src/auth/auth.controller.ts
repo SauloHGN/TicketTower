@@ -9,4 +9,16 @@ export class AuthController {
   async login(@Body() credentials: { email: string; senha: string }) {
     return this.authService.login(credentials.email, credentials.senha);
   }
+
+  @Post('/redefinirSenha')
+  async redefinirSenha(
+    @Body() body: { email: string; codigo: string; senha: string },
+  ) {
+    const result = await this.authService.redefinirSenha(
+      body.email,
+      body.codigo,
+      body.senha,
+    );
+    return result;
+  }
 }

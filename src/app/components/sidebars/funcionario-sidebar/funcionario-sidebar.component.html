@@ -11,11 +11,12 @@
       </div>
 
       <!-- opções funcionario -->
-      <div class="flex flex-col px-1 mt-6">
+      <div class="flex flex-col px-1 mt-6 gap-y-1">
         <a
-          [routerLink]="[{ outlets: { secundary: ['tarefas'] } }]"
+          [routerLink]="['/home/fila-de-tickets']"
           routerLinkActive="active"
           class="flex items-center, text-base, px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+          (click)="sendValueToHeader('Fila de Tickets')"
         >
           <ng-icon
             name="lucideNotepadText"
@@ -28,8 +29,9 @@
 
         <a
           class="flex items-center, text-base, px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
-          [routerLink]="[{ outlets: { secundary: ['dashboard'] } }]"
+          [routerLink]="['/home/relatorio']"
           routerLinkActive="active"
+          (click)="sendValueToHeader('Relatórios')"
         >
           <ng-icon
             name="lucideBarChart4"
@@ -37,7 +39,7 @@
             size="18"
             class="flex items-center"
           ></ng-icon
-          >Relátorios</a
+          >Relatórios</a
         >
       </div>
 
@@ -47,9 +49,10 @@
         >
 
         <a
-          [routerLink]="[{ outlets: { secundary: ['configuracoes'] } }]"
+          [routerLink]="['/home/configuracoes']"
           routerLinkActive="active"
           class="flex px-2 p-2 my-1 gap-x-2 hover:bg-zinc-200 rounded-md"
+          (click)="sendValueToHeader('Configurações')"
         >
           <ng-icon
             name="lucideSettings2"
@@ -61,15 +64,17 @@
         </a>
       </div>
       <footer class="p-2 my-1 border-t border-border">
-        <div class="content-footer-sidebar flex-grow">
+        <div
+          class="content-footer-sidebar flex flex-grow justify-center align-center"
+        >
           <div class="flex flex-col">
-            <span class="text-justify">{{ userInfo?.nome }}</span>
-            <span class="text-justify text-gray-500 text-sm">{{
+            <span class="username text-justify">{{ userInfo?.nome }}</span>
+            <span class="email text-justify text-gray-500 text-sm">{{
               userInfo?.email
             }}</span>
           </div>
           <button
-            class="button-logout flex ml-auto w-10 justify-center content-center hover:bg-red-200 rounded-md py-2"
+            class="button-logout flex ml-auto w-10 justify-center items-center content-center hover:bg-red-200 rounded-md py-2"
             (click)="logout()"
           >
             <ng-icon
