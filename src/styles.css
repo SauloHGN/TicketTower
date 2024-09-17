@@ -59,7 +59,10 @@
   --secundary-font-color: #00aeff;
   --tertiary-font-color: #5c5958;
 
+  --primary-button-background-color: #0499ff;
   --primary-button-text-color: #fff;
+
+  --secundary-button-text-color: #0bcbe0;
 
   --primary-highlighted-text-color: #0c0c14;
   --secundary-highlighted-text-color: #0499ff;
@@ -113,7 +116,9 @@
   --primary-button-background-color: #0499ff;
   --primary-button-text-color: #fff;
 
-  --tertiary-button-text-color: #f15263;
+  --secundary-button-text-color: #0bcbe0;
+
+  --tertiary-button-text-color: rgb(220 38 38);
   --tertiary-button-background-color: rgba(54, 54, 54, 0.897);
 
   --placeholder-default: #d7d7d7;

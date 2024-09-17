@@ -1,3 +1,11 @@
+body {
+  background-color: var(--primary-background-color);
+}
+
+app-header {
+  min-height: 40px;
+}
+
 app-sidebar,
 admin-sidebar,
 funcionario-sidebar,

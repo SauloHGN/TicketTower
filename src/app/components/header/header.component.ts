@@ -1,12 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../utils';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  itemName: string = '';
 
+  constructor(private sharedService: SharedService) {}
+
+  ngOnInit() {
+    this.sharedService.itemName$.subscribe((name: string) => {
+      this.itemName = name;
+    });
+  }
 }

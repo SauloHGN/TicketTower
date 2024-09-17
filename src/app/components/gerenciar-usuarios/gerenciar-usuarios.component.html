@@ -1,0 +1,61 @@
+<div class="max-w-screen-xl mx-auto px-4 md:px-8">
+  <div class="items-start justify-between md:flex">
+    <div class="max-w-lg mt-6">
+      <h3 class="text-xl font-bold sm:text-2xl">Usuários cadastrados</h3>
+    </div>
+  </div>
+  <div class="table-border mt-6 shadow-sm border rounded-lg overflow-x-auto">
+    <table class="w-full table-auto text-sm text-left">
+      <thead class="font-medium border-b">
+        <tr>
+          <th class="py-3 px-6">Usuário</th>
+          <th class="py-3 px-6">Telefone</th>
+          <th class="py-3 px-6">Cargo</th>
+          <th class="py-3 px-6">Tipo</th>
+          <th class="py-3 px-6"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        <tr *ngFor="let item of tableItems; let idx = index">
+          <td class="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
+            <div>
+              <span class="block text-sm font-medium">{{ item.nome }}</span>
+              <span class="block text-xs">{{ item.email }}</span>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ item.telefone }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ item.cargo }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ item.tipo }}</td>
+          <td class="text-right px-6 whitespace-nowrap">
+            <a
+              href="javascript:void(0)"
+              class="button-edit py-2 px-3 font-medium hover: duration-150 hover: rounded-lg"
+              >Editar</a
+            >
+            <button
+              class="button-delete py-2 leading-none px-3 font-medium hover: duration-150 hover: rounded-lg"
+            >
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="max-w-screen-xl mx-auto mt-6 px-4 md:px-8"></div>
+  <div
+    class="pagination flex items-center justify-center gap-x-8 text-sm font-medium"
+  >
+    <a
+      href="#"
+      class="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50"
+      >Previous</a
+    >
+    <div>Página 1 de 9</div>
+    <a
+      href="#"
+      class="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50"
+      >Next</a
+    >
+  </div>
+</div>

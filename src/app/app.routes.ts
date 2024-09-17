@@ -11,6 +11,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { CodigoComponent } from './components/pages/codigo/codigo.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
+import { GerenciarUsuariosComponent } from './components/gerenciar-usuarios/gerenciar-usuarios.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
@@ -25,10 +26,9 @@ export const routes: Routes = [
 
     children: [
       {
-        path: 'tarefas',
+        path: 'fila-de-tickets',
         title: 'Fila de Tickets',
         component: TarefasComponent,
-        outlet: 'secundary',
         canActivate: [AuthGuard],
       },
 
@@ -36,23 +36,27 @@ export const routes: Routes = [
         path: 'cadastro',
         title: 'Cadastro',
         component: CadastroComponent,
-        outlet: 'secundary',
         canActivate: [AuthGuard],
       },
 
       {
-        path: 'CriarTicket',
+        path: 'criar-ticket',
         title: 'Criar Ticket',
         component: CriarTicketComponent,
-        outlet: 'secundary',
         canActivate: [AuthGuard],
       },
 
       {
-        path: 'dashboard',
-        title: 'Dashboard',
+        path: 'relatorio',
+        title: 'Relatório',
         component: DashboardComponent,
-        outlet: 'secundary',
+        canActivate: [AuthGuard],
+      },
+
+      {
+        path: 'gerenciar-usuarios',
+        title: 'Gerenciar Usuários',
+        component: GerenciarUsuariosComponent,
         canActivate: [AuthGuard],
       },
 
@@ -60,7 +64,6 @@ export const routes: Routes = [
         path: 'configuracoes',
         title: 'Configurações',
         component: ConfiguracaoComponent,
-        outlet: 'secundary',
         canActivate: [AuthGuard],
       },
     ],

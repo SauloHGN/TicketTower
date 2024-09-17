@@ -2,13 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Prioridade } from '../../enum/prioridade';
+import { lucideBox } from '@ng-icons/lucide';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
 
 @Component({
   selector: 'app-criarticket',
   standalone: true,
   templateUrl: './criarticket.component.html',
   styleUrl: './criarticket.component.css',
-  imports: [CommonModule],
+  viewProviders: [
+    provideIcons({
+      lucideBox,
+    }),
+  ],
+  imports: [CommonModule, NgIconComponent],
 })
 export class CriarTicketComponent implements OnInit {
   setores?: any[];
