@@ -8,6 +8,8 @@ import { HeaderComponent } from '../../header/header.component';
 import { TarefasComponent } from '../../tarefas/tarefas.component';
 import { CadastroComponent } from '../../cadastro/cadastro.component';
 import { userInfo } from '../../../enum/userInfo';
+import { ModalLogoutComponent } from '../../modal-logout/modal-logout.component';
+import { ModalDeleteUserComponent } from '../../modal-delete-user/modal-delete-user.component';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +23,8 @@ import { userInfo } from '../../../enum/userInfo';
     FuncionarioSidebarComponent,
     ClienteSidebarComponent,
     CommonModule,
+    ModalLogoutComponent,
+    ModalDeleteUserComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

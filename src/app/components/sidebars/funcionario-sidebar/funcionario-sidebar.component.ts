@@ -15,7 +15,7 @@ import {
   lucideTicketPlus,
 } from '@ng-icons/lucide';
 import { userInfo } from '../../../enum/userInfo';
-import { SharedService } from '../../../utils';
+import { SharedService } from '../../../sharedService';
 
 @Component({
   selector: 'funcionario-sidebar',
@@ -56,8 +56,9 @@ export class FuncionarioSidebarComponent implements OnInit {
   }
 
   logout() {
-    this.AuthService.Logout();
-    this.router.navigate(['/']); // Redirecionar para a landing page
+    // this.AuthService.Logout();
+    // this.router.navigate(['/']); // Redirecionar para a landing page
+    this.sharedService.openModal();
   }
 
   sendValueToHeader(value: string) {

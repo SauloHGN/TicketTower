@@ -5,18 +5,95 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { Permissao } from '../../enum/permissao';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  lucideBuilding,
+  lucideMail,
+  lucideQrCode,
+  lucideMapPinned,
+  lucideGripHorizontal,
+  lucideLocate,
+  lucideBus,
+  lucideBarcode,
+  lucidePhone,
+  lucideUserRound,
+  lucidePenLine,
+} from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgxMaskDirective, NgxMaskPipe],
+  imports: [
+    FormsModule,
+    CommonModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
+    NgIconComponent,
+  ],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
+  viewProviders: [
+    provideIcons({
+      lucideBuilding,
+      lucideMail,
+      lucideQrCode,
+      lucideMapPinned,
+      lucideGripHorizontal,
+      lucideLocate,
+      lucideBus,
+      lucideBarcode,
+      lucidePhone,
+      lucideUserRound,
+      lucidePenLine,
+    }),
+  ],
 })
 export class CadastroComponent implements OnInit {
   constructor(private http: HttpClient, private toastService: ToastrService) {}
 
   selectedType: string = ''; // Atributo que armazena o tipo selecionado
+
+  options = [
+    { type: 'cliente' },
+    { type: 'empresa' },
+    { type: 'funcionario' },
+    { type: 'setor' },
+  ];
+
+  estados = [
+    'Acre',
+    'Alagoas',
+    'Amapá',
+    'Amazonas',
+    'Bahia',
+    'Ceará',
+    'Distrito Federal',
+    'Espírito Santo',
+    'Goiás',
+    'Maranhão',
+    'Mato Grosso',
+    'Mato Grosso do Sul',
+    'Minas Gerais',
+    'Pará',
+    'Paraíba',
+    'Paraná',
+    'Pernambuco',
+    'Piauí',
+    'Rio de Janeiro',
+    'Rio Grande do Norte',
+    'Rio Grande do Sul',
+    'Rondônia',
+    'Roraima',
+    'Santa Catarina',
+    'São Paulo',
+    'Sergipe',
+    'Tocantins',
+  ];
+
+  selectOption(option: any) {
+    this.selectedType = option;
+    console.log('teste');
+  }
 
   // Métodos para verificar qual formulário deve ser mostrado com base no tipo selecionado
   showEmpresaForm(): boolean {

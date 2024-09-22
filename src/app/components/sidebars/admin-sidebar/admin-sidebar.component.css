@@ -63,7 +63,8 @@ footer {
     align-items: center;
     gap: 2px;
     font-size: 10px;
-    text-wrap: nowrap;
+    text-wrap: wrap;
+    text-align: center;
   }
 
   ng-icon .flex.items-center,

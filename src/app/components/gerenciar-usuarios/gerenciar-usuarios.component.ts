@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedService } from '../../sharedService';
 
 @Component({
   selector: 'app-gerenciar-usuarios',
@@ -9,6 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './gerenciar-usuarios.component.css',
 })
 export class GerenciarUsuariosComponent implements OnInit {
+  constructor(private sharedService: SharedService) {}
+
   tableItems = [
     {
       nome: 'Liam James',
@@ -47,7 +50,9 @@ export class GerenciarUsuariosComponent implements OnInit {
     },
   ];
 
-  constructor() {}
-
   ngOnInit(): void {}
+
+  deleteUser() {
+    this.sharedService.openModalDelete();
+  }
 }
