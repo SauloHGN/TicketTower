@@ -1,0 +1,35 @@
+<section *ngIf="isOpen" class="fixed inset-0 w-full h-full z-999">
+  <div
+    class="fixed inset-0 w-full h-full bg-black opacity-70"
+    (click)="sharedService.closeModal()"
+  ></div>
+
+  <div
+    class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-lg mx-auto px-4"
+  >
+    <div class="card-logout rounded-md shadow-lg px-4 py-6">
+      <h2 class="title text-lg font-medium text-gray-800 text-center">
+        Confirmar Logout
+      </h2>
+      <p
+        class="sub-title mt-1 text-sm leading-relaxed text-center text-gray-500"
+      >
+        Você tem certeza de que deseja sair?
+      </p>
+      <div class="items-center gap-2 mt-3 text-sm sm:flex">
+        <button
+          (click)="sharedService.closeModal()"
+          class="cancel-button w-full mt-2 p-2.5 flex-1 text-gray-800 rounded-md border"
+        >
+          Cancelar
+        </button>
+        <button
+          (click)="logout()"
+          class="logout-button w-full mt-2 p-2.5 flex-1 text-white bg-red-600 rounded-md"
+        >
+          Sim, Sair
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

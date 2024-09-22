@@ -1,0 +1,24 @@
+.card-delete-user {
+  background-color: var(--primary-background-color);
+}
+
+.title {
+  color: var(--primary-font-color);
+}
+
+.button-excluir {
+  background-color: var(--tertiary-button-text-color);
+  color: var(--primary-font-color);
+}
+
+.button-excluir:hover,
+.button-cancelar:hover {
+  filter: brightness(0.8);
+  transition: ease-in-out 0.2s;
+}
+
+.button-cancelar {
+  color: var(--primary-font-color);
+  background-color: var(--tertiary-button-background-color);
+  border-color: var(--primary-border-color);
+}

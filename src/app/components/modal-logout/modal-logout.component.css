@@ -1,0 +1,32 @@
+.logout-button {
+  background-color: var(--tertiary-button-text-color);
+  color: var(--primary-font-color);
+}
+
+.logout-button:hover {
+  filter: brightness(0.8);
+  transition: ease-in-out 0.2s;
+}
+
+.card-logout {
+  background-color: var(--primary-background-color);
+}
+
+.title {
+  color: var(--primary-font-color);
+}
+
+.sub-title {
+  color: var(--placeholder-default);
+}
+
+.cancel-button {
+  background-color: var(--tertiary-button-background-color);
+  color: var(--primary-font-color);
+  border-color: var(--primary-border-color);
+}
+
+.cancel-button:hover {
+  filter: brightness(0.8);
+  transition: ease-in-out 0.2s;
+}

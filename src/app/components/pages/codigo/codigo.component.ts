@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { sleep } from '../../../utils';
+import { sleep } from '../../../sharedService';
 
 @Component({
   selector: 'app-codigo',

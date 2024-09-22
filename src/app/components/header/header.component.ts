@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../../utils';
+import { SharedService } from '../../sharedService';
 
 @Component({
   selector: 'app-header',
