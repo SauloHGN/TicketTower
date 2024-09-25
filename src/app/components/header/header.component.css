@@ -2,3 +2,7 @@ header {
   background-color: var(--primary-background-color);
   border-bottom: 1px solid var(--primary-border-color);
 }
+
+h2 {
+  padding: 0 8px;
+}

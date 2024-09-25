@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../sharedService';
+import { CommonModule } from '@angular/common';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { lucideArrowLeft } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, NgIconComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  viewProviders: [
+    provideIcons({
+      lucideArrowLeft
+    })
+  ]
 })
 export class HeaderComponent implements OnInit {
   itemName: string = '';

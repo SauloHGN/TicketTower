@@ -2,10 +2,6 @@ body {
   background-color: var(--primary-background-color);
 }
 
-app-header {
-  min-height: 40px;
-}
-
 app-sidebar,
 admin-sidebar,
 funcionario-sidebar,
@@ -18,7 +14,23 @@ cliente-sidebar {
   admin-sidebar,
   funcionario-sidebar,
   cliente-sidebar {
-    width: 100px;
+    width: 70px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  main {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  app-gerenciar-usuarios {
+    width: 85%;
+  }
+
+  main {
+    width: 85%;
   }
 }
 
@@ -28,5 +40,11 @@ cliente-sidebar {
   funcionario-sidebar,
   cliente-sidebar {
     width: 60px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  main {
+    width: 300px;
   }
 }

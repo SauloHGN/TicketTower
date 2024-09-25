@@ -99,11 +99,11 @@
 
   /* --primary-background-color: #181818;  */
   --primary-background-color: #121212;
-  --secundary-background-color: #0499ff;
+  --secundary-background-color: #06b6d4;
   --tertiary-background-color: #333333;
 
   --primary-font-color: #eee;
-  --secundary-font-color: #0499ff;
+  --secundary-font-color: #06b6d4;
   --tertiary-font-color: #d7d7d7;
 
   --primary-border-color: #292929;
@@ -111,12 +111,12 @@
   --tertiary-border-color: rgba(75, 75, 75, 0.541);
 
   --primary-highlighted-text-color: #fff;
-  --secundary-highlighted-text-color: #0499ff;
+  --secundary-highlighted-text-color: #06b6d4;
 
-  --primary-button-background-color: #0499ff;
+  --primary-button-background-color: #06b6d4;
   --primary-button-text-color: #fff;
 
-  --secundary-button-text-color: #0bcbe0;
+  --secundary-button-text-color: #06b6d4;
 
   --tertiary-button-text-color: rgb(220 38 38);
   --tertiary-button-background-color: rgba(54, 54, 54, 0.897);

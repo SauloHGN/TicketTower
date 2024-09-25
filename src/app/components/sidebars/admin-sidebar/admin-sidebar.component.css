@@ -42,7 +42,7 @@ footer {
 
 @media screen and (max-width: 1200px) {
   aside {
-    width: 100px;
+    width: 100%;
   }
 
   .username,

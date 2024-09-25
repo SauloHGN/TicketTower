@@ -1,7 +1,7 @@
 <section class="h-screen">
   <body>
     <aside class="flex flex-col h-screen p-1.5">
-      <div class="container-logo border-b">
+      <div class="container-logo border-b max-h-11 h-full">
         <img
           src="../../../assets/images/icone.ico"
           width="36"
@@ -15,7 +15,7 @@
         <a
           [routerLink]="['/home/fila-de-tickets']"
           routerLinkActive="active"
-          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+          class="flex items-center px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
           (click)="sendValueToHeader('Fila de Tickets')"
         >
           <ng-icon
@@ -29,7 +29,7 @@
         <a
           [routerLink]="['/home/criar-ticket']"
           routerLinkActive="active"
-          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+          class="flex items-center px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
           (click)="sendValueToHeader('Criar Ticket')"
         >
           <ng-icon
@@ -41,7 +41,7 @@
           >Criar Ticket</a
         >
         <a
-          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+          class="flex items-center px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
           [routerLink]="['/home/relatorio']"
           routerLinkActive="active"
           (click)="sendValueToHeader('Relatórios')"
@@ -59,7 +59,7 @@
           [routerLink]="['/home/cadastro']"
           routerLinkActive="active"
           href="/home"
-          class="flex items-center text-base px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
+          class="flex items-center px-2 py-2 gap-x-2 hover:bg-zinc-200 rounded-md"
           (click)="sendValueToHeader('Cadastro')"
         >
           <ng-icon
@@ -108,7 +108,7 @@
       </div>
       <footer class="p-2 my-1 border-t border-border">
         <div
-          class="content-footer-sidebar flex flex-grow justify-center align-center"
+          class="content-footer-sidebar flex flex-grow justify-center items-center"
         >
           <div class="flex flex-col">
             <span class="username text-justify">{{ userInfo?.nome }}</span>
@@ -117,7 +117,7 @@
             }}</span>
           </div>
           <button
-            class="button-logout flex ml-auto w-10 justify-center items-center content-center hover:bg-red-200 rounded-md py-2"
+            class="button-logout flex ml-auto w-9 h-9 justify-center items-center content-center hover:bg-red-200 rounded-md py-1"
             (click)="logout()"
           >
             <ng-icon

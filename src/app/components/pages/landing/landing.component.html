@@ -1,138 +1,315 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <title>Landing Page</title>
-  </head>
-  <body>
-    <header>
-      <div id="title">
-        <h1>
-          Ticket <br />
-          Tower
-        </h1>
-        <article class="container-logo">
-          <img
-            id="imagenzinha"
-            src="../../../../assets/images/icone.ico"
-            alt=""
-          />
-        </article>
+<!-- <header>
+  <div [ngClass]="{ 'mx-2 pb-5': state, hidden: !state }" class="md:hidden">
+    <div class="flex items-center justify-between py-5 md:block">
+      <a href="javascript:void(0)">
+        <img
+          src="https://www.floatui.com/logo.svg"
+          width="120"
+          height="50"
+          alt="Float UI logo"
+        />
+      </a>
+      <div class="md:hidden">
+        <button
+          (click)="toggleMenu()"
+          class="menu-btn text-gray-500 hover:text-gray-800"
+        >
+          <ng-container *ngIf="state; else menuIcon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </ng-container>
+          <ng-template #menuIcon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </ng-template>
+        </button>
       </div>
-
-      <ul>
-        <a href="#"><li>Inicio</li></a>
-        <a href="#"><li>Documentação</li></a>
-        <a href="#faq"><li>FAQ</li></a>
-        <a href="/login" id="loginbtn"><li>Login</li></a>
-      </ul>
-    </header>
-    <main>
-      <section id="primeira">
-        <aside>
-          <span><h2>Quem</h2></span>
-          <h2>somos nós</h2>
-          <p style="text-align: justify">
-            Somos uma equipe dedicada a desenvolver soluções que simplificam a
-            gestão e o atendimento ao cliente para pequenas empresas. Nosso
-            projeto é um protótipo de Service Desk, criado para gerenciar
-            chamados internos e externos. <br />
-            Compreendemos a importância da inovação e da colaboração na evolução
-            dos negócios. Por isso, decidimos disponibilizar nosso protótipo
-            gratuitamente, permitindo que outras empresas e desenvolvedores
-            possam utilizá-lo, adaptá-lo e aprimorá-lo de acordo com suas
-            necessidades específicas.
-          </p>
-        </aside>
-        <article id="imagem1">
+    </div>
+  </div>
+  <nav
+    [ngClass]="{
+      'absolute top-0 inset-x-0 bg-white shadow-lg rounded-xl border mx-2 mt-2 md:shadow-none md:border-none md:mx-0 md:mt-0 md:relative md:bg-transparent':
+        state
+    }"
+    class="pb-5 md:text-sm"
+  >
+    <div
+      class="gap-x-14 items-center max-w-screen-xl mx-auto px-4 md:flex md:px-8"
+    >
+      <div class="flex items-center justify-between py-5 md:block">
+        <a href="javascript:void(0)">
           <img
-            src="../../../../assets/images/landingpageimg.png"
-            alt="TicketTower"
+            src="https://www.floatui.com/logo.svg"
+            width="120"
+            height="50"
+            alt="Float UI logo"
           />
-        </article>
-      </section>
+        </a>
+        <div class="md:hidden">
+          <button
+            (click)="toggleMenu()"
+            class="menu-btn text-gray-500 hover:text-gray-800"
+          >
+            <ng-container *ngIf="state; else menuIcon2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </ng-container>
+            <ng-template #menuIcon2>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </ng-template>
+          </button>
+        </div>
+      </div>
+      <div
+        [ngClass]="{ block: state, hidden: !state }"
+        class="flex-1 items-center mt-8 md:mt-0 md:flex"
+      >
+        <ul
+          class="flex-1 justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0"
+        >
+          <li
+            class="text-gray-700 hover:text-gray-900"
+            *ngFor="
+              let item of [
+                { title: 'Features', path: 'javascript:void(0)' },
+                { title: 'Integrations', path: 'javascript:void(0)' },
+                { title: 'Customers', path: 'javascript:void(0)' },
+                { title: 'Pricing', path: 'javascript:void(0)' }
+              ]
+            "
+          >
+            <a [href]="item.path" class="block" [textContent]="item.title"></a>
+          </li>
+        </ul>
+        <div class="items-center justify-end mt-6 space-y-6 md:flex md:mt-0">
+          <a
+            href="javascript:void(0)"
+            class="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex"
+          >
+            Sign in
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header> -->
 
-      <section id="terceira">
-        <div id="faq" class="faq-body">
-          <div class="faq-header">
-            <span><h3 class="faq-title">Perguntas</h3></span>
-            <h3 class="faq-title">Frequentes</h3>
-            <div class="seperator"></div>
+<body>
+  <header>
+    <div id="title">
+      <h1>
+        Ticket <br />
+        Tower
+      </h1>
+      <article class="container-logo">
+        <img
+          id="imagenzinha"
+          src="../../../../assets/images/icone.ico"
+          alt=""
+        />
+      </article>
+    </div>
+
+    <ul>
+      <a href="#"><li>Inicio</li></a>
+      <a href="#" alt="Documentação"><li>Documentação</li></a>
+      <a href="#faq" alt="FAQ"><li>FAQ</li></a>
+      <button onclick="window.location.href='/login'" class="button-login">
+        <li>Login</li>
+      </button>
+    </ul>
+  </header>
+  <main>
+    <section id="primeira">
+      <aside>
+        <span><h2>Quem</h2></span>
+        <h2>somos nós</h2>
+        <p style="text-align: justify">
+          Somos uma equipe dedicada a desenvolver soluções que simplificam a
+          gestão e o atendimento ao cliente para pequenas empresas. Nosso
+          projeto é um protótipo de Service Desk, criado para gerenciar chamados
+          internos e externos. <br />
+          Compreendemos a importância da inovação e da colaboração na evolução
+          dos negócios. Por isso, decidimos disponibilizar nosso protótipo
+          gratuitamente, permitindo que outras empresas e desenvolvedores possam
+          utilizá-lo, adaptá-lo e aprimorá-lo de acordo com suas necessidades
+          específicas.
+        </p>
+      </aside>
+
+      <!-- <img
+          src="../../../../assets/images/landingpageimg.png"
+          alt="TicketTower"
+        /> -->
+
+      <div
+        class="card relative flex w-80 h-96 m-auto flex-col rounded-xl bg-clip-border text-gray-700 shadow-md"
+      >
+        <div
+          class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-tr from-cyan-500 to-blue-600"
+        ></div>
+        <div class="p-6">
+          <h5
+            class="mb-2 block font-sans text-xl font-semibold tracking-normal text-blue-gray-900 antialiased"
+          >
+            Tailwind card
+          </h5>
+          <p
+            class="block text-base font-light leading-relaxed text-inherit antialiased"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis
+            ligula.
+          </p>
+        </div>
+        <div class="p-6 pt-0">
+          <button
+            class="flex items-center justify-center  gap-2 px-5 py-2.5 text-gray-700 align-center text-center border rounded-md duration-100 hover:border-indigo-600 active:shadow-lg"
+            >
+            Github
+            <ng-icon name="lucideGithub" strokeWidth="2" size="20" class="flex justify-center items-center"> </ng-icon>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="terceira">
+      <div id="faq" class="faq-body">
+        <div class="faq-header">
+          <span><h3 class="faq-title">Perguntas</h3></span>
+          <h3 class="faq-title">Frequentes</h3>
+          <div class="seperator"></div>
+        </div>
+        <div class="faq-list">
+          <div>
+            <details open>
+              <summary title="?">
+                O que é o Service Desk desenvolvido por vocês?
+              </summary>
+              <p class="faq-content">
+                Nosso Service Desk é um sistema de gerenciamento de chamados
+                projetado para pequenas empresas. Ele ajuda a organizar,
+                monitorar e resolver problemas de atendimento ao cliente de
+                maneira eficiente
+              </p>
+            </details>
           </div>
-          <div class="faq-list">
-            <div>
-              <details open>
-                <summary title="?">
-                  O que é o Service Desk desenvolvido por vocês?
-                </summary>
-                <p class="faq-content">
-                  Nosso Service Desk é um sistema de gerenciamento de chamados
-                  projetado para pequenas empresas. Ele ajuda a organizar,
-                  monitorar e resolver problemas de atendimento ao cliente de
-                  maneira eficiente
-                </p>
-              </details>
-            </div>
-            <div>
-              <details>
-                <summary title="?">
-                  Como posso acessar o protótipo do Service Desk?
-                </summary>
-                <p class="faq-content">
-                  Você pode acessar o protótipo do Service Desk através do nosso
-                  repositório no GitHub. O link para o repositório está
-                  disponível na nossa página inicial.
-                </p>
-              </details>
-            </div>
-            <div>
-              <details>
-                <summary title="?">O software é realmente gratuito?</summary>
-                <p class="faq-content">
-                  Sim, o nosso protótipo de Service Desk é totalmente gratuito e
-                  de código aberto. Você pode usá-lo, modificá-lo e distribuí-lo
-                  conforme necessário.
-                </p>
-              </details>
-            </div>
-            <div>
-              <details>
-                <summary title="?">Quem pode usar o Service Desk?</summary>
-                <p class="faq-content">
-                  O Service Desk foi desenvolvido pensando nas pequenas
-                  empresas, mas qualquer pessoa ou organização pode utilizá-lo.
-                  Ele é uma ferramenta versátil e pode ser adaptada para
-                  diversas necessidades.
-                </p>
-              </details>
-            </div>
-            <div>
-              <details>
-                <summary title="?">Vocês oferecem suporte técnico?</summary>
-                <p class="faq-content">
-                  Por ser um projeto open source, não oferecemos suporte técnico
-                  formal. No entanto, estamos sempre disponíveis para ajudar
-                  através do GitHub e outras plataformas de comunicação da
-                  comunidade.
-                </p>
-              </details>
-            </div>
-            <div>
-              <details>
-                <summary title="?">
-                  Quais são as principais funcionalidades do Service Desk?
-                </summary>
-                <p class="faq-content">
-                  As principais funcionalidades incluem gestão de tickets,
-                  acompanhamento de chamados, e geração de relatórios. O sistema
-                  foi projetado para ser intuitivo e fácil de usar,
-                  proporcionando uma experiência eficiente para os usuários.
-                </p>
-              </details>
-            </div>
+          <div>
+            <details>
+              <summary title="?">
+                Como posso acessar o protótipo do Service Desk?
+              </summary>
+              <p class="faq-content">
+                Você pode acessar o protótipo do Service Desk através do nosso
+                repositório no GitHub. O link para o repositório está disponível
+                na nossa página inicial.
+              </p>
+            </details>
+          </div>
+          <div>
+            <details>
+              <summary title="?">O software é realmente gratuito?</summary>
+              <p class="faq-content">
+                Sim, o nosso protótipo de Service Desk é totalmente gratuito e
+                de código aberto. Você pode usá-lo, modificá-lo e distribuí-lo
+                conforme necessário.
+              </p>
+            </details>
+          </div>
+          <div>
+            <details>
+              <summary title="?">Quem pode usar o Service Desk?</summary>
+              <p class="faq-content">
+                O Service Desk foi desenvolvido pensando nas pequenas empresas,
+                mas qualquer pessoa ou organização pode utilizá-lo. Ele é uma
+                ferramenta versátil e pode ser adaptada para diversas
+                necessidades.
+              </p>
+            </details>
+          </div>
+          <div>
+            <details>
+              <summary title="?">Vocês oferecem suporte técnico?</summary>
+              <p class="faq-content">
+                Por ser um projeto open source, não oferecemos suporte técnico
+                formal. No entanto, estamos sempre disponíveis para ajudar
+                através do GitHub e outras plataformas de comunicação da
+                comunidade.
+              </p>
+            </details>
+          </div>
+          <div>
+            <details>
+              <summary title="?">
+                Quais são as principais funcionalidades do Service Desk?
+              </summary>
+              <p class="faq-content">
+                As principais funcionalidades incluem gestão de tickets,
+                acompanhamento de chamados, e geração de relatórios. O sistema
+                foi projetado para ser intuitivo e fácil de usar, proporcionando
+                uma experiência eficiente para os usuários.
+              </p>
+            </details>
           </div>
         </div>
-      </section>
-    </main>
-    <app-footer></app-footer>
-  </body>
-</html>
+      </div>
+    </section>
+  </main>
+  <app-footer></app-footer>
+</body>
