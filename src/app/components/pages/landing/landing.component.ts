@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from '../../footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucideGithub } from '@ng-icons/lucide';
+import { lucideGithub, lucideMoon, lucideSun } from '@ng-icons/lucide';
+import { ThemeService } from '../../../services/theme.service';
 
 @Component({
   selector: 'app-landing',
@@ -13,11 +14,29 @@ import { lucideGithub } from '@ng-icons/lucide';
   viewProviders: [
     provideIcons({
       lucideGithub,
+      lucideMoon,
+      lucideSun,
     }),
   ],
 })
 export class LandingComponent {
   state: any;
+  theme: boolean = false;
 
-  toggleMenu() {}
+  constructor(private themeService: ThemeService) {}
+
+  ngOnInit() {
+    const value = localStorage.getItem('lightTheme');
+    this.theme = value === 'true';
+  }
+
+  sendToGithub() {
+    window.location.href = 'https://github.com/SauloHGN/TicketTower';
+  }
+
+  switchColorTheme() {
+    this.themeService.switchTheme();
+    const value = localStorage.getItem('lightTheme');
+    this.theme = value === 'true';
+  }
 }

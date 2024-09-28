@@ -83,14 +83,15 @@ footer {
   }
 
   .text-extra-links {
-    text-wrap: nowrap;
+    display: none;
+    /* text-wrap: nowrap;
     font-size: 10px;
     margin-left: 0px;
-    text-align: center;
+    text-align: center; */
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 640px) {
   aside {
     width: 60px;
     padding: 0px;

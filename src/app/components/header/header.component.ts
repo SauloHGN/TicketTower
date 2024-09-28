@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../sharedService';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucideArrowLeft } from '@ng-icons/lucide';
+import { lucideArrowRight } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-header',
@@ -12,9 +12,9 @@ import { lucideArrowLeft } from '@ng-icons/lucide';
   styleUrls: ['./header.component.css'],
   viewProviders: [
     provideIcons({
-      lucideArrowLeft
-    })
-  ]
+      lucideArrowRight,
+    }),
+  ],
 })
 export class HeaderComponent implements OnInit {
   itemName: string = '';

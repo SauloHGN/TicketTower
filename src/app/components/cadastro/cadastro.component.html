@@ -11,7 +11,7 @@
       <div *ngFor="let option of options">
         <button
           type="button"
-          class="option relative py-2 px-3 rounded-full text-md text-zinc-400 capitalize hover:text-zinc-100 data-[state=active]:text-zinc-100
+          class="option relative py-2 px-3 rounded-full text-md capitalize hover: data-[state=active]
             {{ selectedType === option.type ? 'text-white' : '' }}"
           (click)="selectOption(option.type)"
         >

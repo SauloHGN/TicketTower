@@ -10,6 +10,14 @@ body {
   background-color: var(--primary-background-color);
 }
 
+.option {
+  color: var(--primary-font-color);
+}
+
+.option:hover {
+  color: var(--primary-highlighted-text-color);
+}
+
 input::placeholder {
   color: var(--primary-placeholder-color);
 }

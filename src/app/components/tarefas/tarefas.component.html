@@ -1,357 +1,107 @@
-<div class="mt-6">
-  <p-table
-    #dt2
-    [value]="customers"
-    dataKey="id"
-    [rows]="10"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [paginator]="true"
-    [globalFilterFields]="[
-      'name',
-      'country.name',
-      'representative.name',
-      'status'
-    ]"
-    [tableStyle]="{
-      'min-width': '40rem',
-    }"
-  >
-    <ng-template pTemplate="caption">
-      <div class="flex">
-        <input
-          pInputText
-          type="text"
-          (input)="dt2.filterGlobal($event.target, 'contains')"
-          placeholder="Palavra chave"
-        />
-        <button class="bg-blue-500 mx-4 rounded-lg h-8 w-10 hover:bg-blue-600">
-          <ng-icon name="lucideRefreshCcw" class="text-white h-4"></ng-icon>
-        </button>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th style="width: 15%">ID</th>
-        <th style="width: 20%">Aberto Por</th>
-        <th style="width: 15%">Tipo</th>
-        <th style="width: 15%">Data</th>
-        <th style="width: 15%">Status</th>
-        <th style="width: 5%">Prioridade</th>
-      </tr>
-      <tr>
-        <th>
-          <p-columnFilter
-            type="text"
-            field="ID"
-            placeholder="Pesquisar ID"
-            ariaLabel="Filter ID"
-            class=""
-          />
-        </th>
-        <th>
-          <p-columnFilter
-            type="text"
-            field="country.name"
-            placeholder="Pesquisar nome"
-            ariaLabel="Filter Country"
-          />
-        </th>
-        <th>
-          <p-columnFilter
-            field="representative"
-            matchMode="in"
-            [showMenu]="false"
-          >
-            <ng-template
-              pTemplate="filter"
-              let-value
-              let-filter="filterCallback"
+<div class="max-w-screen-xl mx-auto px-4 pt-6 md:px-8">
+  <div class="flex items-center flex-row gap-4 md:flex">
+    <div class="relative w-64">
+      <ng-icon
+        name="lucideSearch"
+        strokeWidth="1.5"
+        size="20"
+        class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+      ></ng-icon>
+
+      <input
+        type="text"
+        placeholder="Pesquisar"
+        id="pesquisar"
+        [(ngModel)]="filterText"
+        (input)="filterTickets()"
+        class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+      />
+    </div>
+    <button
+      class="flex items-center justify-center w-11 h-10 border border-[var(--primary-border-color)] rounded-md hover:bg-[var(--tertiary-button-background-color)]"
+    >
+      <ng-icon
+        class="flex text-[var(--primary-font-color)]"
+        name="lucideRefreshCcw"
+        strokeWidth="1.5"
+        size="18"
+      ></ng-icon>
+    </button>
+  </div>
+  <div class="table-border mt-6 shadow-sm border rounded-lg overflow-x-auto">
+    <table class="w-full table-auto text-sm text-left">
+      <thead class="font-medium border-b">
+        <tr>
+          <th class="py-3 px-6">Código<br />Usuário</th>
+          <th class="py-3 px-6">Prioridade</th>
+          <th class="py-3 px-6">Descrição</th>
+          <th class="py-3 px-6">Status</th>
+          <th class="py-3 px-6">Responsável</th>
+          <th class="py-3 px-6">Abertura</th>
+          <th class="py-3 px-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        <tr *ngFor="let ticket of paginatedTickets; let idx = index">
+          <td class="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
+            <div>
+              <span class="block text-sm font-medium">{{ ticket.id }}</span>
+              <span class="block text-xs">{{ ticket.abertoPor }}</span>
+            </div>
+          </td>
+          <td class="pr-6 py-4 whitespace-nowrap">
+            <span
+              [ngClass]="{
+                'px-3 py-2 rounded-full font-semibold text-xs': true,
+                'text-[var(--font-color-prioridade-urgente)] bg-[var(--background-prioridade-urgente)]':
+                  ticket.prioridade === 'Urgente',
+                'text-[var(--font-color-prioridade-alta)] bg-[var(--background-prioridade-alta)]':
+                  ticket.prioridade === 'Alta',
+                'text-[var(--font-color-prioridade-media)] bg-[var(--background-prioridade-media)]':
+                  ticket.prioridade === 'Média',
+                'text-[var(--font-color-prioridade-normal)] bg-[var(--background-prioridade-normal)]':
+                  ticket.prioridade === 'Normal'
+              }"
             >
-              <p-dropdown
-                [(ngModel)]="selectedValue"
-                [options]="statuses"
-                (onChange)="filter($event.value)"
-                placeholder="Todos"
-                [showClear]="true"
+              {{ ticket.prioridade }}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.descricao }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.status }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.responsavel }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.abertura }}</td>
+          <td class="text-right px-4 whitespace-nowrap">
+            <ng-container *ngIf="ticket.responsavel !== 'N/A'">
+              <a
+                href="javascript:void(0)"
+                class="button-adotar py-2 px-3 font-medium hover: duration-150 hover: rounded-lg"
+                >Adotar</a
               >
-              </p-dropdown>
-            </ng-template>
-          </p-columnFilter>
-        </th>
-
-        <th>
-          <p-columnFilter
-            field="status"
-            matchMode="equals"
-            [showMenu]="true"
-          ></p-columnFilter>
-          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-            <p-dropdown
-              [(ngModel)]="selectedValue"
-              [options]="statuses"
-              (onChange)="filter($event.value)"
-              placeholder="Selecione"
-              [showClear]="true"
+            </ng-container>
+            <button
+              class="button-gerenciar py-2 leading-none px-3 font-medium hover: duration-150 hover: rounded-lg"
             >
-            </p-dropdown>
-            <ng-template let-option pTemplate="item"> </ng-template>
-          </ng-template>
-        </th>
-        <th>
-          <p-dropdown
-            [(ngModel)]="selectedValue"
-            [options]="statuses"
-            (onChange)="filter($event.value)"
-            placeholder="Selecione"
-            [showClear]="true"
-          >
-          </p-dropdown>
-        </th>
-
-        <th>
-          <p-dropdown
-            [(ngModel)]="selectedValue"
-            [options]="statuses"
-            (onChange)="filter($event.value)"
-            placeholder="Prioridade"
-            [showClear]="true"
-          >
-          </p-dropdown>
-        </th>
-      </tr>
-    </ng-template>
-
-    <!-- CORPO DA TABELA   -->
-
-    <ng-template pTemplate="body" let-customer>
-      <tr>
-        <td>
-          <!-- {{ customer.name }} -->
-          ID
-        </td>
-        <td>
-          <span class="ml-1 vertical-align-middle">
-            <!-- {{ customer.country.name }} -->
-            Nome Sobrenome
-          </span>
-        </td>
-        <td>
-          <span class="ml-1 vertical-align-middle">
-            <!-- {{ customer.representative.name }} -->
-            Cliente
-          </span>
-        </td>
-        <td>
-          <span class="ml-1 vertical-align-middle">
-            <!-- {{ customer.representative.name }} -->
-            00/00/0000
-          </span>
-        </td>
-        <td>
-          <span class="ml-1 vertical-align-middle">
-            <!-- {{ customer.representative.name }} -->
-            Aberto
-          </span>
-        </td>
-        <td>
-          <p-tag
-            [value]="customer.status"
-            [severity]="getSeverity(customer.status)"
-          />
-        </td>
-      </tr>
-
-      <ng-template pTemplate="body" let-customer>
-        <tr>
-          <td>
-            <!-- {{ customer.name }} -->
-            ID
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.country.name }} -->
-              Nome Sobrenome
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Cliente
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              00/00/0000
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Aberto
-            </span>
-          </td>
-          <td>
-            <p-tag
-              [value]="customer.status"
-              [severity]="getSeverity(customer.status)"
-            />
+              Gerenciar
+            </button>
           </td>
         </tr>
-
-        <tr>
-          <td>
-            <!-- {{ customer.name }} -->
-            ID
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.country.name }} -->
-              Nome Sobrenome
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Cliente
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              00/00/0000
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Aberto
-            </span>
-          </td>
-          <td>
-            <p-tag
-              [value]="customer.status"
-              [severity]="getSeverity(customer.status)"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <!-- {{ customer.name }} -->
-            ID
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.country.name }} -->
-              Nome Sobrenome
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Cliente
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              00/00/0000
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Aberto
-            </span>
-          </td>
-          <td>
-            <p-tag
-              [value]="customer.status"
-              [severity]="getSeverity(customer.status)"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <!-- {{ customer.name }} -->
-            ID
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.country.name }} -->
-              Nome Sobrenome
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Cliente
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              00/00/0000
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Aberto
-            </span>
-          </td>
-          <td>
-            <p-tag
-              [value]="customer.status"
-              [severity]="getSeverity(customer.status)"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <!-- {{ customer.name }} -->
-            ID
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.country.name }} -->
-              Nome Sobrenome
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Cliente
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              00/00/0000
-            </span>
-          </td>
-          <td>
-            <span class="ml-1 vertical-align-middle">
-              <!-- {{ customer.representative.name }} -->
-              Aberto
-            </span>
-          </td>
-          <td>
-            <p-tag
-              [value]="customer.status"
-              [severity]="getSeverity(customer.status)"
-            />
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="5">Dados não encontrados.</td>
-        </tr>
-      </ng-template>
-    </ng-template>
-  </p-table>
+      </tbody>
+    </table>
+  </div>
+  <div class="max-w-screen-xl mx-auto mt-6 px-4 md:px-8"></div>
+  <div
+    class="pagination flex items-center justify-center gap-x-8 text-sm font-medium"
+  >
+    <a
+      (click)="prevPage()"
+      class="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50 cursor-pointer"
+      >Anterior</a
+    >
+    <div>Página {{ currentPage }} de {{ totalPages }}</div>
+    <a
+      (click)="nextPage()"
+      class="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50 cursor-pointer"
+      >Próximo</a
+    >
+  </div>
 </div>

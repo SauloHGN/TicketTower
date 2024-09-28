@@ -1,14 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TableModule } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { ChipsModule } from 'primeng/chips';
-import { TagModule } from 'primeng/tag';
-import { ButtonModule } from 'primeng/button';
-import { lucideRefreshCcw } from '@ng-icons/lucide';
+import { lucideRefreshCcw, lucideSearch } from '@ng-icons/lucide';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 
 @Component({
@@ -16,109 +9,162 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
   standalone: true,
   templateUrl: './tarefas.component.html',
   styleUrl: './tarefas.component.css',
-  imports: [
-    CommonModule,
-    FormsModule,
-    TableModule,
-    InputTextModule,
-    MultiSelectModule,
-    DropdownModule,
-    ChipsModule,
-    TagModule,
-    ButtonModule,
-    NgIconComponent,
-  ],
+  imports: [CommonModule, FormsModule, NgIconComponent],
   viewProviders: [
     provideIcons({
       lucideRefreshCcw,
+      lucideSearch,
     }),
   ],
 })
 export class TarefasComponent {
   selectedValue: string = 'teste';
 
-  customers = [
+  queueTickets: Ticket[] = [
     {
-      name: 'Customer 1',
-      country: 'Brasil',
-      agent: '?',
+      id: 'f47ac10b',
+      abertoPor: 'Customer 1',
+      prioridade: 'Urgente',
+      descricao: '?',
       status: 'qualified',
-      verified: 'true',
+      responsavel: 'N/A',
+      abertura: '12/09/2024',
     },
     {
-      name: 'Customer 1',
-      country: 'Brasil',
-      agent: '?',
+      id: 'a3c6e54d',
+      abertoPor: 'Customer 1',
+      prioridade: 'Média',
+      descricao: '?',
       status: 'qualified',
-      verified: 'true',
+      responsavel: 'true',
+      abertura: '12/09/2024',
     },
     {
-      name: 'Customer 1',
-      country: 'Brasil',
-      agent: '?',
+      id: '7c9f0b62',
+      abertoPor: 'Customer 1',
+      prioridade: 'Normal',
+      descricao: '?',
       status: 'qualified',
-      verified: 'true',
+      responsavel: 'true',
+      abertura: '12/09/2024',
     },
     {
-      name: 'Customer 1',
-      country: 'Brasil',
-      agent: '?',
+      id: 'a2c5f77e',
+      abertoPor: 'Customer 1',
+      prioridade: 'Alta',
+      descricao: '?',
       status: 'qualified',
-      verified: 'true',
+      responsavel: 'true',
+      abertura: '08/09/2024',
     },
     {
-      name: 'Customer 1',
-      country: 'Brasil',
-      agent: '?',
+      id: '1d9e0f32',
+      abertoPor: 'Customer 1',
+      prioridade: 'Média',
+      descricao: '?',
       status: 'qualified',
-      verified: 'true',
+      responsavel: 'N/A',
+      abertura: '07/09/2024',
+    },
+    {
+      id: 'b6a1d24c',
+      abertoPor: 'Customer 1',
+      prioridade: 'Média',
+      descricao: '?',
+      status: 'qualified',
+      responsavel: 'TESTE',
+      abertura: '07/09/2024',
+    },
+    {
+      id: 'b6a1d24c',
+      abertoPor: 'Customer 1',
+      prioridade: 'Média',
+      descricao: '?',
+      status: 'qualified',
+      responsavel: 'TESTE',
+      abertura: '07/09/2024',
+    },
+    {
+      id: 'b6a1d24c',
+      abertoPor: 'Customer 1',
+      prioridade: 'Média',
+      descricao: '?',
+      status: 'qualified',
+      responsavel: 'TESTE',
+      abertura: '07/09/2024',
+    },
+    {
+      id: 'b6a1d24c',
+      abertoPor: 'Customer 1',
+      prioridade: 'Média',
+      descricao: '?',
+      status: 'qualified',
+      responsavel: 'TESTE',
+      abertura: '07/09/2024',
     },
   ];
 
-  loading = [
-    { name: 'loading 1' },
-    { name: 'loading 2' },
-    { name: 'loading 3' },
-  ];
+  filteredTickets: Ticket[] = []; // Esta será a lista filtrada
+  filterText = ''; // valor do filtro (input)
+  currentPage = 1; // pgina atual
+  ticketsPerPage = 8; // quantidade de tickets por página
 
-  tags: string[] = [];
-
-  dt2!: any;
-  representatives: any[] | undefined;
-  statuses: any[] | undefined;
-
-  onFilterInput(event: any) {
-    const value = (event.target as HTMLInputElement).value;
-    this.dt2.filterGlobal(value, 'contains');
+  constructor() {
+    this.filteredTickets = this.queueTickets; // inicializa com todos os tickets
   }
 
-  getSeverity(
-    status: string
-  ):
-    | 'success'
-    | 'secondary'
-    | 'info'
-    | 'warning'
-    | 'danger'
-    | 'contrast'
-    | undefined {
-    switch (status) {
-      case 'Active':
-        return 'success';
-      case 'Inactive':
-        return 'secondary';
-      case 'Pending':
-        return 'warning';
-      case 'Completed':
-        return 'info';
-      case 'Rejected':
-        return 'danger';
-      default:
-        return undefined;
+  filterTickets() {
+    this.filteredTickets = this.queueTickets.filter((ticket) =>
+      this.matchesFilter(ticket)
+    );
+    this.currentPage = 1; // resetar para a primeira pagina
+  }
+
+  private matchesFilter(ticket: Ticket): boolean {
+    // filtar dados da tabela de acordo com os atributos definidos
+    const lowerCaseFilterText = this.filterText.toLowerCase();
+    return (
+      ticket.id.toLowerCase().includes(lowerCaseFilterText) ||
+      ticket.abertoPor.toLowerCase().includes(lowerCaseFilterText) ||
+      ticket.prioridade.toLowerCase().includes(lowerCaseFilterText) ||
+      ticket.descricao.toLowerCase().includes(lowerCaseFilterText) ||
+      ticket.status.toLowerCase().includes(lowerCaseFilterText) ||
+      ticket.responsavel.toLowerCase().includes(lowerCaseFilterText) ||
+      ticket.abertura.toLowerCase().includes(lowerCaseFilterText)
+    );
+  }
+
+  get paginatedTickets() {
+    const startIndex = (this.currentPage - 1) * this.ticketsPerPage;
+    return this.filteredTickets.slice(
+      startIndex,
+      startIndex + this.ticketsPerPage
+    );
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
     }
   }
 
-  filter(selectedValues: any[]) {
-    // Use this.selectedRepresentatives instead of value
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
+
+  get totalPages() {
+    return Math.ceil(this.filteredTickets.length / this.ticketsPerPage);
+  }
+}
+
+interface Ticket {
+  id: string;
+  abertoPor: string;
+  prioridade: string;
+  descricao: string;
+  status: string;
+  responsavel: string;
+  abertura: string;
 }
