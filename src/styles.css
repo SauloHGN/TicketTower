@@ -29,7 +29,7 @@
   --font-sans: "Roboto Mono, " Poppins ", sans-serif";
 }
 
-.dark {
+.light {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
   --card: 0 0% 100%;
@@ -51,25 +51,29 @@
   --ring: 240 5.9% 10%;
   --radius: 0.5rem;
 
-  --primary-background-color: aliceblue;
+  --primary-background-color: #fff;
   --secundary-background-color: #ffffff;
   --tertiary-background-color: rgb(226 232 240);
 
   --primary-font-color: #0c0c14;
-  --secundary-font-color: #00aeff;
+  --secundary-font-color: #06b6d4;
   --tertiary-font-color: #5c5958;
 
-  --primary-button-background-color: #0499ff;
+  --primary-button-background-color: #06b6d4;
   --primary-button-text-color: #fff;
 
   --secundary-button-text-color: #0bcbe0;
 
   --primary-highlighted-text-color: #0c0c14;
-  --secundary-highlighted-text-color: #0499ff;
+  --secundary-highlighted-text-color: #06b6d4;
+  --tertiary-highligted-text-color: rgb(107 114 128);
 
-  --primary-border-color: #898989;
+  --primary-border-color: #e5e7eb;
   --secundary-border-color: lightblue;
   --tertiary-border-color: rgba(0, 0, 0, 0.1);
+
+  --tertiary-button-text-color: rgb(220 38 38);
+  --tertiary-button-background-color: rgb(220, 224, 228);
 
   --placeholder-default: lightblue;
 
@@ -99,11 +103,11 @@
 
   /* --primary-background-color: #181818;  */
   --primary-background-color: #121212;
-  --secundary-background-color: #0499ff;
+  --secundary-background-color: #06b6d4;
   --tertiary-background-color: #333333;
 
   --primary-font-color: #eee;
-  --secundary-font-color: #0499ff;
+  --secundary-font-color: #06b6d4;
   --tertiary-font-color: #d7d7d7;
 
   --primary-border-color: #292929;
@@ -111,12 +115,13 @@
   --tertiary-border-color: rgba(75, 75, 75, 0.541);
 
   --primary-highlighted-text-color: #fff;
-  --secundary-highlighted-text-color: #0499ff;
+  --secundary-highlighted-text-color: #06b6d4;
+  --tertiary-highligted-text-color: rgb(107 114 128);
 
-  --primary-button-background-color: #0499ff;
+  --primary-button-background-color: #06b6d4;
   --primary-button-text-color: #fff;
 
-  --secundary-button-text-color: #0bcbe0;
+  --secundary-button-text-color: #06b6d4;
 
   --tertiary-button-text-color: rgb(220 38 38);
   --tertiary-button-background-color: rgba(54, 54, 54, 0.897);
@@ -124,6 +129,16 @@
   --placeholder-default: #d7d7d7;
 
   --primary-shadow-color: rgba(0, 0, 0, 0);
+
+  --background-prioridade-urgente: rgb(49 25 25);
+  --background-prioridade-alta: rgb(55 34 7);
+  --background-prioridade-media: rgb(45 42 15);
+  --background-prioridade-normal: rgb(16 35 61);
+
+  --font-color-prioridade-urgente: rgb(220 38 38);
+  --font-color-prioridade-alta: rgb(234 88 12);
+  --font-color-prioridade-media: rgb(202 138 4);
+  --font-color-prioridade-normal: rgb(37 99 235);
 }
 
 /*https://account.proton.me/pt-br/mail*/

@@ -16,7 +16,7 @@ body {
   align-items: center;
   flex-direction: column;
   width: 500px;
-  gap: 16px;
+  gap: 12px;
 }
 
 .header {
@@ -168,4 +168,21 @@ textarea {
 
 .buttons .send:hover {
   background-color: rgb(0, 174, 255);
+}
+
+@media screen and (max-width: 768px) {
+  .formulario {
+    width: 420px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .formulario {
+    width: 250px;
+  }
+
+  .select-group {
+    flex-direction: column;
+    gap: 0;
+  }
 }

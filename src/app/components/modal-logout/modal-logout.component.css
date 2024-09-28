@@ -16,9 +16,7 @@
   color: var(--primary-font-color);
 }
 
-.sub-title {
-  color: var(--placeholder-default);
-}
+
 
 .cancel-button {
   background-color: var(--tertiary-button-background-color);

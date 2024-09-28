@@ -10,6 +10,14 @@ body {
   background-color: var(--primary-background-color);
 }
 
+.option {
+  color: var(--primary-font-color);
+}
+
+.option:hover {
+  color: var(--primary-highlighted-text-color);
+}
+
 input::placeholder {
   color: var(--primary-placeholder-color);
 }
@@ -20,8 +28,15 @@ input::placeholder {
   align-items: center;
   flex-direction: column;
   width: 800px;
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 32px;
+}
+
+.form-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 h1 {
@@ -97,6 +112,7 @@ input:focus {
 @media screen and (max-width: 680px) {
   .input-group {
     flex-direction: column;
+    gap: 6px;
   }
 
   .formulario {
@@ -107,5 +123,21 @@ input:focus {
 @media screen and (max-width: 450px) {
   .formulario {
     width: 200px;
+  }
+
+  .container-options {
+    padding: 0;
+    gap: 0;
+  }
+
+  .main-content {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+
+  button[type="button"] {
+    padding: 4px 8px;
   }
 }

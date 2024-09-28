@@ -44,3 +44,12 @@ h3 {
 .button-delete:hover {
   background-color: var(--tertiary-button-background-color);
 }
+
+input {
+  color: var(--primary-font-color);
+  border-color: var(--primary-border-color);
+}
+
+input:focus {
+  border-color: var(--secundary-border-color);
+}

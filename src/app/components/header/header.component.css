@@ -2,3 +2,13 @@ header {
   background-color: var(--primary-background-color);
   border-bottom: 1px solid var(--primary-border-color);
 }
+
+h2 {
+  padding: 0 8px;
+}
+
+@media screen and (max-width: 640px) {
+  h2 {
+    font-size: 14px;
+  }
+}
