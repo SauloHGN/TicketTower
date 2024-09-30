@@ -30,4 +30,8 @@ export class AuthService {
     sessionStorage.removeItem('nome');
     sessionStorage.removeItem('tipo');
   }
+
+  getPermission(id: string) {
+    const url = 'localhost:3000/'
+  }
 }

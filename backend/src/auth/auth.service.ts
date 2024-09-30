@@ -9,6 +9,8 @@ import { padrao } from 'src/enums/padrao';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { DataUtilsService } from 'src/repository/DataUtils.service';
+import { UsersView } from 'src/entity/usersView.entity';
+import { Permissao } from 'src/enums/permissao';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +22,9 @@ export class AuthService {
     private readonly clientesRepository: Repository<Clientes>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly dataUtilsService: DataUtilsService,
+
+    @InjectRepository(UsersView)
+    private readonly usersView: Repository<UsersView>,
   ) {}
 
   async login(email: string, senha: string) {
@@ -152,4 +157,6 @@ export class AuthService {
       return 'Erro ao atualizar a senha';
     }
   }
+
+
 }

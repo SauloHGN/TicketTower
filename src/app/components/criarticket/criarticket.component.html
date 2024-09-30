@@ -7,7 +7,6 @@
     </h2>
   </div>
 
-
   <div class="formulario">
     <div class="relative w-full">
       <ng-icon
@@ -20,7 +19,9 @@
       <input
         type="text"
         placeholder="Titulo"
+        id="titulo"
         class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+        required
       />
     </div>
 
@@ -83,13 +84,14 @@
           </svg>
         </div>
         <div class="text">
-          <span>Click to upload image</span>
+          <span>Clique para fazer upload de arquivos</span>
         </div>
         <input type="file" id="file" />
       </label>
       <button
         type="submit"
         id="send"
+        (click)="criarTicket()"
         class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
       >
         Enviar

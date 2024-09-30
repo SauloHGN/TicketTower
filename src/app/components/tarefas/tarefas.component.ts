@@ -157,6 +157,10 @@ export class TarefasComponent {
   get totalPages() {
     return Math.ceil(this.filteredTickets.length / this.ticketsPerPage);
   }
+
+  loadTicket() {
+    const id = sessionStorage.getItem('userInfo');
+  }
 }
 
 interface Ticket {

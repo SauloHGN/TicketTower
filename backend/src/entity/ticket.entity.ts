@@ -25,7 +25,7 @@ export class Tickets {
   data_hora_encerramento: Date;
 
   @Column()
-  aberto_por: number;
+  aberto_por: string;
 
   @Column({ type: 'enum', enum: AbertoPorTipo })
   aberto_por_tipo: AbertoPorTipo;
@@ -39,6 +39,9 @@ export class Tickets {
 
   @Column({ type: 'enum', enum: Prioridade })
   prioridade: Prioridade;
+
+  @Column({ name: 'titulo' })
+  titulo: string;
 
   @Column({ name: 'descricao' })
   descricao: string;
