@@ -242,7 +242,7 @@ export class CadastroComponent implements OnInit {
       this.http
         .post(`http://localhost:3000/cadastro/${user.id}/cliente`, clienteData)
         .subscribe((response) => {
-          console.log(response); //Excluir
+          //console.log(response); //Excluir
 
           this.toastService.success('Cliente cadastrado com sucesso');
           // Limpar os campos após o cadastro

@@ -48,7 +48,7 @@ export class EmailService {
 
     try {
       this.mailerService.sendMail({
-        to: 'Saulohgn@gmail.com',
+        to: destinatario,
         subject: 'Recuperação de Senha',
         template: 'recuperar',
         context: {

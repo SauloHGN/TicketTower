@@ -19,6 +19,8 @@ import { SetoresModule } from './setores/setores.module';
 import { CadastroModule } from './cadastro/cadastro.module';
 import { EmailModule } from './email/email.module';
 import { DataUtilsModule } from './repository/DataUtils.module';
+import { TicketModule } from './objects/ticket/ticket.module';
+import { Tickets } from './entity/ticket.entity';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -30,6 +32,7 @@ import { DataUtilsModule } from './repository/DataUtils.module';
     CadastroModule,
     EmailModule,
     DataUtilsModule,
+    TicketModule,
 
     ConfigModule.forRoot({
       isGlobal: true,
@@ -45,6 +48,7 @@ import { DataUtilsModule } from './repository/DataUtils.module';
       Setores,
       Enderecos,
       UsersView,
+      Tickets,
     ]),
   ],
   controllers: [AppController],

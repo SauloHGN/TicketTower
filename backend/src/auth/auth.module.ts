@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from '@nestjs/cache-manager';
 import { UsersView } from 'src/entity/usersView.entity';
 import { DataUtilsService } from 'src/repository/DataUtils.service';
+import { FuncionarioService } from 'src/users/funcionario/funcionario.service';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { DataUtilsService } from 'src/repository/DataUtils.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, DataUtilsService],
+  providers: [AuthService, DataUtilsService, FuncionarioService],
   exports: [AuthService],
 })
 export class AuthModule {}
