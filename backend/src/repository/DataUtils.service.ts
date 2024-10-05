@@ -25,6 +25,34 @@ export class DataUtilsService {
     return dados ? dados.id : null;
   }
 
+  async getRoleByID(id: string): Promise<string> | null {
+    try {
+      // Verificar na tabela funcionarios
+      const funcionario = await this.funcionarioRepository.findOne({
+        where: { id: id },
+      });
+
+      if (funcionario) {
+        return 'funcionario';
+      }
+
+      // Verificar na tabela clientes
+      const cliente = await this.clienteRepository.findOne({
+        where: { id: id },
+      });
+
+      if (cliente) {
+        return 'cliente';
+      }
+
+      // Se não encontrar em nenhum dos dois
+      return null;
+    } catch (error) {
+      console.error('Erro ao buscar o registro:', error);
+      throw new Error('Erro ao buscar o registro');
+    }
+  }
+
   async getTableById(id: string): Promise<string> {
     try {
       // Verificar na tabela funcionarios

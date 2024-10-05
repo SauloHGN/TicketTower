@@ -6,11 +6,28 @@ import { Tickets } from 'src/entity/ticket.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Funcionarios } from 'src/entity/funcionarios.entity';
 import { UsersView } from 'src/entity/usersView.entity';
+import { DataUtilsService } from 'src/repository/DataUtils.service';
+import { Clientes } from 'src/entity/clientes.entity';
+import { SetoresService } from 'src/setores/setores.service';
+import { Setores } from 'src/entity/setores.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Tickets, Funcionarios, UsersView])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Clientes,
+      Tickets,
+      Funcionarios,
+      UsersView,
+      Setores,
+    ]),
+  ],
   controllers: [TicketController],
-  providers: [TicketService, FuncionarioService],
+  providers: [
+    TicketService,
+    FuncionarioService,
+    DataUtilsService,
+    SetoresService,
+  ],
   exports: [TicketService],
 })
 export class TicketModule {}

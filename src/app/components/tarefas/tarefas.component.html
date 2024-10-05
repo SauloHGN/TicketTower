@@ -46,30 +46,34 @@
           <td class="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
             <div>
               <span class="block text-sm font-medium">{{ ticket.id }}</span>
-              <span class="block text-xs">{{ ticket.abertoPor }}</span>
+              <span class="block text-xs">{{ ticket.aberto_por }}</span>
             </div>
           </td>
           <td class="pr-6 py-4 whitespace-nowrap">
             <span
               [ngClass]="{
-                'px-3 py-2 rounded-full font-semibold text-xs': true,
+                'px-3 py-2 rounded-full font-semibold text-xs capitalize': true,
                 'text-[var(--font-color-prioridade-urgente)] bg-[var(--background-prioridade-urgente)]':
-                  ticket.prioridade === 'Urgente',
+                  ticket.prioridade == 'urgente',
                 'text-[var(--font-color-prioridade-alta)] bg-[var(--background-prioridade-alta)]':
-                  ticket.prioridade === 'Alta',
+                  ticket.prioridade == 'alta',
                 'text-[var(--font-color-prioridade-media)] bg-[var(--background-prioridade-media)]':
-                  ticket.prioridade === 'Média',
+                  ticket.prioridade == 'média',
                 'text-[var(--font-color-prioridade-normal)] bg-[var(--background-prioridade-normal)]':
-                  ticket.prioridade === 'Normal'
+                  ticket.prioridade == 'normal'
               }"
             >
               {{ ticket.prioridade }}
             </span>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.descricao }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.status }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.titulo }}</td>
+          <td class="px-6 py-4 whitespace-nowrap capitalize">
+            {{ ticket.status }}
+          </td>
           <td class="px-6 py-4 whitespace-nowrap">{{ ticket.responsavel }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.abertura }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            {{ ticket.data_hora_abertura }}
+          </td>
           <td class="text-right px-4 whitespace-nowrap">
             <ng-container *ngIf="ticket.responsavel !== 'N/A'">
               <a
