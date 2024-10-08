@@ -75,9 +75,9 @@
             {{ ticket.data_hora_abertura }}
           </td>
           <td class="text-right px-4 whitespace-nowrap">
-            <ng-container *ngIf="ticket.responsavel !== 'N/A'">
+            <ng-container *ngIf="ticket.responsavel == 'N/A'">
               <a
-                href="javascript:void(0)"
+                (click)="adotarTicket(ticket.id)"
                 class="button-adotar py-2 px-3 font-medium hover: duration-150 hover: rounded-lg"
                 >Adotar</a
               >

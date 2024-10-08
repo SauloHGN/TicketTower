@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { lucideRefreshCcw, lucideSearch } from '@ng-icons/lucide';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { HttpClient } from '@angular/common/http';
+import { Toast } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tarefas',
@@ -59,7 +60,7 @@ export class TarefasComponent implements OnInit {
           `http://localhost:3000/ticket/${userID}`
         )
         .subscribe((data) => {
-          this.filteredTickets = data.tickets;
+          this.filteredTickets = this.queueTickets = data.tickets;
           console.log(this.queueTickets);
         });
     } catch {
@@ -68,6 +69,7 @@ export class TarefasComponent implements OnInit {
   }
 
   filterTickets() {
+    console.log('Filtering tickets with:', this.filterText);
     this.filteredTickets = this.queueTickets.filter((ticket) =>
       this.matchesFilter(ticket)
     );
@@ -117,7 +119,50 @@ export class TarefasComponent implements OnInit {
   }
 
   loadTicket() {
-    const id = sessionStorage.getItem('userInfo');
+    try {
+      let userID = '';
+      const userInfoString = sessionStorage.getItem('userInfo');
+      if (userInfoString) {
+        const userInfo = JSON.parse(userInfoString);
+        userID = userInfo.id;
+      } else {
+        return;
+      }
+
+      this.http
+        .get<{ status: number; tickets: any[] }>(
+          `http://localhost:3000/ticket/${userID}`
+        )
+        .subscribe((data) => {
+          this.filteredTickets = this.queueTickets = data.tickets;
+          console.log(this.queueTickets);
+        });
+    } catch {
+      throw new Error('Erro ao se comunicar com o servidor');
+    }
+  }
+
+  adotarTicket(id: string) {
+    try {
+      let userID = '';
+      const userInfoString = sessionStorage.getItem('userInfo');
+      if (userInfoString) {
+        const userInfo = JSON.parse(userInfoString);
+        userID = userInfo.id;
+      } else {
+        return;
+      }
+      this.http
+        .patch<{ message: string }>(`http://localhost:3000/ticket/adotar`, {
+          userID: userID,
+          ticketID: id,
+        })
+        .subscribe((data) => {
+          this.loadTicket();
+        });
+    } catch (error) {
+      throw new Error('Erro ao se comunicar com o servidor');
+    }
   }
 }
 

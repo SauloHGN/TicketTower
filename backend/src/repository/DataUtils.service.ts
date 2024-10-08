@@ -80,4 +80,32 @@ export class DataUtilsService {
       throw new Error('Erro ao buscar o registro');
     }
   }
+
+  async getEmailByID(id: string): Promise<string> | null {
+    try {
+      const user = await this.usersViewRepository.findOne({
+        where: { id: id },
+      });
+
+      if (user) {
+        return user.email;
+      }
+
+      return null;
+    } catch (error) {
+      throw new Error('Erro ao buscar o registro');
+    }
+  }
+
+  getUserByID(id: string) {
+    const user = this.usersViewRepository.findOne({
+      where: { id: id },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
 }

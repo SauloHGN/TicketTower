@@ -14,6 +14,7 @@ import { Setores } from './setores.entity';
 import { AbertoPorTipo } from 'src/enums/abertoPor';
 import { StatusTicket } from 'src/enums/statusTicket';
 import { Prioridade } from 'src/enums/prioridade';
+import { ResponsavelDto } from 'src/dto/ResponsavelDto';
 
 @Entity()
 export class Tickets {
@@ -48,7 +49,9 @@ export class Tickets {
   @Column({ name: 'descricao' })
   descricao: string;
 
-  @ManyToOne(() => Funcionarios, (Funcionarios) => Funcionarios.id)
-  @JoinColumn({ name: 'id_funcionario' })
-  id_funcionario: Funcionarios;
+  @ManyToOne(() => Funcionarios, (Funcionarios) => Funcionarios.id, {
+    eager: true,
+  })
+  @JoinColumn({ name: 'id_responsavel' })
+  id_responsavel: ResponsavelDto;
 }

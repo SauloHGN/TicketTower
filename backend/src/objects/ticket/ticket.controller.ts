@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -61,6 +62,12 @@ export class TicketController {
     // Carregar dados dos tickets
     const result = this.ticketService.loadData(id, value.permissao);
 
+    return result;
+  }
+
+  @Patch('/adotar')
+  async adotarTicket(@Body() body: { userID: string; ticketID: string }) {
+    const result = this.ticketService.adotarTicket(body.userID, body.ticketID);
     return result;
   }
 }

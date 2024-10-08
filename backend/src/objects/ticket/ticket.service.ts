@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ResponsavelDto } from 'src/dto/ResponsavelDto';
 import { Funcionarios } from 'src/entity/funcionarios.entity';
 import { Mensagens } from 'src/entity/mensagens.entity';
 import { Setores } from 'src/entity/setores.entity';
 import { Tickets } from 'src/entity/ticket.entity';
+import { UsersView } from 'src/entity/usersView.entity';
 import { AbertoPorTipo } from 'src/enums/abertoPor';
 import { Prioridade } from 'src/enums/prioridade';
+import { StatusTicket } from 'src/enums/statusTicket';
 import { ticketClassify } from 'src/enums/ticketClassify';
 import { DataUtilsService } from 'src/repository/DataUtils.service';
 import { SetoresService } from 'src/setores/setores.service';
@@ -17,6 +20,8 @@ export class TicketService {
   constructor(
     @InjectRepository(Tickets)
     private readonly ticketRepository: Repository<Tickets>,
+    @InjectRepository(UsersView)
+    private readonly usersView: Repository<UsersView>,
 
     private readonly setoresService: SetoresService,
     private readonly funcionarioService: FuncionarioService,
@@ -33,7 +38,7 @@ export class TicketService {
   ) {
     const ticketID = await this.createTicketID(classificacao);
     if (ticketID.includes(null)) {
-      return { status: 400, mgs: 'Erro ao criar ticket' };
+      return { status: 400, msg: 'Erro ao criar ticket' };
     }
     const setorID = await this.setoresService.getSetorByID(parseInt(setor));
 
@@ -140,83 +145,59 @@ export class TicketService {
   }
 
   async loadData(id: string, permissao: string) {
-    if (permissao == 'funcionario') {
+    let tickets;
+
+    if (permissao === 'funcionario') {
       const funcionario = await this.funcionarioService.getSetorByID(id);
-      const tickets = await this.ticketRepository
+      tickets = await this.ticketRepository
         .createQueryBuilder('ticket')
-        .innerJoin('ticket.id_setor', 'setor') // Juntando com a entidade Setores
-        .where('setor.id = :setorId', { setorId: funcionario.setor }) // Comparando com o setor do funcionário
+        .innerJoin('ticket.id_setor', 'setor')
+        .where('setor.id = :setorId', { setorId: funcionario.setor })
         .getMany();
-
-      const formattedTickets = tickets.map((ticket) => ({
-        id: ticket.id,
-        data_hora_abertura: this.formatDate(ticket.data_hora_abertura),
-        data_hora_encerramento: ticket.data_hora_encerramento
-          ? this.formatDate(ticket.data_hora_encerramento)
-          : '-',
-        aberto_por: ticket.aberto_por,
-        aberto_por_tipo: ticket.aberto_por_tipo,
-        status: ticket.status,
-        prioridade: ticket.prioridade,
-        titulo: ticket.titulo,
-        descricao: ticket.descricao,
-        id_setor: ticket.id_setor,
-      }));
-
+    } else if (permissao === 'cliente') {
+      tickets = await this.ticketRepository.find({
+        where: { aberto_por: id },
+      });
+    } else if (permissao === 'administrador') {
+      tickets = await this.ticketRepository.find();
+    } else {
       return {
-        status: 200,
-        tickets: formattedTickets,
+        status: 404,
+        mensagem: 'Permissao não conhecida',
+        tickets: null,
       };
     }
 
-    if (permissao == 'cliente') {
-      const tickets = await this.ticketRepository.find({
-        where: { aberto_por: id }, // Ajuste conforme seu modelo
-      });
+    const formattedTickets = await Promise.all(
+      tickets.map(async (ticket) => {
+        const email = await this.dataUtilsService.getEmailByID(
+          ticket.aberto_por,
+        );
+        const email_responsavel = ticket.id_responsavel
+          ? await this.dataUtilsService.getEmailByID(ticket.id_responsavel.id)
+          : 'N/A'; // Mensagem padrão se não houver responsável
 
-      const formattedTickets = tickets.map((ticket) => ({
-        id: ticket.id,
-        data_hora_abertura: this.formatDate(ticket.data_hora_abertura),
-        data_hora_encerramento: ticket.data_hora_encerramento
-          ? this.formatDate(ticket.data_hora_encerramento)
-          : '-',
-        aberto_por: ticket.aberto_por,
-        aberto_por_tipo: ticket.aberto_por_tipo,
-        status: ticket.status,
-        prioridade: ticket.prioridade,
-        titulo: ticket.titulo,
-        descricao: ticket.descricao,
-        id_setor: ticket.id_setor,
-      }));
-
-      return { status: 200, tickets: formattedTickets };
-    }
-
-    if (permissao == 'administrador') {
-      const tickets = await this.ticketRepository.find();
-
-      const formattedTickets = tickets.map((ticket) => ({
-        id: ticket.id,
-        data_hora_abertura: this.formatDate(ticket.data_hora_abertura),
-        data_hora_encerramento: ticket.data_hora_encerramento
-          ? this.formatDate(ticket.data_hora_encerramento)
-          : '-',
-        aberto_por: ticket.aberto_por,
-        aberto_por_tipo: ticket.aberto_por_tipo,
-        status: ticket.status,
-        prioridade: ticket.prioridade,
-        titulo: ticket.titulo,
-        descricao: ticket.descricao,
-        id_setor: ticket.id_setor,
-      }));
-
-      return { status: 200, tickets: formattedTickets };
-    }
+        return {
+          id: ticket.id,
+          data_hora_abertura: this.formatDate(ticket.data_hora_abertura),
+          data_hora_encerramento: ticket.data_hora_encerramento
+            ? this.formatDate(ticket.data_hora_encerramento)
+            : '-',
+          aberto_por: email,
+          aberto_por_tipo: ticket.aberto_por_tipo,
+          status: ticket.status,
+          prioridade: ticket.prioridade,
+          titulo: ticket.titulo,
+          descricao: ticket.descricao,
+          id_setor: ticket.id_setor,
+          responsavel: email_responsavel, // Utiliza o valor padrão aqui
+        };
+      }),
+    );
 
     return {
-      status: 404,
-      mensagem: 'Permissao não conhecida',
-      tickets: null,
+      status: 200,
+      tickets: formattedTickets,
     };
   }
 
@@ -231,5 +212,76 @@ export class TicketService {
       format = '-';
     }
     return format; // Formata a data
+  }
+
+  async adotarTicket(userID: string, ticketID: string) {
+    const userResponsavel = await this.dataUtilsService.getUserByID(userID);
+
+    if (!userResponsavel) {
+      return { status: 404, msg: 'Usuário não encontrado ou inativo' };
+    }
+
+    const responsavelDto: ResponsavelDto = {
+      id: userResponsavel.id,
+      email: userResponsavel.email,
+    };
+
+    const updates: Partial<Tickets> = {
+      id_responsavel: responsavelDto, // A entidade completa é necessária
+      status: StatusTicket.EMANDAMENTO,
+    };
+
+    const result = await this.updateTicket(ticketID, updates);
+
+    if (result && 'status' in result) {
+      return result;
+    }
+
+    return { status: 200, ticket: result };
+  }
+
+  async getTicketByID(id: string) {
+    const ticket = await this.ticketRepository.findOne({
+      where: { id },
+      relations: ['id_responsavel', 'id_setor'],
+    });
+
+    return ticket || null;
+  }
+
+  async updateTicket(id: string, updates: Partial<Tickets>) {
+    try {
+      const ticket = await this.getTicketByID(id);
+
+      if (!ticket) {
+        return { status: 404, msg: 'Ticket não encontrado' };
+      }
+
+      await this.ticketRepository.update(id, updates); // Atualizar o ticket
+
+      const updatedTicket = await this.getTicketByID(id); // Buscando o ticket atualizado
+
+      return {
+        id: updatedTicket.id,
+        data_hora_abertura: updatedTicket.data_hora_abertura,
+        data_hora_encerramento: updatedTicket.data_hora_encerramento,
+        aberto_por: updatedTicket.aberto_por,
+        aberto_por_tipo: updatedTicket.aberto_por_tipo,
+        status: updatedTicket.status,
+        prioridade: updatedTicket.prioridade,
+        titulo: updatedTicket.titulo,
+        descricao: updatedTicket.descricao,
+        id_setor: {
+          id: updatedTicket.id_setor.id,
+          nome: updatedTicket.id_setor.nome,
+        },
+        responsavel: {
+          id: updatedTicket.id_responsavel.id,
+          email: updatedTicket.id_responsavel.email,
+        } as ResponsavelDto,
+      };
+    } catch (error) {
+      return { status: 500, msg: 'Erro ao atualizar ticket' };
+    }
   }
 }
