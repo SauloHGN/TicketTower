@@ -13,4 +13,8 @@ export class SetoresService {
   async findAll(): Promise<Setores[]> {
     return await this.setorRepository.find();
   }
+
+  async getSetorByID(setorID: number): Promise<Setores | null> {
+    return await this.setorRepository.findOne({ where: { id: setorID } });
+  }
 }

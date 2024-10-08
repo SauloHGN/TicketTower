@@ -55,6 +55,25 @@
       </div>
     </div>
 
+    <div class="select-group">
+      <div class="select-container">
+        <select
+          id="classificacao"
+          name="classificacao"
+          class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          required
+        >
+          <option value="">Selecione a Classificação</option>
+          <option
+            *ngFor="let valorClassify of enumTicketClassify"
+            [value]="valorClassify"
+          >
+            {{ valorClassify }}
+          </option>
+        </select>
+      </div>
+    </div>
+
     <label for="descricao">Descrição</label>
     <textarea
       id="descricao"

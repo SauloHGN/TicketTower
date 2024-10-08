@@ -5,6 +5,7 @@ import { Prioridade } from '../../enum/prioridade';
 import { lucideBox } from '@ng-icons/lucide';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ToastrService } from 'ngx-toastr';
+import { ticketClassify } from '../../enum/ticketClassify';
 
 @Component({
   selector: 'app-criarticket',
@@ -26,10 +27,17 @@ export class CriarTicketComponent implements OnInit {
   enumValues = Object.values(Prioridade); // Array com os valores do enum
   enum = Prioridade;
 
+  ticketClassify?: any[];
+  selectedTicketClassify: any;
+  valorClassify: any = ticketClassify;
+  enumTicketClassify = Object.values(ticketClassify);
+  enumTicket = ticketClassify;
+
   constructor(private http: HttpClient, private toastService: ToastrService) {}
 
   ngOnInit(): void {
     try {
+      // ------- Captar todos os setores ---------
       this.http
         .get<any[]>('http://localhost:3000/setores')
         .subscribe((data) => {
@@ -66,20 +74,35 @@ export class CriarTicketComponent implements OnInit {
 
   criarTicket() {
     const url = 'http://localhost:3000/ticket/criar';
+
     try {
+      let userID = '';
+      const userInfoString = sessionStorage.getItem('userInfo');
+      if (userInfoString) {
+        const userInfo = JSON.parse(userInfoString);
+        userID = userInfo.id;
+      } else {
+        this.toastService.error('não foi possivel efetuar a criação');
+        return;
+      }
+
       const ticket: ticket = {
+        userID: userID,
         titulo: (document.getElementById('titulo') as HTMLInputElement).value,
         descricao: (document.getElementById('descricao') as HTMLInputElement)
           .value,
         setor: (document.getElementById('setor') as HTMLInputElement).value,
         prioridade: (document.getElementById('prioridade') as HTMLInputElement)
           .value as Prioridade,
+        classificacao: (
+          document.getElementById('classificacao') as HTMLInputElement
+        ).value as ticketClassify,
         files: Array.from(
           (document.getElementById('file') as HTMLInputElement).files || [],
           (file) => file as File
         ), // Converte uma FileList para Array de files
       };
-      console.log(ticket);
+
       if (
         !ticket.titulo ||
         !ticket.descricao ||
@@ -116,9 +139,11 @@ export class CriarTicketComponent implements OnInit {
 }
 
 export interface ticket {
+  userID: string;
   titulo: string;
   descricao: string;
   setor: string;
   prioridade: Prioridade;
+  classificacao: ticketClassify;
   files: File[];
 }

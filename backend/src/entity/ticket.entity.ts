@@ -6,19 +6,22 @@ import {
   OneToOne,
   OneToMany,
   JoinColumn,
+  PrimaryColumn,
+  CreateDateColumn,
 } from 'typeorm';
 import { Funcionarios } from './funcionarios.entity';
 import { Setores } from './setores.entity';
 import { AbertoPorTipo } from 'src/enums/abertoPor';
 import { StatusTicket } from 'src/enums/statusTicket';
 import { Prioridade } from 'src/enums/prioridade';
+import { ResponsavelDto } from 'src/dto/ResponsavelDto';
 
 @Entity()
 export class Tickets {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ name: 'id' })
   id: string;
 
-  @Column({ type: 'datetime' })
+  @CreateDateColumn({ type: 'datetime' })
   data_hora_abertura: Date;
 
   @Column({ type: 'datetime' })
@@ -33,7 +36,7 @@ export class Tickets {
   @Column({ type: 'enum', enum: StatusTicket, default: StatusTicket.ABERTO })
   status: StatusTicket;
 
-  @ManyToOne(() => Setores, (Setores) => Setores.id)
+  @ManyToOne(() => Setores, (Setores) => Setores.id, { eager: true })
   @JoinColumn({ name: 'id_setor' })
   id_setor: Setores;
 
@@ -46,7 +49,9 @@ export class Tickets {
   @Column({ name: 'descricao' })
   descricao: string;
 
-  @ManyToOne(() => Funcionarios, (Funcionarios) => Funcionarios.id)
-  @JoinColumn({ name: 'id_funcionario' })
-  id_funcionario: Funcionarios;
+  @ManyToOne(() => Funcionarios, (Funcionarios) => Funcionarios.id, {
+    eager: true,
+  })
+  @JoinColumn({ name: 'id_responsavel' })
+  id_responsavel: ResponsavelDto;
 }

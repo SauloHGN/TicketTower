@@ -1,6 +1,6 @@
 export enum StatusTicket {
   ABERTO = 'aberto',
-  EMANDAMENTO = 'em_andamento',
+  EMANDAMENTO = 'em andamento',
   RESOLVIDO = 'resolvido',
   FECHADO = 'fechado',
   REABERTO = 'reaberto',
