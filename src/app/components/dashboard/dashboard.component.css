@@ -1,0 +1,26 @@
+p {
+  color: var(--primary-font-color);
+}
+
+h5 {
+  color: var(--primary-font-color);
+}
+
+button{
+  background-color: var(--card-background-color);
+  border-color: var(--primary-border-color);
+  color: var(--primary-font-color);
+}
+
+button:hover{
+  background-color:  var(--tertiary-button-background-color);
+}
+
+a {
+  color: var(--primary-font-color);
+}
+
+.card-item, .grafico-ondas, .grafico-barras, .grafico-circular {
+  background-color: var(--card-background-color);
+  border-color: var(--primary-border-color);
+}

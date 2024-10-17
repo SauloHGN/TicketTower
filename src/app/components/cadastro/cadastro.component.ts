@@ -92,7 +92,6 @@ export class CadastroComponent implements OnInit {
 
   selectOption(option: any) {
     this.selectedType = option;
-    console.log('teste');
   }
 
   // Métodos para verificar qual formulário deve ser mostrado com base no tipo selecionado

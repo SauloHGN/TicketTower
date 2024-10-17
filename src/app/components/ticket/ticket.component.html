@@ -1,0 +1,176 @@
+<body>
+  <div
+    role="tablist"
+    aria-orientation="horizontal"
+    class="main-content flex items-center justify-center px-6 overflow-hidden py-3 overflow-auto mb-4"
+    tabindex="1"
+    data-orientation="horizontal"
+    style="outline: none; gap: 4px"
+  >
+    <div class="container-options flex items-center gap-x-2 relative z-10">
+      <div *ngFor="let option of options">
+        <button
+          type="button"
+          class="option relative py-2 px-3 rounded-full text-md capitalize hover: data-[state=active]
+            {{ selectedType === option.type ? 'text-white' : '' }}"
+          (click)="selectOption(option.type)"
+        >
+          {{ option.type }}
+          <span
+            *ngIf="selectedType === option.type"
+            class="absolute inset-0 rounded-full border border-zinc-700 z-[-1] bg-[linear-gradient(185deg,_rgba(39,_39,_42,_0.95)_70%,_rgba(15,_23,_42,_0.00)_140.23%)] transition ease-in-out duration-300"
+            style="transform: none; transform-origin: 50% 50% 0px"
+          ></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedType == 'detalhes'">
+    <section
+      class="campos-de-informacao flex flex-col items-center justify-center p-3 gap-y-3 w-full"
+    >
+      <div class="input-group flex flex-row gap-x-2 w-11/12">
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Ticket ID"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Titulo"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Data de Abertura"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Previsão de Encerramento"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div class="input-group flex flex-row gap-x-2 w-11/12">
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Aberto Por"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Tipo"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Prioridade"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="text"
+            placeholder="Responsável"
+            [disabled]="isInputDisabled"
+            id="titulo-ticket"
+            class="input-disable w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div class="input-group flex flex-row gap-x-2 w-6/12">
+        <textarea
+          id="descricao"
+          name="descricao"
+          placeholder="Descrição"
+          class="input-disable w-full pl-12 pr-3 py-2 text-gray-500 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          [disabled]="isInputDisabled"
+        >
+        </textarea>
+      </div>
+    </section>
+  </div>
+
+  <div
+    *ngIf="selectedType == 'chat'"
+    class="chat flex flex-col items-center justify-center border-t mx-10 border-[var(--primary-border-color)]"
+    style="min-height: 0"
+  >
+    <header
+      class="destinatario flex flex-col justify-center items-start px-4 pt-3 w-8/12"
+    >
+      <h5 class="flex text-md capitalize text-[var(--primary-font-color)]">
+        Nome Teste
+      </h5>
+      <h6 class="flex text-sm text-[var(--tertiary-highligted-text-color)]">
+        email&email.com
+      </h6>
+    </header>
+    <main
+      class="mensagens-list flex flex-col flex-grow w-8/12 px-10 mt-auto overflow-y-auto"
+    >
+      <p>teste</p>
+    </main>
+    <div
+      class="input-container p-1 flex items-center justify-center w-8/12 border border-[var(--primary-border-color)] rounded-full"
+    >
+      <button
+        class="upload flex items-center justify-center w-11 h-11 rounded-full border border-[var(--primary-border-color)] hover:bg-[var(--tertiary-button-background-color)]"
+      >
+        <ng-icon
+          name="lucidePlus"
+          strokeWidth="1.8"
+          size="20"
+          class="text-[var(--primary-font-color)]"
+        ></ng-icon>
+      </button>
+      <input
+        type="text"
+        class="flex flex-grow h-10 border-none bg-transparent text-[var(--primary-font-color)] px-3 focus:outline-none"
+      />
+
+      <button
+        class="enviar flex items-center justify-center w-11 h-11 rounded-full border-[var(--primary-border-color)] hover:bg-[var(--tertiary-button-background-color)]"
+      >
+        <ng-icon
+          name="lucideSendHorizontal"
+          strokeWidth="1.8"
+          size="20"
+          class="text-[var(--primary-font-color)]"
+        ></ng-icon>
+      </button>
+    </div>
+  </div>
+</body>

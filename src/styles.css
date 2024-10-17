@@ -130,15 +130,17 @@
 
   --primary-shadow-color: rgba(0, 0, 0, 0);
 
-  --background-prioridade-urgente: rgb(49 25 25);
-  --background-prioridade-alta: rgb(55 34 7);
-  --background-prioridade-media: rgb(45 42 15);
-  --background-prioridade-normal: rgb(16 35 61);
+  --card-background-color: rgb(32, 32, 32);
 
-  --font-color-prioridade-urgente: rgb(220 38 38);
-  --font-color-prioridade-alta: rgb(234 88 12);
-  --font-color-prioridade-media: rgb(202 138 4);
-  --font-color-prioridade-normal: rgb(37 99 235);
+  --background-prioridade-urgente: #311919;
+  --background-prioridade-alta: #372207;
+  --background-prioridade-media: #2d2a0f;
+  --background-prioridade-normal: #10233d;
+
+  --font-color-prioridade-urgente: #dc2626;
+  --font-color-prioridade-alta: #ea580c;
+  --font-color-prioridade-media: #ca8a04;
+  --font-color-prioridade-normal: #2563eb;
 }
 
 /*https://account.proton.me/pt-br/mail*/

@@ -78,13 +78,14 @@
             <ng-container *ngIf="ticket.responsavel == 'N/A'">
               <a
                 (click)="adotarTicket(ticket.id)"
-                class="button-adotar py-2 px-3 font-medium hover: duration-150 hover: rounded-lg"
+                class="button-adotar py-2 px-3 font-medium hover: duration-150 hover: rounded-lg cursor-pointer"
                 >Adotar</a
               >
             </ng-container>
             <button
               class="button-gerenciar py-2 leading-none px-3 font-medium hover: duration-150 hover: rounded-lg"
-            >
+              (click)="gerenciarTicket(ticket.id)"
+              >
               Gerenciar
             </button>
           </td>

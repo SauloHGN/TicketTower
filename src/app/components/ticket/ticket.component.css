@@ -1,0 +1,46 @@
+.input-disable:disabled,
+.input-disable:hover,
+.input-disable:focus {
+  cursor: not-allowed;
+}
+
+input,
+textarea {
+  border-color: var(--primary-border-color);
+}
+
+textarea {
+  max-height: 300px;
+}
+
+.option {
+  color: var(--primary-font-color);
+}
+
+.chat {
+  height: 78vh;
+}
+/*
+@media screen and (max-height: 1080px) {
+  .chat {
+    height: 800px;
+  }
+}
+
+@media screen and (max-height: 960px) {
+  .chat {
+    height: 768px;
+  }
+}
+
+@media screen and (max-height: 768px) {
+  .chat {
+    height: 600px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .chat {
+    height: 476px;
+  }
+}*/
