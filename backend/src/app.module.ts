@@ -21,6 +21,8 @@ import { EmailModule } from './email/email.module';
 import { DataUtilsModule } from './repository/DataUtils.module';
 import { TicketModule } from './objects/ticket/ticket.module';
 import { Tickets } from './entity/ticket.entity';
+import { Sla } from './entity/sla.entity';
+import { SlaModule } from './objects/sla/sla.module';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -33,6 +35,7 @@ import { Tickets } from './entity/ticket.entity';
     EmailModule,
     DataUtilsModule,
     TicketModule,
+    SlaModule,
 
     ConfigModule.forRoot({
       isGlobal: true,
@@ -49,6 +52,7 @@ import { Tickets } from './entity/ticket.entity';
       Enderecos,
       UsersView,
       Tickets,
+      Sla
     ]),
   ],
   controllers: [AppController],

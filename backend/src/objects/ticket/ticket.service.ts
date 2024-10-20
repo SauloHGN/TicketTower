@@ -4,6 +4,7 @@ import { ResponsavelDto } from 'src/dto/ResponsavelDto';
 import { Funcionarios } from 'src/entity/funcionarios.entity';
 import { Mensagens } from 'src/entity/mensagens.entity';
 import { Setores } from 'src/entity/setores.entity';
+import { Sla } from 'src/entity/sla.entity';
 import { Tickets } from 'src/entity/ticket.entity';
 import { UsersView } from 'src/entity/usersView.entity';
 import { AbertoPorTipo } from 'src/enums/abertoPor';
@@ -22,6 +23,8 @@ export class TicketService {
     private readonly ticketRepository: Repository<Tickets>,
     @InjectRepository(UsersView)
     private readonly usersView: Repository<UsersView>,
+    @InjectRepository(Sla)
+    private readonly slaRepository: Repository<Sla>,
 
     private readonly setoresService: SetoresService,
     private readonly funcionarioService: FuncionarioService,
@@ -57,6 +60,20 @@ export class TicketService {
       };
     }
 
+    const sla = await this.slaRepository.findOne({
+      where: {
+        ticket_tipo: classificacao,
+        prioridade: prioridadeEnum,
+      },
+    });
+
+    if (!sla) {
+      return {
+        status: 400,
+        msg: 'SLA não encontrada para este tipo de ticket e prioridade',
+      };
+    }
+
     // Cria uma nova instância de Ticket
     const newTicket = new Tickets();
     newTicket.id = ticketID;
@@ -69,6 +86,7 @@ export class TicketService {
     newTicket.descricao = descricao;
     newTicket.id_setor = setorID;
     newTicket.prioridade = prioridadeEnum;
+    newTicket.sla = sla;
 
     try {
       // Salva o novo ticket no banco de dados

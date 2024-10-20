@@ -237,7 +237,6 @@ export class CadastroComponent implements OnInit {
       );
       clienteData.id_empresa = idEmpresa;
 
-      console.log(clienteData);
       this.http
         .post(`http://localhost:3000/cadastro/${user.id}/cliente`, clienteData)
         .subscribe((response) => {
