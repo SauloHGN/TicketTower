@@ -11,6 +11,7 @@ import { Clientes } from 'src/entity/clientes.entity';
 import { SetoresService } from 'src/setores/setores.service';
 import { Setores } from 'src/entity/setores.entity';
 import { Sla } from 'src/entity/sla.entity';
+import { SlaService } from '../sla/sla.service';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { Sla } from 'src/entity/sla.entity';
     FuncionarioService,
     DataUtilsService,
     SetoresService,
+    SlaService
   ],
   exports: [TicketService],
 })

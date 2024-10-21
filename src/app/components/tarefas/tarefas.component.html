@@ -38,6 +38,7 @@
           <th class="py-3 px-6">Status</th>
           <th class="py-3 px-6">Responsável</th>
           <th class="py-3 px-6">Abertura</th>
+          <th class="py-3 px-6">Resposta<br />Fechamento</th>
           <th class="py-3 px-3"></th>
         </tr>
       </thead>
@@ -74,6 +75,14 @@
           <td class="px-6 py-4 whitespace-nowrap">
             {{ ticket.data_hora_abertura }}
           </td>
+
+          <td class="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
+            <div>
+              <span class="block text-sm font-medium">{{ ticket.prazo_resposta }}</span>
+              <span class="block text-sm font-medium">{{ ticket.prazo_resolucao }}</span>
+            </div>
+          </td>
+
           <td class="text-right px-4 whitespace-nowrap">
             <ng-container *ngIf="ticket.responsavel == 'N/A'">
               <a

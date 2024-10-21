@@ -6,6 +6,7 @@ import { lucideBox } from '@ng-icons/lucide';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ToastrService } from 'ngx-toastr';
 import { ticketClassify } from '../../enum/ticketClassify';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-criarticket',
@@ -103,6 +104,8 @@ export class CriarTicketComponent implements OnInit {
         ), // Converte uma FileList para Array de files
       };
 
+      console.log(ticket);
+
       if (
         !ticket.titulo ||
         !ticket.descricao ||
@@ -116,6 +119,10 @@ export class CriarTicketComponent implements OnInit {
       }
 
       this.http.post(url, ticket).subscribe((response: any) => {
+        if (response.status != 201) {
+          this.toastService.error('Erro ao criar Ticket');
+          return;
+        }
         this.toastService.success('Ticket criado com sucesso.');
 
         //limpar campos

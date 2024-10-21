@@ -154,4 +154,10 @@ export class SlaService implements OnModuleInit {
       msg: 'Permissão invalida ou usuário não encontrado.',
     };
   }
+
+  async getSlaById(slaID: number) {
+    return await this.slaRepository.findOne({
+      where: { id: slaID },
+    });
+  }
 }

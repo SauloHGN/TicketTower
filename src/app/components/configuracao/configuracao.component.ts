@@ -4,6 +4,7 @@ import { lucidePencilLine } from '@ng-icons/lucide';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-configuracao',
@@ -20,7 +21,11 @@ import { ToastrService } from 'ngx-toastr';
 export class ConfiguracaoComponent implements OnInit {
   isDisable = true;
 
-  constructor(private http: HttpClient, private toastService: ToastrService) {}
+  constructor(
+    private http: HttpClient,
+    private toastService: ToastrService,
+    private themeService: ThemeService
+  ) {}
 
   switchDisable() {
     this.isDisable = !this.isDisable;
@@ -207,5 +212,18 @@ export class ConfiguracaoComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  theme: boolean = false;
+
+  ngOnInit(): void {
+    this.theme = localStorage.getItem('lightTheme') === 'true';
+  }
+
+  switchColorTheme(event: any): void {
+    const isChecked = event.target.checked;
+
+    if (this.theme !== isChecked) {
+      this.theme = isChecked;
+      this.themeService.switchTheme(); // Serviço global para alterar thema
+    }
+  }
 }

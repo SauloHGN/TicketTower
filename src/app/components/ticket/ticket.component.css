@@ -7,6 +7,7 @@
 input,
 textarea {
   border-color: var(--primary-border-color);
+  color: var(--primary-font-color);
 }
 
 textarea {
@@ -20,27 +21,38 @@ textarea {
 .chat {
   height: 78vh;
 }
-/*
-@media screen and (max-height: 1080px) {
-  .chat {
-    height: 800px;
+
+@media screen and (max-width: 1024px) {
+  .input-group {
+    flex-direction: column;
+    gap: 10px;
+    width: 400px;
+  }
+
+  .campos-de-informacao {
+    margin: 0 auto;
+    width: 400px;
+  }
+
+  input {
+    width: 400px;
   }
 }
 
-@media screen and (max-height: 960px) {
-  .chat {
-    height: 768px;
+@media screen and (max-width: 640px) {
+  * {
+    font-size: 11px;
+  }
+
+  .campos-de-informacao {
+    width: 250px;
+  }
+
+  .input-group {
+    width: 250px;
+  }
+
+  input {
+    width: 250px;
   }
 }
-
-@media screen and (max-height: 768px) {
-  .chat {
-    height: 600px;
-  }
-}
-
-@media screen and (max-height: 600px) {
-  .chat {
-    height: 476px;
-  }
-}*/

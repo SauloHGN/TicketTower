@@ -33,7 +33,7 @@ export const routes: Routes = [
       },
 
       {
-        path: 'ticket/:ticketid',
+        path: 'ticket/:ticketID',
         title: 'Ticket',
         component: TicketComponent,
         canActivate: [AuthGuard],

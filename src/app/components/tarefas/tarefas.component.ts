@@ -188,4 +188,6 @@ interface Ticket {
   responsavel: string | null; // ID do responsável pelo ticket (pode ser nulo se não houver)
   data_hora_abertura: Date; // Data e hora de abertura do ticket
   data_hora_encerramento?: Date | null; // Data e hora de encerramento do ticket (opcional e pode ser nulo)
+  prazo_resposta?: Date;
+  prazo_resolucao?: Date;
 }

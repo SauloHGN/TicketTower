@@ -6,21 +6,68 @@ h5 {
   color: var(--primary-font-color);
 }
 
-button{
+button {
   background-color: var(--card-background-color);
   border-color: var(--primary-border-color);
   color: var(--primary-font-color);
 }
 
-button:hover{
-  background-color:  var(--tertiary-button-background-color);
+button:hover {
+  background-color: var(--tertiary-button-background-color);
 }
 
 a {
   color: var(--primary-font-color);
 }
 
-.card-item, .grafico-ondas, .grafico-barras, .grafico-circular {
+.card-item,
+.grafico-ondas,
+.grafico-barras,
+.grafico-circular {
   background-color: var(--card-background-color);
   border-color: var(--primary-border-color);
+}
+
+@media screen and (max-width: 1660px) {
+  .apexcharts-legend {
+    top: 250px;
+  }
+
+  .cards {
+    gap: 10px;
+  }
+
+  .card-item {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .main-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .coluna {
+    flex-direction: row;
+    gap: 12px;
+    width: 60%;
+  }
+
+  .blocos .grid{
+
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-columns: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .coluna{
+    margin-top: 12px;
+    width: 80%;
+  }
+
+  
+
 }
