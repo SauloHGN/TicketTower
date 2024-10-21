@@ -92,7 +92,6 @@ export class CadastroComponent implements OnInit {
 
   selectOption(option: any) {
     this.selectedType = option;
-    console.log('teste');
   }
 
   // Métodos para verificar qual formulário deve ser mostrado com base no tipo selecionado
@@ -238,7 +237,6 @@ export class CadastroComponent implements OnInit {
       );
       clienteData.id_empresa = idEmpresa;
 
-      console.log(clienteData);
       this.http
         .post(`http://localhost:3000/cadastro/${user.id}/cliente`, clienteData)
         .subscribe((response) => {

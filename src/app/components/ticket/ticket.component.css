@@ -1,0 +1,58 @@
+.input-disable:disabled,
+.input-disable:hover,
+.input-disable:focus {
+  cursor: not-allowed;
+}
+
+input,
+textarea {
+  border-color: var(--primary-border-color);
+  color: var(--primary-font-color);
+}
+
+textarea {
+  max-height: 300px;
+}
+
+.option {
+  color: var(--primary-font-color);
+}
+
+.chat {
+  height: 78vh;
+}
+
+@media screen and (max-width: 1024px) {
+  .input-group {
+    flex-direction: column;
+    gap: 10px;
+    width: 400px;
+  }
+
+  .campos-de-informacao {
+    margin: 0 auto;
+    width: 400px;
+  }
+
+  input {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  * {
+    font-size: 11px;
+  }
+
+  .campos-de-informacao {
+    width: 250px;
+  }
+
+  .input-group {
+    width: 250px;
+  }
+
+  input {
+    width: 250px;
+  }
+}

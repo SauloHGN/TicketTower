@@ -1,1 +1,326 @@
+<section class="flex flex-col items-center justify-center p-4">
+  <div class="flex flex-row w-96 justify-between">
+    <p class="flex items-center text-sm text-[var(--primary-font-color)]">
+      Tema claro
+    </p>
 
+    <label
+      for="darkTheme"
+      class="relative inline-block h-6 w-12 cursor-pointer rounded-full bg-gray-300 transition [-webkit-tap-highlight-color:_transparent] has-[:checked]:bg-[var(--primary-button-background-color)]"
+    >
+      <input
+        type="checkbox"
+        id="darkTheme"
+        class="peer sr-only"
+        [checked]="theme"
+        (change)="switchColorTheme($event)"
+      />
+
+      <span
+        class="absolute inset-y-0 start-0 m-1 size-4 rounded-full bg-white transition-all peer-checked:start-6"
+      ></span>
+    </label>
+  </div>
+
+  <div class="w-3/5 border-b border-[var(--primary-border-color)] m-6"></div>
+
+  <div class="flex flex-col w-3/5 gap-y-4">
+    <div class="flex flex-row items-center justify-around mb-6">
+      <div class="flex flex-col w-9/12">
+        <h4
+          class="text-[var(--primary-highlighted-text-color)] text-xl font-semibold"
+        >
+          SLA's
+        </h4>
+        <p
+          class="mt-2 text-[var(--tertiary-highligted-text-color)] text-justify text-base sm:text-sm"
+        >
+          Os campos a seguir são destinados à personalização dos SLA's para as
+          respostas a tickets, conforme cada classificação. (Tempo definido em
+          minutos)
+        </p>
+        <p
+          class="italic text-[var(--tertiary-highligted-text-color)] text-justify text-base sm:text-sm"
+        >
+          Caso os valores não sejam definidos o sistema irá funcionar com
+          valores padrões de SLA.
+        </p>
+      </div>
+
+      <button
+        class="flex items-center justify-center mt-4 w-42 h-8 gap-x-2 p-4 border border-[var(--primary-border-color)] text-sm text-[var(--primary-font-color)] rounded-md hover:bg-[var(--tertiary-button-background-color)]"
+        (click)="switchDisable()"
+      >
+        Habilitar Edição
+        <ng-icon
+          class="flex text-[var(--primary-font-color)]"
+          name="lucidePencilLine"
+          strokeWidth="1.5"
+          size="18"
+        ></ng-icon>
+      </button>
+    </div>
+
+    <div class="flex flex-col w-full justify-between gap-y-2">
+      <h3 class="text-lg text-[var(--primary-font-color)] font-semibold py-2">
+        Incidente (IN)
+      </h3>
+      <div class="input-group flex flex-row gap-x-2">
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Urgente"
+            id="resolucao-incidente-urgente"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Alta"
+            id="resolucao-incidente-alta"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Média"
+            id="resolucao-incidente-media"
+            disabled
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Normal"
+            id="resolucao-incidente-normal"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="input-group flex flex-row gap-x-2">
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Reposta Urgente"
+            id="resposta-incidente-urgente"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Reposta Alta"
+            id="resposta-incidente-alta"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Reposta Média"
+            id="resposta-incidente-media"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Reposta Normal"
+            id="resposta-incidente-normal"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full justify-between gap-y-2">
+      <h3 class="text-lg text-[var(--primary-font-color)] font-semibold py-2">
+        Mudança (CH)
+      </h3>
+      <div class="input-group flex flex-row gap-x-2">
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Urgente"
+            id="resolucao-mudanca-urgente"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Alta"
+            id="resolucao-mudanca-alta"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Média"
+            id="resolucao-mudanca-media"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Normal"
+            id="resolucao-mudanca-normal"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="input-group flex flex-row gap-x-2">
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Urgente"
+            id="resposta-mudanca-urgente"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Alta"
+            id="resposta-mudanca-alta"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Média"
+            id="resposta-mudanca-media"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Normal"
+            id="resposta-mudanca-normal"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full justify-between gap-y-2">
+      <h3 class="text-lg text-[var(--primary-font-color)] font-semibold py-2">
+        Solicitação de Serviço (SS)
+      </h3>
+      <div class="input-group flex flex-row gap-x-2">
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Urgente"
+            id="resolucao-solicitacao-servico-urgente"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Alta"
+            id="resolucao-solicitacao-servico-alta"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Média"
+            id="resolucao-solicitacao-servico-media"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resolução Normal"
+            id="resolucao-solicitacao-servico-normal"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="input-group flex flex-row gap-x-2">
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Urgente"
+            id="resposta-solicitacao-servico-urgente"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Alta"
+            id="resposta-solicitacao-servico-alta"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Média"
+            id="resposta-solicitacao-servico-media"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+        <div class="relative w-full">
+          <input
+            type="number"
+            placeholder="Resposta Normal"
+            id="resposta-solicitacao-servico-normal"
+            class="w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg disabled:cursor-not-allowed"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center mt-10">
+        <button
+          type="submit"
+          class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
+          (click)="salvarSLA()"
+        >
+          Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

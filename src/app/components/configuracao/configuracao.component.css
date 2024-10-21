@@ -1,0 +1,23 @@
+
+
+input::placeholder {
+  color: var(--primary-placeholder-color);
+}
+
+input:focus {
+  border-color: var(--secundary-border-color);
+}
+
+select:focus,
+input:focus {
+  border-color: var(--secundary-border-color);
+}
+
+input::placeholder {
+  color: var(--primary-placeholder-color);
+}
+
+input {
+  color: var(--primary-font-color);
+  border-color: var(--primary-border-color);
+}

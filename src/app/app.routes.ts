@@ -12,12 +12,12 @@ import { CodigoComponent } from './components/pages/codigo/codigo.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { GerenciarUsuariosComponent } from './components/gerenciar-usuarios/gerenciar-usuarios.component';
+import { TicketComponent } from './components/ticket/ticket.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
   { path: 'redefinir', title: 'Esqueci a senha', component: CodigoComponent },
-  { path: '*', title: 'Página não encontrada', component: NotFoundComponent },
   {
     path: 'home',
     title: 'Página Inicial',
@@ -29,6 +29,13 @@ export const routes: Routes = [
         path: 'fila-de-tickets',
         title: 'Fila de Tickets',
         component: TarefasComponent,
+        canActivate: [AuthGuard],
+      },
+
+      {
+        path: 'ticket/:ticketID',
+        title: 'Ticket',
+        component: TicketComponent,
         canActivate: [AuthGuard],
       },
 
@@ -68,6 +75,8 @@ export const routes: Routes = [
       },
     ],
   },
+
+  { path: '**', title: 'Página não encontrada', component: NotFoundComponent },
 ];
 
 @NgModule({

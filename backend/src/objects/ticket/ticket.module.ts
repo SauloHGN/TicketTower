@@ -10,6 +10,8 @@ import { DataUtilsService } from 'src/repository/DataUtils.service';
 import { Clientes } from 'src/entity/clientes.entity';
 import { SetoresService } from 'src/setores/setores.service';
 import { Setores } from 'src/entity/setores.entity';
+import { Sla } from 'src/entity/sla.entity';
+import { SlaService } from '../sla/sla.service';
 
 @Module({
   imports: [
@@ -19,6 +21,7 @@ import { Setores } from 'src/entity/setores.entity';
       Funcionarios,
       UsersView,
       Setores,
+      Sla
     ]),
   ],
   controllers: [TicketController],
@@ -27,6 +30,7 @@ import { Setores } from 'src/entity/setores.entity';
     FuncionarioService,
     DataUtilsService,
     SetoresService,
+    SlaService
   ],
   exports: [TicketService],
 })

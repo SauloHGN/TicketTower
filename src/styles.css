@@ -69,6 +69,7 @@
   --tertiary-highligted-text-color: rgb(107 114 128);
 
   --primary-border-color: #e5e7eb;
+  --secundary-border-color: rgb(17 24 39);
   --secundary-border-color: lightblue;
   --tertiary-border-color: rgba(0, 0, 0, 0.1);
 
@@ -78,6 +79,24 @@
   --placeholder-default: lightblue;
 
   --primary-shadow-color: rgba(0, 0, 0, 0.1);
+
+  --card-background-color: rgba(238, 238, 238, 0.5);
+
+  --background-prioridade-urgente: #dc262670;
+  --background-prioridade-alta: #ea5a0c85;
+  --background-prioridade-media: #ca8b045d;
+  --background-prioridade-normal: #2e70ff70;
+
+  --font-color-prioridade-urgente: #dc2626;
+  --font-color-prioridade-alta: #ea580c;
+  --font-color-prioridade-media: #ca8a04;
+  --font-color-prioridade-normal: #2563eb;
+
+  --background-gradient: linear-gradient(
+    185deg,
+    rgba(39, 39, 42, 0.95) 70%,
+    rgba(115, 123, 142, 0.7) 140.23%
+  );
 }
 
 :root {
@@ -111,8 +130,9 @@
   --tertiary-font-color: #d7d7d7;
 
   --primary-border-color: #292929;
+  --default-border-color: rgb(185 189 195);
+
   --secundary-border-color: lightblue;
-  --tertiary-border-color: rgba(75, 75, 75, 0.541);
 
   --primary-highlighted-text-color: #fff;
   --secundary-highlighted-text-color: #06b6d4;
@@ -130,15 +150,21 @@
 
   --primary-shadow-color: rgba(0, 0, 0, 0);
 
-  --background-prioridade-urgente: rgb(49 25 25);
-  --background-prioridade-alta: rgb(55 34 7);
-  --background-prioridade-media: rgb(45 42 15);
-  --background-prioridade-normal: rgb(16 35 61);
+  --card-background-color: rgb(32, 32, 32);
 
-  --font-color-prioridade-urgente: rgb(220 38 38);
-  --font-color-prioridade-alta: rgb(234 88 12);
-  --font-color-prioridade-media: rgb(202 138 4);
-  --font-color-prioridade-normal: rgb(37 99 235);
+  --background-prioridade-urgente: #311919;
+  --background-prioridade-alta: #372207;
+  --background-prioridade-media: #2d2a0f;
+  --background-prioridade-normal: #10233d;
+
+  --font-color-prioridade-urgente: #dc2626;
+  --font-color-prioridade-alta: #ea580c;
+  --font-color-prioridade-media: #ca8a04;
+  --font-color-prioridade-normal: #2563eb;
+
+  --background-gradient: linear-gradient(
+    185deg,
+    rgba(39, 39, 42, 0.95) 70%,
+    rgba(15, 23, 42, 0) 140.23%
+  );
 }
-
-/*https://account.proton.me/pt-br/mail*/

@@ -15,6 +15,7 @@ import { AbertoPorTipo } from 'src/enums/abertoPor';
 import { StatusTicket } from 'src/enums/statusTicket';
 import { Prioridade } from 'src/enums/prioridade';
 import { ResponsavelDto } from 'src/dto/ResponsavelDto';
+import { Sla } from './sla.entity';
 
 @Entity()
 export class Tickets {
@@ -54,4 +55,7 @@ export class Tickets {
   })
   @JoinColumn({ name: 'id_responsavel' })
   id_responsavel: ResponsavelDto;
+
+  @ManyToOne(() => Sla, { eager: true })
+  sla: Sla; // Relaciona o ticket com a SLA
 }

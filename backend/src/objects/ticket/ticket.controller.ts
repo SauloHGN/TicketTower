@@ -46,6 +46,12 @@ export class TicketController {
     return result;
   }
 
+  @Get('/detalhes/:ticketID')
+  async getTicketInfo(@Param('ticketID') ticketID: string) {
+    const result = this.ticketService.getTicketInfo(ticketID);
+    return result;
+  }
+
   @Get('/:id')
   async load(@Param('id') id: string) {
     //Captar a permissão do usuario para definr quais tickets serão exibidos

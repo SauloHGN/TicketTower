@@ -4,6 +4,7 @@ import { ResponsavelDto } from 'src/dto/ResponsavelDto';
 import { Funcionarios } from 'src/entity/funcionarios.entity';
 import { Mensagens } from 'src/entity/mensagens.entity';
 import { Setores } from 'src/entity/setores.entity';
+import { Sla } from 'src/entity/sla.entity';
 import { Tickets } from 'src/entity/ticket.entity';
 import { UsersView } from 'src/entity/usersView.entity';
 import { AbertoPorTipo } from 'src/enums/abertoPor';
@@ -14,6 +15,7 @@ import { DataUtilsService } from 'src/repository/DataUtils.service';
 import { SetoresService } from 'src/setores/setores.service';
 import { FuncionarioService } from 'src/users/funcionario/funcionario.service';
 import { LessThan, MoreThanOrEqual, Repository } from 'typeorm';
+import { SlaService } from '../sla/sla.service';
 
 @Injectable()
 export class TicketService {
@@ -22,10 +24,13 @@ export class TicketService {
     private readonly ticketRepository: Repository<Tickets>,
     @InjectRepository(UsersView)
     private readonly usersView: Repository<UsersView>,
+    @InjectRepository(Sla)
+    private readonly slaRepository: Repository<Sla>,
 
     private readonly setoresService: SetoresService,
     private readonly funcionarioService: FuncionarioService,
     private readonly dataUtilsService: DataUtilsService,
+    private readonly slaService: SlaService,
   ) {}
 
   async createTicket(
@@ -57,6 +62,27 @@ export class TicketService {
       };
     }
 
+    if (
+      classificacao == 'solicitacao de servico' ||
+      classificacao == 'solicitação de serviço'
+    ) {
+      classificacao = 'solicitacao_de_servico';
+    }
+
+    const sla = await this.slaRepository.findOne({
+      where: {
+        ticket_tipo: classificacao,
+        prioridade: prioridadeEnum,
+      },
+    });
+
+    if (!sla) {
+      return {
+        status: 400,
+        msg: 'SLA não encontrada para este tipo de ticket e prioridade',
+      };
+    }
+
     // Cria uma nova instância de Ticket
     const newTicket = new Tickets();
     newTicket.id = ticketID;
@@ -69,6 +95,7 @@ export class TicketService {
     newTicket.descricao = descricao;
     newTicket.id_setor = setorID;
     newTicket.prioridade = prioridadeEnum;
+    newTicket.sla = sla;
 
     try {
       // Salva o novo ticket no banco de dados
@@ -191,6 +218,8 @@ export class TicketService {
           descricao: ticket.descricao,
           id_setor: ticket.id_setor,
           responsavel: email_responsavel, // Utiliza o valor padrão aqui
+          prazo_resposta: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resposta),
+          prazo_resolucao: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resolucao),
         };
       }),
     );
@@ -199,6 +228,33 @@ export class TicketService {
       status: 200,
       tickets: formattedTickets,
     };
+  }
+
+
+  async formatTicket(ticket){
+
+    const email = await this.dataUtilsService.getEmailByID(ticket.aberto_por);
+    const email_responsavel = ticket.id_responsavel
+      ? await this.dataUtilsService.getEmailByID(ticket.id_responsavel.id)
+      : 'N/A'; // Mensagem padrão se não houver responsável
+
+    return {
+      id: ticket.id,
+      data_hora_abertura: this.formatDate(ticket.data_hora_abertura),
+      data_hora_encerramento: ticket.data_hora_encerramento
+        ? this.formatDate(ticket.data_hora_encerramento)
+        : '-',
+      aberto_por: email,
+      aberto_por_tipo: ticket.aberto_por_tipo,
+      status: ticket.status,
+      prioridade: ticket.prioridade,
+      titulo: ticket.titulo,
+      descricao: ticket.descricao,
+      id_setor: ticket.id_setor,
+      responsavel: email_responsavel, // Utiliza o valor padrão aqui
+      prazo_resposta: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resposta),
+      prazo_resolucao: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resolucao),
+    }
   }
 
   formatDate(date: Date | null) {
@@ -211,7 +267,28 @@ export class TicketService {
     if (format == null || format.includes('null') || format == 'NaN/NaN/NaN') {
       format = '-';
     }
-    return format; // Formata a data
+    return format;
+  }
+
+  async deadlineTickets(openingDate: Date, tempo: number) {
+    // Garantir que openingDate é um objeto Date
+
+
+    const openingDateObject = new Date(openingDate);
+
+
+    const prazo = new Date(openingDateObject); // Cria uma nova data a partir da data de abertura
+    prazo.setMinutes(prazo.getMinutes() + tempo); // Adiciona os minutos
+
+
+
+    const day = String(prazo.getDate()).padStart(2, '0'); // Dia com 2 dígitos
+    const month = String(prazo.getMonth() + 1).padStart(2, '0'); // Mês com 2 dígitos
+    const year = prazo.getFullYear(); // Ano
+    const hours = String(prazo.getHours()).padStart(2, '0'); // Horas com 2 dígitos
+    const minutes = String(prazo.getMinutes()).padStart(2, '0'); // Minutos com 2 dígitos
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 
   async adotarTicket(userID: string, ticketID: string) {
@@ -283,5 +360,22 @@ export class TicketService {
     } catch (error) {
       return { status: 500, msg: 'Erro ao atualizar ticket' };
     }
+  }
+
+
+  async getTicketInfo(ticketID: string){
+    try{
+      const ticket = await this.ticketRepository.findOne({
+        where: {id: ticketID}
+      })
+
+      const dadosTicket = await this.formatTicket(ticket);
+
+      return {status: 200, ticket: dadosTicket, msg:'Consulta bem sucedida' }
+
+    }catch(error){
+      return {status: 500, ticket: null, msg:'Ocorreu um erro no processamento:\n' + error}
+    }
+
   }
 }

@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { lucideRefreshCcw, lucideSearch } from '@ng-icons/lucide';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { HttpClient } from '@angular/common/http';
+import { SharedService } from '../../sharedService';
+import { Injectable } from '@angular/core';
 import { Toast } from 'ngx-toastr';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-tarefas',
@@ -41,7 +44,11 @@ export class TarefasComponent implements OnInit {
       abertura: '12/09/2024',
     },
   ];*/
-  constructor(private http: HttpClient) {
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private sharedService: SharedService
+  ) {
     this.filteredTickets = this.queueTickets; // inicializa com todos os tickets
   }
   ngOnInit(): void {
@@ -164,6 +171,12 @@ export class TarefasComponent implements OnInit {
       throw new Error('Erro ao se comunicar com o servidor');
     }
   }
+
+  gerenciarTicket(id: string) {
+    this.sharedService.updateItemName('Detalhes do Ticket');
+
+    this.router.navigate([`home/ticket/${id}`]);
+  }
 }
 
 interface Ticket {
@@ -175,4 +188,6 @@ interface Ticket {
   responsavel: string | null; // ID do responsável pelo ticket (pode ser nulo se não houver)
   data_hora_abertura: Date; // Data e hora de abertura do ticket
   data_hora_encerramento?: Date | null; // Data e hora de encerramento do ticket (opcional e pode ser nulo)
+  prazo_resposta?: Date;
+  prazo_resolucao?: Date;
 }
