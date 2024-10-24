@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucidePlus, lucideSendHorizontal } from '@ng-icons/lucide';
+import { lucidePlus, lucideSendHorizontal, lucideX, lucideBuilding} from '@ng-icons/lucide';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -16,16 +16,21 @@ import { ActivatedRoute } from '@angular/router';
     provideIcons({
       lucidePlus,
       lucideSendHorizontal,
+      lucideX,
+      lucideBuilding
     }),
   ],
 })
-export class TicketComponent {
+export class TicketComponent implements OnInit{
   isInputDisabled: boolean = true;
   selectedType: string = '';
-  options = [{ type: 'detalhes' }, { type: 'chat' }];
+  options = [{ type: 'detalhes' }, { type: 'notas' }, { type: 'anexos' }];
 
   ticketID: string | null = '';
   dadosTicket: any;
+
+  setores?: any[];
+  selectedSetor: any;
 
   constructor(
     private http: HttpClient,
@@ -36,8 +41,17 @@ export class TicketComponent {
     if (this.selectedType === 'detalhes') {
       this.loadDetalhes();
     }
-    if (this.selectedType === 'chat') {
+    if (this.selectedType === 'notas') {
     }
+    if (this.selectedType === 'anexos') {
+    }
+  }
+
+
+  ngOnInit(): void {
+    this.http.get<any[]>('http://localhost:3000/setores').subscribe((data) => {
+      this.setores = data;
+    });
   }
 
   loadDetalhes() {
@@ -119,5 +133,12 @@ export class TicketComponent {
 
   selectOption(option: any) {
     this.selectedType = option;
+  }
+
+
+  popoverVisible: boolean = false;
+
+  togglePopover() {
+    this.popoverVisible = !this.popoverVisible;
   }
 }

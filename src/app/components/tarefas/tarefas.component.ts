@@ -126,27 +126,29 @@ export class TarefasComponent implements OnInit {
   }
 
   loadTicket() {
-    try {
-      let userID = '';
-      const userInfoString = sessionStorage.getItem('userInfo');
-      if (userInfoString) {
-        const userInfo = JSON.parse(userInfoString);
-        userID = userInfo.id;
-      } else {
-        return;
-      }
+    setTimeout(() => {
+      try {
+        let userID = '';
+        const userInfoString = sessionStorage.getItem('userInfo');
+        if (userInfoString) {
+          const userInfo = JSON.parse(userInfoString);
+          userID = userInfo.id;
+        } else {
+          return;
+        }
 
-      this.http
-        .get<{ status: number; tickets: any[] }>(
-          `http://localhost:3000/ticket/${userID}`
-        )
-        .subscribe((data) => {
-          this.filteredTickets = this.queueTickets = data.tickets;
-          console.log(this.queueTickets);
-        });
-    } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
-    }
+        this.http
+          .get<{ status: number; tickets: any[] }>(
+            `http://localhost:3000/ticket/${userID}`
+          )
+          .subscribe((data) => {
+            this.filteredTickets = this.queueTickets = data.tickets;
+            console.log(this.queueTickets);
+          });
+      } catch {
+        throw new Error('Erro ao se comunicar com o servidor');
+      }
+    }, 10000);
   }
 
   adotarTicket(id: string) {

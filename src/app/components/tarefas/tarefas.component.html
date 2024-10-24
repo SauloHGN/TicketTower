@@ -1,4 +1,4 @@
-<div class="max-w-screen-xl mx-auto px-4 pt-6 md:px-8">
+<div class="max-w-screen-2xl mx-auto px-4 pt-6 md:px-8">
   <div class="flex items-center flex-row gap-4 md:flex">
     <div class="relative w-64">
       <ng-icon
@@ -19,7 +19,8 @@
     </div>
     <button
       class="flex items-center justify-center w-11 h-10 border border-[var(--primary-border-color)] rounded-md hover:bg-[var(--tertiary-button-background-color)]"
-    >
+      (click)="loadTicket()"
+      >
       <ng-icon
         class="flex text-[var(--primary-font-color)]"
         name="lucideRefreshCcw"
@@ -33,7 +34,7 @@
       <thead class="font-medium border-b">
         <tr>
           <th class="py-3 px-6">Código<br />Usuário</th>
-          <th class="py-3 px-6">Prioridade</th>
+          <th class="py-3 px-4">Prioridade</th>
           <th class="py-3 px-6">Título</th>
           <th class="py-3 px-6">Status</th>
           <th class="py-3 px-6">Responsável</th>
@@ -46,11 +47,11 @@
         <tr *ngFor="let ticket of paginatedTickets; let idx = index">
           <td class="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
             <div>
-              <span class="block text-sm font-medium">{{ ticket.id }}</span>
-              <span class="block text-xs">{{ ticket.aberto_por }}</span>
+              <span class="block text-sm font-medium max-w-40 overflow-hidden">{{ ticket.id }}</span>
+              <span class="block text-xs max-w-40 overflow-hidden">{{ ticket.aberto_por }}</span>
             </div>
           </td>
-          <td class="pr-6 py-4 whitespace-nowrap">
+          <td class="pr-6 py-4 whitespace-nowrap text-center items-center">
             <span
               [ngClass]="{
                 'px-3 py-2 rounded-full font-semibold text-xs capitalize': true,
@@ -67,12 +68,12 @@
               {{ ticket.prioridade }}
             </span>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.titulo }}</td>
-          <td class="px-6 py-4 whitespace-nowrap capitalize">
+          <td class="px-6 py-4 whitespace-nowrap max-w-56 overflow-hidden">{{ ticket.titulo }}</td>
+          <td class="px-6 py-4 whitespace-nowrap capitalize max-w-40 overflow-hidden">
             {{ ticket.status }}
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">{{ ticket.responsavel }}</td>
-          <td class="px-6 py-4 whitespace-nowrap">
+          <td class="px-6 py-4 whitespace-nowrap max-w-40 overflow-hidden">{{ ticket.responsavel }}</td>
+          <td class="px-6 py-4 whitespace-nowrap max-w-40 overflow-hidden">
             {{ ticket.data_hora_abertura }}
           </td>
 
