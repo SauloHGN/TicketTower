@@ -57,8 +57,8 @@
           <td class="px-6 py-4 whitespace-nowrap">{{ item.tipo }}</td>
           <td class="text-right px-6 whitespace-nowrap">
             <a
-              href="javascript:void(0)"
-              class="button-edit py-2 px-3 font-medium hover: duration-150 hover: rounded-lg"
+              (click)="editarUser(item.tipo)"
+              class="button-edit py-2 px-3 font-medium hover: duration-150 hover: rounded-lg hover:cursor-pointer"
               >Editar</a
             >
             <button

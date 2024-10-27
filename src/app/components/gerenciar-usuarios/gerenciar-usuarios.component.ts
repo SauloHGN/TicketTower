@@ -4,6 +4,7 @@ import { SharedService } from '../../sharedService';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { lucideRefreshCcw, lucideSearch } from '@ng-icons/lucide';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gerenciar-usuarios',
@@ -19,7 +20,7 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class GerenciarUsuariosComponent implements OnInit {
-  constructor(private sharedService: SharedService) {
+  constructor(private sharedService: SharedService, private router: Router) {
     this.filteredUsers = this.tableItems; // inicializa com todos os usuarios
   }
 
@@ -488,6 +489,14 @@ export class GerenciarUsuariosComponent implements OnInit {
 
   get totalPages() {
     return Math.ceil(this.filteredUsers.length / this.usersPerPage);
+  }
+
+  editarUser(tipo: string) {
+    const tipoValue = tipo.toLowerCase();
+
+    this.sharedService.setEditTypeUser(tipoValue);
+
+    this.router.navigate(['/home/editar']);
   }
 }
 

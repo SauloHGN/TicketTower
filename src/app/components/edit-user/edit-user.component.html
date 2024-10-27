@@ -1,0 +1,175 @@
+<body class="bg-[var(--primary-background-color)]">
+  <section class="flex py-6 px-6 items-center justify-center gap-3">
+    <div *ngIf="tipoUsuario == 'administrador'"></div>
+
+    <div *ngIf="tipoUsuario == 'funcionario'">
+      <div class="input-group">
+        <div class="relative w-full">
+          <ng-icon
+            name="lucideUserRound"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          ></ng-icon>
+
+          <input
+            type="text"
+            placeholder="Nome do Funcionario"
+            id="funcionario-nome"
+            class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+
+        <div class="relative w-full">
+          <ng-icon
+            name="lucideMail"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          ></ng-icon>
+
+          <input
+            type="email"
+            placeholder="Email do Funcionario"
+            id="funcionario-email"
+            class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="relative w-full">
+          <ng-icon
+            name="lucideUserRound"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          ></ng-icon>
+
+          <input
+            type="text"
+            placeholder="Cargo do Funcionario"
+            id="funcionario-cargo"
+            class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+
+        <div class="relative w-full">
+          <ng-icon
+            name="lucidePhone"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          ></ng-icon>
+
+          <input
+            type="text"
+            placeholder="Celular"
+            id="funcionario-celular"
+            mask="(00) 00000-0000"
+            class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="relative w-full">
+          <ng-icon
+            name="lucideBuilding"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          >
+          </ng-icon>
+          <select
+            id="funcionario-permissao"
+            name="funcionario-permissao"
+            class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+            required
+          >
+            <option value="" disabled selected hidden>Setor</option>
+            <option *ngFor="let setor of setores" [value]="setor.id">
+              {{ setor.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="tipoUsuario == 'cliente'">
+      <div class="input-group">
+        <div class="relative w-full">
+          <ng-icon
+            name="lucideUserRound"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          ></ng-icon>
+
+          <input
+            type="text"
+            placeholder="Nome e Sobrenome"
+            id="cliente-nome"
+            class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+
+        <div class="relative w-full">
+          <ng-icon
+            name="lucideMail"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          ></ng-icon>
+
+          <input
+            type="email"
+            placeholder="Email"
+            id="cliente-email"
+            class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="relative w-full">
+          <ng-icon
+            name="lucidePhone"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          ></ng-icon>
+
+          <input
+            type="text"
+            placeholder="Celular"
+            id="cliente-celular"
+            mask="(00) 00000-0000"
+            class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+        </div>
+
+        <div class="relative w-full">
+          <ng-icon
+            name="lucideBuilding"
+            strokeWidth="1.5"
+            size="20"
+            class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+          >
+          </ng-icon>
+          <select
+            id="cliente-empresa"
+            name="cliente-empresa"
+            class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+            required
+          >
+            <option value="" disabled selected hidden>Empresa</option>
+            <option *ngFor="let empresa of empresas" [value]="empresa.id">
+              {{ empresa.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>

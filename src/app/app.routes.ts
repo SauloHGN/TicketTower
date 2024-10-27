@@ -14,6 +14,7 @@ import { NotFoundComponent } from './components/pages/not-found/not-found.compon
 import { GerenciarUsuariosComponent } from './components/gerenciar-usuarios/gerenciar-usuarios.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 import { SlaComponent } from './components/sla/sla.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
@@ -73,6 +74,13 @@ export const routes: Routes = [
         path: 'configuracoes',
         title: 'Configurações',
         component: ConfiguracaoComponent,
+        canActivate: [AuthGuard],
+      },
+
+      {
+        path: 'editar',
+        title: 'Atualizar usuário',
+        component: EditUserComponent,
         canActivate: [AuthGuard],
       },
     ],

@@ -23,6 +23,7 @@ import { TicketModule } from './objects/ticket/ticket.module';
 import { Tickets } from './entity/ticket.entity';
 import { Sla } from './entity/sla.entity';
 import { SlaModule } from './objects/sla/sla.module';
+import { MensagemModule } from './utils/mensagem/mensagem.module';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -36,6 +37,7 @@ import { SlaModule } from './objects/sla/sla.module';
     DataUtilsModule,
     TicketModule,
     SlaModule,
+    MensagemModule,
 
     ConfigModule.forRoot({
       isGlobal: true,
@@ -54,6 +56,7 @@ import { SlaModule } from './objects/sla/sla.module';
       Tickets,
       Sla
     ]),
+    MensagemModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,0 +1,17 @@
+select,
+input {
+  color: var(--primary-font-color);
+  border-color: var(--primary-border-color);
+  width: 280px;
+
+  margin: 6px;
+}
+
+select:focus,
+input:focus {
+  border-color: var(--secundary-border-color);
+}
+
+option {
+  background-color: var(--primary-background-color);
+}
