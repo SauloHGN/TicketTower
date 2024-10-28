@@ -1,8 +1,6 @@
 <body class="bg-[var(--primary-background-color)]">
-  <section class="flex py-6 px-6 items-center justify-center gap-3">
-    <div *ngIf="tipoUsuario == 'administrador'"></div>
-
-    <div *ngIf="tipoUsuario == 'funcionario'">
+  <section class="flex py-6 px-6 items-center justify-center gap-3 flex-col">
+    <div *ngIf="tipoUsuario == 'funcionario' || tipoUsuario == 'administrador'">
       <div class="input-group">
         <div class="relative w-full">
           <ng-icon
@@ -93,6 +91,21 @@
             </option>
           </select>
         </div>
+
+
+        <div class="relative w-full">
+          <select
+            id="funcionario-permissao"
+            name="funcionario-permissao"
+            class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+            required
+          >
+            <option *ngFor="let valor of enumValues" [value]="valor">
+              {{ valor }}
+            </option>
+          </select>
+          </div>
+
       </div>
     </div>
 
@@ -163,6 +176,11 @@
             class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
             required
           >
+            <label
+              class="absolute translate-y-[-45%] px-2 top-0 font-light text-base text-sm text-[var(--default-border-color)] -top-0 left-3 text-sm"
+            >
+              Empresa
+            </label>
             <option value="" disabled selected hidden>Empresa</option>
             <option *ngFor="let empresa of empresas" [value]="empresa.id">
               {{ empresa.nome }}
@@ -171,5 +189,12 @@
         </div>
       </div>
     </div>
+
+    <button
+    class="gradient-button rounded-full"
+    (click)="updateUser(tipoUsuario)"
+      >Atualizar Usuário
+    </button>
+
   </section>
 </body>

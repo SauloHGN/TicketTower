@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Blob } from 'buffer';
 import { Anexos } from 'src/entity/anexos.entity';
 import { Mensagens } from 'src/entity/mensagens.entity';
+import { UsersView } from 'src/entity/usersView.entity';
+import { DataUtilsService } from 'src/repository/DataUtils.service';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -13,6 +15,8 @@ export class MensagemService {
 
     @InjectRepository(Anexos)
     private readonly anexoRepository: Repository<Anexos>,
+
+    private readonly dataUtilsService: DataUtilsService,
   ) {}
 
   async criarMensagem(
@@ -27,8 +31,8 @@ export class MensagemService {
     novaMensagem.data_hora = new Date();
     novaMensagem.id_remetente = remetenteID;
 
-    if(mensagem == null){
-      return {status: 500, erro: 'Não é possivel criar uma mensagem vazia'}
+    if (mensagem == null) {
+      return { status: 500, erro: 'Não é possivel criar uma mensagem vazia' };
     }
 
     // Verifica se o anexo existe
@@ -46,7 +50,33 @@ export class MensagemService {
       where: { id_ticket: { id: ticketID } },
     });
 
-    return { status: 200, mensagens: mensagens };
+    const mensagensFormat = await this.formatarMensagens(mensagens);
+
+    return { status: 200, mensagens: mensagensFormat };
+  }
+
+  async formatarMensagens(mensagens: any[]): Promise<any[]> {
+    // Usar Promise.all para aguardar todas as Promises
+    return Promise.all(
+      mensagens.map(async (mensagem) => {
+        const usuario = await this.dataUtilsService.getUserByID(
+          mensagem.id_remetente,
+        );
+        return {
+          id: mensagem.id,
+          mensagem: mensagem.mensagem,
+          data_hora: new Date(mensagem.data_hora).toLocaleString('pt-BR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          }),
+          nome: usuario ? usuario.nome : '...', // ... para usuários não encontrados
+        };
+      }),
+    );
   }
 
   async criarAnexo(
@@ -69,6 +99,6 @@ export class MensagemService {
     const anexos = await this.anexoRepository.find({
       where: { id_mensagem: { id: mensagemID } },
     });
-    return {status: 200, anexos: anexos};
+    return { status: 200, anexos: anexos };
   }
 }

@@ -3,13 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucidePlus, lucideSendHorizontal, lucideX, lucideBuilding} from '@ng-icons/lucide';
+import { NotesFileComponent } from '../notes-file/notes-file.component';
+import { NotesTextComponent } from '../notes-text/notes-text.component';
+import {
+  lucidePlus,
+  lucideSendHorizontal,
+  lucideX,
+  lucideBuilding,
+} from '@ng-icons/lucide';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ticket',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgIconComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    NgIconComponent,
+    NotesFileComponent,
+    NotesTextComponent
+  ],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.css',
   viewProviders: [
@@ -17,11 +30,11 @@ import { ActivatedRoute } from '@angular/router';
       lucidePlus,
       lucideSendHorizontal,
       lucideX,
-      lucideBuilding
+      lucideBuilding,
     }),
   ],
 })
-export class TicketComponent implements OnInit{
+export class TicketComponent implements OnInit {
   isInputDisabled: boolean = true;
   selectedType: string = '';
   options = [{ type: 'detalhes' }, { type: 'notas' }, { type: 'anexos' }];
@@ -31,6 +44,9 @@ export class TicketComponent implements OnInit{
 
   setores?: any[];
   selectedSetor: any;
+
+  dadosNotas?: Nota[] = [];
+  dadosAnexos?: [];
 
   constructor(
     private http: HttpClient,
@@ -47,20 +63,24 @@ export class TicketComponent implements OnInit{
     }
   }
 
-
   ngOnInit(): void {
     this.http.get<any[]>('http://localhost:3000/setores').subscribe((data) => {
       this.setores = data;
     });
   }
 
-  loadDetalhes() {
-    try {
-      // ------- Captar todos os setores ---------
+  async getParamTicket(): Promise<string | null> {
+    return new Promise((resolve) => {
       this.activatedRoute.paramMap.subscribe((params) => {
-        this.ticketID = params.get('ticketID');
+        const ticket = params.get('ticketID');
+        resolve(ticket);
       });
+    });
+  }
 
+  async loadDetalhes() {
+    try {
+      this.ticketID = await this.getParamTicket();
       if (this.ticketID == null) {
         return;
       }
@@ -113,6 +133,50 @@ export class TicketComponent implements OnInit{
     } catch (error) {}
   }
 
+  async loadAnexos() {
+    try {
+      this.ticketID = await this.getParamTicket();
+
+      if (this.ticketID == null) {
+        return;
+      }
+
+      this.http
+        .get(`http://localhost:3000/ticket/detalhes/${this.ticketID}`)
+        .subscribe({
+          next: async (response: any) => {
+            if (response.status != 200) {
+              return;
+            }
+
+            this.dadosAnexos = response.anexos;
+            console.log(this.dadosAnexos);
+          },
+        });
+    } catch (error) {}
+  }
+
+  async loadNotas() {
+    try {
+      this.ticketID = await this.getParamTicket();
+
+      if (this.ticketID == null) {
+        return;
+      }
+
+      this.http
+        .get(`http://localhost:3000/ticket/${this.ticketID}/notas`)
+        .subscribe({
+          next: async (response: any) => {
+            if (response.status != 200) {
+              return;
+            }
+            this.dadosNotas = response.mensagens;
+          },
+        });
+    } catch (error) {}
+  }
+
   async getClassificacao(ticketID: string) {
     let classificacao = ticketID.substring(0, 2);
 
@@ -133,12 +197,39 @@ export class TicketComponent implements OnInit{
 
   selectOption(option: any) {
     this.selectedType = option;
+
+    switch (option) {
+      case 'detalhes':
+        this.loadDetalhes();
+        return;
+
+      case 'anexos':
+        this.loadAnexos();
+        return;
+
+      case 'notas':
+        this.loadNotas();
+        return;
+
+      default:
+        return;
+    }
   }
 
+  setorChange() {
+    
+  }
 
   popoverVisible: boolean = false;
 
   togglePopover() {
     this.popoverVisible = !this.popoverVisible;
   }
+}
+
+export interface Nota {
+  mensagemID: number,
+  nome: string;
+  data_hora: string;
+  mensagem: string;
 }

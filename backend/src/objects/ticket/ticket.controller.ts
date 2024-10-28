@@ -127,4 +127,16 @@ export class TicketController {
     return result;
   }
 
+  @Patch('/:ticketId/transferirSetor')
+  async transferirSetor(@Param('ticketId') ticketId: string, @Body() body: { novoSetor: number }) {
+    const result = await this.ticketService.transferirSetor(ticketId, body.novoSetor);
+    return result;
+  }
+
+  @Post('/:ticketId/encerrar')
+  async encerrar(@Param('ticketId') ticketId: string, @Body() body: { userID: string }) {
+    const result = await this.ticketService.encerrarTicket(ticketId, body.userID);
+    return result;
+  }
+
 }

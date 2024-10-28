@@ -205,6 +205,7 @@
                   >
                   </ng-icon>
                   <select
+                    [(ngModel)]="selectedSetor"
                     class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border-[var(--primary-border-color)] border focus: shadow-sm rounded-lg"
                     required
                   >
@@ -217,6 +218,7 @@
 
                 <button
                 class="flex mx-auto mt-8 justify-center px-4 py-2 border border-[var(--primary-border-color)] text-[var(--primary-font-color)] rounded-lg duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
+                (click)="setorChange()"
                 >
                   Alterar
                 </button>
@@ -239,19 +241,21 @@
       class="notas flex flex-col items-center justify-center border-t mx-10 border-[var(--primary-border-color)]"
       style="min-height: 0"
     >
-      <header
-        class="destinatario flex flex-col justify-center items-start px-4 pt-3 w-8/12"
-      >
-        <h5 class="flex text-md capitalize text-[var(--primary-font-color)]">
-          Nome Teste
-        </h5>
-        <h6 class="flex text-sm text-[var(--tertiary-highligted-text-color)]">
-          email&email.com
-        </h6>
-      </header>
       <main
         class="mensagens-list flex flex-col flex-grow w-8/12 px-10 mt-auto overflow-y-auto"
-      ></main>
+      >
+
+      <div *ngFor="let nota of dadosNotas">
+        <app-notes-text
+        [nome]="nota.nome"
+        [data_hora]="nota.data_hora"
+        [mensagem]="nota.mensagem">
+
+        </app-notes-text>
+      </div>
+
+
+    </main>
       <div
         class="input-container p-1 flex items-center justify-center w-8/12 border border-[var(--primary-border-color)] rounded-full"
       >

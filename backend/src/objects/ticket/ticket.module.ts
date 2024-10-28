@@ -15,6 +15,9 @@ import { SlaService } from '../sla/sla.service';
 import { MensagemService } from 'src/utils/mensagem/mensagem.service';
 import { Mensagens } from 'src/entity/mensagens.entity';
 import { Anexos } from 'src/entity/anexos.entity';
+import { EmailService } from 'src/email/email.service';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -36,7 +39,10 @@ import { Anexos } from 'src/entity/anexos.entity';
     DataUtilsService,
     SetoresService,
     SlaService,
-    MensagemService
+    MensagemService,
+    EmailService,
+    AuthService,
+    JwtService
   ],
   exports: [TicketService],
 })

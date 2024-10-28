@@ -16,6 +16,7 @@ import {
   lucideUserRound,
 } from '@ng-icons/lucide';
 import { SharedService } from '../../sharedService';
+import { Permissao } from '../../enum/permissao';
 
 @Component({
   selector: 'app-edit-user',
@@ -48,6 +49,10 @@ export class EditUserComponent implements OnInit {
   empresas?: any[];
   selectedEmpresa: any;
 
+  valorPermissao: any = Permissao; // Propriedade para armazenar o valor selecionado
+  enumValues = Object.values(Permissao); // Array com os valores do enum
+  enum = Permissao;
+
   constructor(private http: HttpClient, private sharedService: SharedService) {}
 
   ngOnInit() {
@@ -60,5 +65,16 @@ export class EditUserComponent implements OnInit {
     this.http.get<any[]>('http://localhost:3000/empresas').subscribe((data) => {
       this.empresas = data;
     });
+  }
+
+  updateUser(tipoUsuario: string){
+    if(tipoUsuario == 'cliente'){
+
+
+      return;
+    }
+
+    
+
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-notes-text',
@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './notes-text.component.css'
 })
 export class NotesTextComponent {
-
+  @Input() nome!: string;
+  @Input() data_hora!: string;
+  @Input() mensagem!: string;
 }

@@ -74,7 +74,6 @@ export class CadastroService {
 
       const permissao = funcionarioDto.permissao;
 
-      console.log(permissao);
 
       funcionarioDto.senha = padrao.SENHA;
       const senhaHash = await this.GerarHash(funcionarioDto.senha);
