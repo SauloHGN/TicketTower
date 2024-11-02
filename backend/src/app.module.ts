@@ -24,6 +24,7 @@ import { Tickets } from './entity/ticket.entity';
 import { Sla } from './entity/sla.entity';
 import { SlaModule } from './objects/sla/sla.module';
 import { MensagemModule } from './utils/mensagem/mensagem.module';
+import { TicketTransfer } from './entity/ticketTransfer.entity';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -54,7 +55,8 @@ import { MensagemModule } from './utils/mensagem/mensagem.module';
       Enderecos,
       UsersView,
       Tickets,
-      Sla
+      Sla,
+      TicketTransfer
     ]),
     MensagemModule,
   ],

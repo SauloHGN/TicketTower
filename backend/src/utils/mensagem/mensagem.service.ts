@@ -6,6 +6,7 @@ import { Mensagens } from 'src/entity/mensagens.entity';
 import { UsersView } from 'src/entity/usersView.entity';
 import { DataUtilsService } from 'src/repository/DataUtils.service';
 import { Repository } from 'typeorm';
+import { promises as fs } from 'fs';
 
 @Injectable()
 export class MensagemService {
@@ -23,7 +24,7 @@ export class MensagemService {
     ticketID: string,
     mensagem: string,
     remetenteID: string,
-    anexo: Buffer,
+    anexo: Express.Multer.File | null,
   ) {
     const novaMensagem = new Mensagens();
     novaMensagem.id_ticket = { id: ticketID } as any;
@@ -31,13 +32,34 @@ export class MensagemService {
     novaMensagem.data_hora = new Date();
     novaMensagem.id_remetente = remetenteID;
 
-    if (mensagem == null) {
-      return { status: 500, erro: 'Não é possivel criar uma mensagem vazia' };
-    }
+    // if (!mensagem && !anexo) {
+    //   return { status: 500, erro: 'Não é possível criar uma mensagem vazia' };
+    // }
+
+    // Salva a mensagem e obtém o ID gerado
+    const mensagemSalva = await this.mensagemRepository.save(novaMensagem);
 
     // Verifica se o anexo existe
     if (anexo) {
-      novaMensagem.id_anexo = { conteudo: anexo } as any;
+      const anexoFile = new Anexos();
+      const fileBuffer = await fs.readFile(anexo.path);
+      anexoFile.anexo = fileBuffer; // Use o arquivo gerado em uploads
+      anexoFile.nome_arquivo = anexo.originalname;
+      anexoFile.tamanho = anexo.size.toString();
+      anexoFile.tipo_arquivo = anexo.mimetype;
+      anexoFile.id_mensagem = mensagemSalva;
+
+      novaMensagem.id_anexo = anexoFile; // Adiciona a referência do anexo à mensagem
+
+
+      const anexoSalvo = await this.anexoRepository.save(anexoFile);
+
+
+      mensagemSalva.id_anexo = anexoSalvo; // Associa o anexo à mensagem
+      await this.mensagemRepository.save(mensagemSalva); // Atualiza a mensagem
+
+
+      await fs.unlink(anexo.path);
     }
 
     this.mensagemRepository.save(novaMensagem);
@@ -48,6 +70,7 @@ export class MensagemService {
   async listarMensagens(ticketID: string) {
     const mensagens = await this.mensagemRepository.find({
       where: { id_ticket: { id: ticketID } },
+      relations: ['id_anexo'],
     });
 
     const mensagensFormat = await this.formatarMensagens(mensagens);
@@ -62,6 +85,14 @@ export class MensagemService {
         const usuario = await this.dataUtilsService.getUserByID(
           mensagem.id_remetente,
         );
+
+        const anexo = mensagem.id_anexo ? {
+          id: mensagem.id_anexo.id,
+          nome_arquivo: mensagem.id_anexo.nome_arquivo,
+          tipo_arquivo: mensagem.id_anexo.tipo_arquivo,
+          tamanho: await this.formatarTamanhoArquivo(mensagem.id_anexo.tamanho)
+        } : null; // Se não houver anexo, retorna null
+
         return {
           id: mensagem.id,
           mensagem: mensagem.mensagem,
@@ -74,31 +105,60 @@ export class MensagemService {
             hour12: false,
           }),
           nome: usuario ? usuario.nome : '...', // ... para usuários não encontrados
+          anexo: anexo
         };
       }),
     );
   }
 
-  async criarAnexo(
-    ticketID: string,
-    nome_arquivo: string,
-    tipo_arquivo: string,
-    anexo: Buffer,
-  ) {
-    const novoAnexo = new Anexos();
-    novoAnexo.nome_arquivo = nome_arquivo;
-    novoAnexo.tipo_arquivo = tipo_arquivo;
-    novoAnexo.anexo = anexo; // Armazena o arquivo binário
+  async downloadAnexo(anexoId: number){
 
-    // Salva o anexo no banco de dados
-    await this.anexoRepository.save(novoAnexo);
-    return { status: 201, msg: 'Anexo salvo com sucesso' };
+    const anexo = await this.anexoRepository.findOne({
+      where: {id : anexoId}
+    });
+
+    if (!anexo) {
+      return {status: 404, msg: 'Arquivo não encontrado', anexo: null}
+    }
+
+    return {status: 200, msg: 'Anexo encontrado', anexo: anexo}
+
   }
 
-  async listarAnexos(mensagemID: number) {
-    const anexos = await this.anexoRepository.find({
-      where: { id_mensagem: { id: mensagemID } },
+  async listarAnexos(ticketID: string) {
+    const notas = await this.mensagemRepository.find({
+      where: { id_ticket: { id: ticketID } },
+      relations: ['id_anexo']
     });
+
+    const anexos = await Promise.all(
+      notas
+        .map(mensagem => mensagem.id_anexo)
+        .filter(anexo => anexo !== null) // Filtra para remover nulls
+        .map(async anexo => ({
+          id: anexo.id,
+          nome_arquivo: anexo.nome_arquivo,
+          tipo_arquivo: anexo.tipo_arquivo,
+          tamanho: await this.formatarTamanhoArquivo(parseInt(anexo.tamanho)), // Formata o tamanho
+        }))
+    );
+
     return { status: 200, anexos: anexos };
   }
+
+
+  async formatarTamanhoArquivo(tamanhoEmBytes: number):Promise <string> {
+    const tamanhos = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    let index = 0;
+
+    let tamanho = tamanhoEmBytes;
+
+    while (tamanho >= 1024 && index < tamanhos.length - 1) {
+      tamanho /= 1024;
+      index++;
+    }
+
+    return `${tamanho.toFixed(2)} ${tamanhos[index]}`;
+  }
+
 }

@@ -142,6 +142,22 @@
         </div>
       </div>
 
+      <div class="input-group flex flex-row gap-x-2 w-11/12">
+        <div class="relative">
+          <input
+            type="text"
+            [disabled]="isInputDisabled"
+            id="setor-ticket"
+            class="input-disable capitalize w-full z-10 pl-4 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+          />
+          <label
+            class="absolute translate-y-[-45%] px-2 top-0 font-light text-base text-sm text-[var(--default-border-color)] -top-0 left-3 text-sm"
+          >
+            Setor Responsável</label
+          >
+        </div>
+      </div>
+
       <div class="input-group relative flex flex-row gap-x-2 w-6/12">
         <textarea
           id="descricao-ticket"
@@ -157,11 +173,13 @@
         >
       </div>
 
-      <div class="buttons-area flex gap-x-4 items-end justify-around w-4/5 h-56">
+      <div
+        class="buttons-area flex gap-x-4 items-end justify-around w-full h-16 sm:h-56 w-4/5"
+      >
         <button
           (click)="togglePopover()"
           type="button"
-          class="px-4 py-2 font-semibold text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-full duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
+          class="px-4 py-2 font-semibold text-nowrap text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-full duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
         >
           Atualizar setor
         </button>
@@ -174,25 +192,23 @@
             <div class="flex">
               <div>
                 <header class="flex justify-between items-center mb-4">
-                <div>
-                  <p
-                    class="mb-1 text-base font-semibold leading-none text-gray-900 dark:text-white"
-                  >
-                    <a class="hover:underline">Enviar para</a>
-                  </p>
-                </div>
-                <button class="self-start"
-                  (click)="togglePopover()"
-                >
-                  <ng-icon
-                  name="lucideX"
-                  strokeWidth="1.8"
-                  size="20"
-                  class="text-[var(--primary-font-color)] hover:text-[var(--tertiary-button-text-color)] "
-                  >
-                  </ng-icon>
-                </button>
-              </header>
+                  <div>
+                    <p
+                      class="mb-1 text-base font-semibold leading-none text-gray-900 dark:text-white"
+                    >
+                      <a class="hover:underline">Enviar para</a>
+                    </p>
+                  </div>
+                  <button class="self-start" (click)="togglePopover()">
+                    <ng-icon
+                      name="lucideX"
+                      strokeWidth="1.8"
+                      size="20"
+                      class="text-[var(--primary-font-color)] hover:text-[var(--tertiary-button-text-color)]"
+                    >
+                    </ng-icon>
+                  </button>
+                </header>
                 <p class="mb-4 text-sm">
                   Essa alterção irá modificar o setor responsável pelo ticket
                 </p>
@@ -205,6 +221,7 @@
                   >
                   </ng-icon>
                   <select
+                    id="novo-setor"
                     [(ngModel)]="selectedSetor"
                     class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border-[var(--primary-border-color)] border focus: shadow-sm rounded-lg"
                     required
@@ -217,21 +234,17 @@
                 </div>
 
                 <button
-                class="flex mx-auto mt-8 justify-center px-4 py-2 border border-[var(--primary-border-color)] text-[var(--primary-font-color)] rounded-lg duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
-                (click)="setorChange()"
+                  class="flex mx-auto mt-8 justify-center px-4 py-2 border border-[var(--primary-border-color)] text-[var(--primary-font-color)] rounded-lg duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
+                  (click)="setorChange()"
                 >
                   Alterar
                 </button>
-
-
               </div>
             </div>
           </div>
         </div>
 
-        <button
-        class="gradient-button rounded-full"
-        >Fechar Ticket</button>
+        <button class="gradient-button rounded-full">Resolvido</button>
       </div>
     </section>
   </div>
@@ -242,25 +255,38 @@
       style="min-height: 0"
     >
       <main
-        class="mensagens-list flex flex-col flex-grow w-8/12 px-10 mt-auto overflow-y-auto"
+        id="mensagens-list"
+        class="mensagens-list flex flex-col flex-grow w-full px-10 mt-auto overflow-y-auto sm:w-8/12"
       >
+        <div *ngFor="let nota of dadosNotas">
+          <div *ngIf="nota.anexo == null; else TextAnexo">
+            <app-notes-text
+              [nome]="nota.nome"
+              [data_hora]="nota.data_hora"
+              [mensagem]="nota.mensagem"
+            >
+            </app-notes-text>
+          </div>
 
-      <div *ngFor="let nota of dadosNotas">
-        <app-notes-text
-        [nome]="nota.nome"
-        [data_hora]="nota.data_hora"
-        [mensagem]="nota.mensagem">
-
-        </app-notes-text>
-      </div>
-
-
-    </main>
+          <ng-template #TextAnexo>
+            <app-notes-file
+              [id]="nota.anexo.id"
+              [nome]="nota.nome"
+              [data_hora]="nota.data_hora"
+              [mensagem]="nota.mensagem"
+              [nome_arquivo]="nota.anexo.nome_arquivo"
+              [tamanho]="nota.anexo.tamanho"
+              [tipo_arquivo]="nota.anexo.tipo_arquivo"
+            >
+            </app-notes-file>
+          </ng-template>
+        </div>
+      </main>
       <div
-        class="input-container p-1 flex items-center justify-center w-8/12 border border-[var(--primary-border-color)] rounded-full"
+        class="input-container p-1 flex items-center justify-center w-full border border-[var(--primary-border-color)] rounded-full sm:w-8/12"
       >
-        <button
-          class="upload flex items-center justify-center w-11 h-11 rounded-full border border-[var(--primary-border-color)] hover:bg-[var(--tertiary-button-background-color)]"
+        <label
+          class="upload flex items-center justify-center w-11 h-11 rounded-full border border-[var(--primary-border-color)] hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
         >
           <ng-icon
             name="lucidePlus"
@@ -268,13 +294,35 @@
             size="20"
             class="text-[var(--primary-font-color)]"
           ></ng-icon>
-        </button>
-        <input
+          <label
+            class="absolute translate-y-[+150%] translate-x-[+50%] mb-2 text-sm font-medium"
+            for="file_input"
+          >
+            <div
+              *ngIf="fileName"
+              class="mt-2 text-sm px-3 py-1 overflow-hidden rounded-full text-[var(--primary-font-color)] bg-[var(--tertiary-background-color)] hover:"
+            >
+              Arquivo selecionado: {{ fileName }}
+            </div>
+          </label>
+          <input
+            class="input-file"
+            type="file"
+            class="hidden"
+            (change)="handleFileUpload($event)"
+            (change)="onFileSelected($event)"
+          />
+        </label>
+        <textarea
+          id="text-nota"
+          rows="4"
           type="text"
-          class="flex flex-grow h-10 border-none bg-transparent text-[var(--primary-font-color)] px-3 focus:outline-none"
-        />
+          style="resize: none"
+          class="flex items-center flex-grow h-10 pt-2 border-none bg-transparent text-[var(--primary-font-color)] px-3 focus:outline-none"
+        ></textarea>
 
         <button
+          (click)="criarNota()"
           class="enviar flex items-center justify-center w-11 h-11 rounded-full border-[var(--primary-border-color)] hover:bg-[var(--tertiary-button-background-color)]"
         >
           <ng-icon
@@ -290,7 +338,36 @@
 
   <div [ngStyle]="{ display: selectedType === 'anexos' ? 'block' : 'none' }">
     <div
-      class="flex flex-col items-center justify-center border-t mx-10 border-[var(--primary-border-color)]"
-    ></div>
+      class="flex flex-row flex-wrap gap-x-12 gap-y-4 items-center justify-center border-t mx-10 border-[var(--primary-border-color)]"
+    >
+      <div *ngFor="let anexo of dadosAnexos">
+        <app-notes-file
+          [id]="anexo.id"
+          [nome_arquivo]="anexo.nome_arquivo"
+          [tamanho]="anexo.tamanho"
+          [tipo_arquivo]="anexo.tipo_arquivo"
+        ></app-notes-file>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Histórico -->
+  <div [ngStyle]="{ display: selectedType === 'histórico' ? 'block' : 'none' }">
+    <div
+      class="notas flex flex-col items-center justify-center rounded-xl border mx-10 border-[var(--primary-border-color)]"
+      style="min-height: 0"
+    >
+      <main class="flex flex-col flex-grow w-full p-4 gap-y-2 overflow-y-auto">
+
+        <div *ngFor="let transferencia of dadosHistorico">
+          <p class="text-[var(--tertiary-highligted-text-color)]">
+            ➔ [{{transferencia.dataTransferencia}}]: {{transferencia.user}} Transferiu do setor {{transferencia.setorAntigo}}  para {{transferencia.setorNovo}}
+          </p>
+        </div>
+
+
+      </main>
+    </div>
+    <!-- END Histórico -->
   </div>
 </body>

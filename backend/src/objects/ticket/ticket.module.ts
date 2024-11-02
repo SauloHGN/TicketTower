@@ -18,6 +18,8 @@ import { Anexos } from 'src/entity/anexos.entity';
 import { EmailService } from 'src/email/email.service';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { MulterModule } from '@nestjs/platform-express';
+import { TicketTransfer } from 'src/entity/ticketTransfer.entity';
 
 @Module({
   imports: [
@@ -29,8 +31,12 @@ import { JwtService } from '@nestjs/jwt';
       Setores,
       Sla,
       Mensagens,
-      Anexos
+      Anexos,
+      TicketTransfer
     ]),
+    MulterModule.register({
+      dest: './uploads', // Configura o destino dos uploads temporários
+    }),
   ],
   controllers: [TicketController],
   providers: [
@@ -42,7 +48,7 @@ import { JwtService } from '@nestjs/jwt';
     MensagemService,
     EmailService,
     AuthService,
-    JwtService
+    JwtService,
   ],
   exports: [TicketService],
 })

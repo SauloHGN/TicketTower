@@ -2,19 +2,19 @@
   <div class="flex flex-col gap-1">
     <div class="flex items-center space-x-2 rtl:space-x-reverse">
       <span class="text-sm font-semibold text-[var(--primary-font-color)]"
-        >Bonnie Green</span
+        >{{nome}}</span
       >
       <span class="text-sm font-normal text-gray-500 dark:text-gray-400"
-        >11:46</span
+        >{{data_hora}}</span
       >
     </div>
-    <div class="leading-1.5 flex w-full max-w-[400px] flex-col">
+    <div class="leading-1.5 flex w-full max-w-[400px] min-w-[250px] flex-col">
       <div
         class="flex items-start bg-[var(--card-background-color)] rounded-xl p-2"
       >
-        <div class="me-2">
+        <div class="me-2 w-full flex flex-col gap-y-1 text-[var(--primary-font-color)]">
           <span
-            class="flex items-center max-w-[320px] box-border gap-2 text-sm font-medium text-[var(--primary-font-color)] pb-2"
+            class="flex items-center justify-between max-w-[320px] box-border gap-2 text-sm font-medium text-[var(--primary-font-color)] pb-2"
           >
             <!-- sample rectangle -->
             <svg fill="none" class="w-6 h-6 flex-shrink-0" viewBox="0 0 20 21">
@@ -48,13 +48,36 @@
               </defs>
             </svg>
             <p class="max-w-72 break-words">
-              File title
+              {{nome_arquivo}}
             </p>
+
+            <div class="inline-flex self-center items-center">
+              <button
+                class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-[var(--card-background-color)] rounded-lg hover:bg-[var(--tertiary-background-color)] focus:ring-4"
+                type="button"
+                (click)="downloadFile(id, nome_arquivo)"
+              >
+                <svg
+                  class="w-4 h-4 text-[var(--primary-font-color)]"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"
+                  />
+                  <path
+                    d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
+                  />
+                </svg>
+              </button>
+            </div>
+
           </span>
           <span
             class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2"
           >
-            12 Pages
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="self-center"
@@ -65,7 +88,7 @@
             >
               <circle cx="1.5" cy="2" r="1.5" fill="#6B7280" />
             </svg>
-            18 MB
+            {{tamanho}}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
@@ -77,29 +100,9 @@
             >
               <circle cx="1.5" cy="2" r="1.5" fill="#6B7280" />
             </svg>
-            PDF
+            {{tipo_arquivo}}
           </span>
-        </div>
-        <div class="inline-flex self-center items-center">
-          <button
-            class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-[var(--card-background-color)] rounded-lg hover:bg-[var(--tertiary-background-color)] focus:ring-4"
-            type="button"
-          >
-            <svg
-              class="w-4 h-4 text-[var(--primary-font-color)]"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"
-              />
-              <path
-                d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
-              />
-            </svg>
-          </button>
+          {{mensagem}}
         </div>
       </div>
     </div>

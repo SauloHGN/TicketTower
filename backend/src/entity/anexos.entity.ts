@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Mensagens } from './mensagens.entity';
+import { Blob } from 'buffer';
 
 @Entity()
 export class Anexos {
@@ -22,6 +23,9 @@ export class Anexos {
 
   @Column({ name: 'tipo_arquivo', nullable: false })
   tipo_arquivo: string;
+
+  @Column({ name: 'tamanho', nullable: false })
+  tamanho: string;
 
   @Column({ name: 'anexo', type: 'longblob', nullable: false })
   anexo: Buffer;

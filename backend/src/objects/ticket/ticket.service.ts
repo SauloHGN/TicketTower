@@ -17,6 +17,7 @@ import { FuncionarioService } from 'src/users/funcionario/funcionario.service';
 import { LessThan, MoreThanOrEqual, Repository } from 'typeorm';
 import { SlaService } from '../sla/sla.service';
 import { EmailService } from 'src/email/email.service';
+import { TicketTransfer } from 'src/entity/ticketTransfer.entity';
 
 @Injectable()
 export class TicketService {
@@ -29,12 +30,14 @@ export class TicketService {
     private readonly slaRepository: Repository<Sla>,
     @InjectRepository(Setores)
     private readonly setoresRepository: Repository<Setores>,
+    @InjectRepository(TicketTransfer)
+    private readonly ticketTransferRepository: Repository<TicketTransfer>,
 
     private readonly setoresService: SetoresService,
     private readonly funcionarioService: FuncionarioService,
     private readonly dataUtilsService: DataUtilsService,
     private readonly slaService: SlaService,
-    private readonly emailService: EmailService
+    private readonly emailService: EmailService,
   ) {}
 
   async createTicket(
@@ -383,7 +386,7 @@ export class TicketService {
 
   }
 
-  async transferirSetor(ticketID: string, novoSetor: number) {
+  async transferirSetor(ticketID: string, novoSetor: number, userID: string) {
     try {
       // Encontra o ticket com o ID fornecido
       const ticket = await this.ticketRepository.findOne({
@@ -399,12 +402,24 @@ export class TicketService {
         where: { id: novoSetor }
       });
 
+      const setorAntigo = ticket.id_setor
+
+      const ticketTransfer = new TicketTransfer();
+      ticketTransfer.setorAnterior = setorAntigo;
+      ticketTransfer.setorNovo = await this.setoresService.getSetorByID(novoSetor);
+      ticketTransfer.ticket = ticket
+      ticketTransfer.usuarioId = userID
+
+      this.ticketTransferRepository.save(ticketTransfer);
+
+
       // Verifica se o novo setor foi encontrado
       if (!setor) {
         return { status: 404, msg: 'Novo setor não encontrado' };
       }
 
       // Atualiza o setor do ticket
+      ticket.id_responsavel = null;
       ticket.id_setor = setor;
 
       // Salvar alteração
@@ -415,6 +430,12 @@ export class TicketService {
     } catch (error) {
       return { status: 500, msg: 'Ocorreu um erro no processamento:\n' + error.message };
     }
+  }
+
+  async findHistoricoById(ticketID: string){
+    return this.ticketTransferRepository.find({
+      where: { ticket: {id: ticketID}}
+    })
   }
 
   async encerrarTicket(ticketID: string, userID: string) {
