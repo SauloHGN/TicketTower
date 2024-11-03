@@ -25,6 +25,7 @@ import { Sla } from './entity/sla.entity';
 import { SlaModule } from './objects/sla/sla.module';
 import { MensagemModule } from './utils/mensagem/mensagem.module';
 import { TicketTransfer } from './entity/ticketTransfer.entity';
+import { RelatorioModule } from './objects/relatorio/relatorio.module';
 // ----------------------------------------------------------------------
 
 @Module({
@@ -39,6 +40,7 @@ import { TicketTransfer } from './entity/ticketTransfer.entity';
     TicketModule,
     SlaModule,
     MensagemModule,
+    RelatorioModule,
 
     ConfigModule.forRoot({
       isGlobal: true,

@@ -20,6 +20,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { MulterModule } from '@nestjs/platform-express';
 import { TicketTransfer } from 'src/entity/ticketTransfer.entity';
+import { RelatorioService } from '../relatorio/relatorio.service';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { TicketTransfer } from 'src/entity/ticketTransfer.entity';
     EmailService,
     AuthService,
     JwtService,
+    RelatorioService
   ],
   exports: [TicketService],
 })

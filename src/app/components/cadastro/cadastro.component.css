@@ -91,6 +91,7 @@ input {
 select:focus,
 input:focus {
   border-color: var(--secundary-border-color);
+  background-color: var(--primary-background-color);
 }
 
 #funcionario-permissao option,

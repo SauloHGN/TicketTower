@@ -1,7 +1,7 @@
 // inner-join.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { Clientes } from '../entity/clientes.entity';
 import { Funcionarios } from '../entity/funcionarios.entity';
 import { UsersView } from 'src/entity/usersView.entity';
@@ -107,5 +107,11 @@ export class DataUtilsService {
     }
 
     return user;
+  }
+
+  async getAllUsersWithoutRoot() {
+    return await this.usersViewRepository.find({
+      where: { source: Not('root') },
+    });
   }
 }

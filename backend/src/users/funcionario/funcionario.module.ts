@@ -6,5 +6,6 @@ import { FuncionarioService } from './funcionario.service';
   imports: [],
   controllers: [FuncionarioController],
   providers: [FuncionarioService],
+  exports: [FuncionarioService]
 })
 export class FuncionarioModule {}
