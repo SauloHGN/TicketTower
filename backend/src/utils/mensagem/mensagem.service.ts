@@ -7,13 +7,16 @@ import { UsersView } from 'src/entity/usersView.entity';
 import { DataUtilsService } from 'src/repository/DataUtils.service';
 import { Repository } from 'typeorm';
 import { promises as fs } from 'fs';
+import { Tickets } from 'src/entity/ticket.entity';
+import { StatusTicket } from 'src/enums/statusTicket';
 
 @Injectable()
 export class MensagemService {
   constructor(
     @InjectRepository(Mensagens)
     private readonly mensagemRepository: Repository<Mensagens>,
-
+    @InjectRepository(Tickets)
+    private readonly ticketRepository: Repository<Tickets>,
     @InjectRepository(Anexos)
     private readonly anexoRepository: Repository<Anexos>,
 
@@ -32,9 +35,13 @@ export class MensagemService {
     novaMensagem.data_hora = new Date();
     novaMensagem.id_remetente = remetenteID;
 
-    // if (!mensagem && !anexo) {
-    //   return { status: 500, erro: 'Não é possível criar uma mensagem vazia' };
-    // }
+    const ticket = await this.ticketRepository.findOne({
+      where: {id: ticketID}
+    })
+
+    if (ticket.status == StatusTicket.RESOLVIDO || ticket.status == StatusTicket.EMANDAMENTO) {
+       return { status: 500, erro: 'Não é possível criar uma mensagem em um ticket já finalizado' };
+    }
 
     // Salva a mensagem e obtém o ID gerado
     const mensagemSalva = await this.mensagemRepository.save(novaMensagem);

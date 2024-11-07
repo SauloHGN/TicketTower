@@ -1,34 +1,44 @@
 <div class="max-w-screen-2xl mx-auto px-4 pt-6 md:px-8">
-  <div class="flex items-center flex-row gap-4 md:flex">
-    <div class="relative w-64">
-      <ng-icon
-        name="lucideSearch"
-        strokeWidth="1.5"
-        size="20"
-        class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
-      ></ng-icon>
+  <div class="flex flex-row justify-between">
+    <div class="flex items-center flex-row gap-4 md:flex">
+      <div class="relative w-64">
+        <ng-icon
+          name="lucideSearch"
+          strokeWidth="1.5"
+          size="20"
+          class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
+        ></ng-icon>
 
-      <input
-        type="text"
-        placeholder="Pesquisar"
-        id="pesquisar"
-        [(ngModel)]="filterText"
-        (input)="filterTickets()"
-        class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
-      />
-    </div>
-    <button
-      class="flex items-center justify-center w-11 h-10 border border-[var(--primary-border-color)] rounded-md hover:bg-[var(--tertiary-button-background-color)]"
-      (click)="loadTicket()"
+        <input
+          type="text"
+          placeholder="Pesquisar"
+          id="pesquisar"
+          [(ngModel)]="filterText"
+          (input)="filterTickets()"
+          class="w-full z-10 pl-12 pr-3 py-2 bg-transparent outline-none border focus: shadow-sm rounded-lg"
+        />
+      </div>
+      <button
+        class="flex items-center justify-center w-11 h-10 border border-[var(--primary-border-color)] rounded-md hover:bg-[var(--tertiary-button-background-color)]"
+        (click)="loadTicket()"
       >
-      <ng-icon
-        class="flex text-[var(--primary-font-color)]"
-        name="lucideRefreshCcw"
-        strokeWidth="1.5"
-        size="18"
-      ></ng-icon>
+        <ng-icon
+          class="flex text-[var(--primary-font-color)]"
+          name="lucideRefreshCcw"
+          strokeWidth="1.5"
+          size="18"
+        ></ng-icon>
+      </button>
+    </div>
+
+    <button
+      class="flex items-center justify-center p-2 w-28 h-10 text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-md hover:bg-[var(--tertiary-button-background-color)]"
+      (click)="switchCurrentFilter()"
+    >
+      {{ currentFilterFinalizados ? "Pendentes" : "Finalizados" }}
     </button>
   </div>
+
   <div class="table-border mt-6 shadow-sm border rounded-lg overflow-x-auto">
     <table class="w-full table-auto text-sm text-left">
       <thead class="font-medium border-b">
@@ -47,8 +57,13 @@
         <tr *ngFor="let ticket of paginatedTickets; let idx = index">
           <td class="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
             <div>
-              <span class="block text-sm font-medium max-w-40 overflow-hidden">{{ ticket.id }}</span>
-              <span class="block text-xs max-w-40 overflow-hidden">{{ ticket.aberto_por }}</span>
+              <span
+                class="block text-sm font-medium max-w-40 overflow-hidden"
+                >{{ ticket.id }}</span
+              >
+              <span class="block text-xs max-w-40 overflow-hidden">{{
+                ticket.aberto_por
+              }}</span>
             </div>
           </td>
           <td class="pr-6 py-4 whitespace-nowrap text-center items-center">
@@ -68,19 +83,29 @@
               {{ ticket.prioridade }}
             </span>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap max-w-56 overflow-hidden">{{ ticket.titulo }}</td>
-          <td class="px-6 py-4 whitespace-nowrap capitalize max-w-40 overflow-hidden">
+          <td class="px-6 py-4 whitespace-nowrap max-w-56 overflow-hidden">
+            {{ ticket.titulo }}
+          </td>
+          <td
+            class="px-6 py-4 whitespace-nowrap capitalize max-w-40 overflow-hidden"
+          >
             {{ ticket.status }}
           </td>
-          <td class="px-6 py-4 whitespace-nowrap max-w-40 overflow-hidden">{{ ticket.responsavel }}</td>
+          <td class="px-6 py-4 whitespace-nowrap max-w-40 overflow-hidden">
+            {{ ticket.responsavel }}
+          </td>
           <td class="px-6 py-4 whitespace-nowrap max-w-40 overflow-hidden">
             {{ ticket.data_hora_abertura }}
           </td>
 
           <td class="flex items-center gap-x-3 py-3 px-6 whitespace-nowrap">
             <div>
-              <span class="block text-sm font-medium">{{ ticket.prazo_resposta }}</span>
-              <span class="block text-sm font-medium">{{ ticket.prazo_resolucao }}</span>
+              <span class="block text-sm font-medium">{{
+                ticket.prazo_resposta
+              }}</span>
+              <span class="block text-sm font-medium">{{
+                ticket.prazo_resolucao
+              }}</span>
             </div>
           </td>
 
@@ -95,7 +120,7 @@
             <button
               class="button-gerenciar py-2 leading-none px-3 font-medium hover: duration-150 hover: rounded-lg"
               (click)="gerenciarTicket(ticket.id)"
-              >
+            >
               Gerenciar
             </button>
           </td>

@@ -8,6 +8,7 @@ import { SharedService } from '../../sharedService';
 import { Injectable } from '@angular/core';
 import { Toast } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-tarefas',
@@ -31,19 +32,8 @@ export class TarefasComponent implements OnInit {
   currentPage = 1; // pgina atual
   ticketsPerPage = 8; // quantidade de tickets por página
 
-  /*queueTickets: Ticket[] = [
+  currentFilterFinalizados = false;
 
-
-    {
-      id: 'f47ac10b',
-      abertoPor: 'Customer 1',
-      prioridade: 'Urgente',
-      descricao: '?',
-      status: 'qualified',
-      responsavel: 'N/A',
-      abertura: '12/09/2024',
-    },
-  ];*/
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -52,6 +42,11 @@ export class TarefasComponent implements OnInit {
     this.filteredTickets = this.queueTickets; // inicializa com todos os tickets
   }
   ngOnInit(): void {
+    this.carregarTickets();
+  }
+
+  // Método para carregar os tickets com base no filtro atual
+  carregarTickets() {
     try {
       let userID = '';
       const userInfoString = sessionStorage.getItem('userInfo');
@@ -62,26 +57,58 @@ export class TarefasComponent implements OnInit {
         return;
       }
 
+      // Chamada à API para buscar os tickets
       this.http
         .get<{ status: number; tickets: any[] }>(
           `http://localhost:3000/ticket/${userID}`
         )
         .subscribe((data) => {
-          this.filteredTickets = this.queueTickets = data.tickets;
-          console.log(this.queueTickets);
+          this.queueTickets = data.tickets; // Armazena todos os tickets
+
+          // Aplica o filtro dependendo do status de currentFilterFinalizados
+          this.applyFilter();
         });
     } catch {
       throw new Error('Erro ao se comunicar com o servidor');
     }
   }
 
+  // Método que aplica o filtro baseado no status finalizados
+  applyFilter() {
+    if (this.currentFilterFinalizados) {
+      // Se o filtro for "finalizados", mostra tickets que não sejam "aberto" ou "em andamento"
+      this.filteredTickets = this.queueTickets.filter(
+        (ticket) =>
+          ticket.status !== 'aberto' && ticket.status !== 'em andamento'
+      );
+    } else {
+      // Caso contrário, exibe os tickets que não estejam "fechado" ou "resolvido"
+      this.filteredTickets = this.queueTickets.filter(
+        (ticket) => ticket.status !== 'fechado' && ticket.status !== 'resolvido'
+      );
+    }
+  }
+
+  switchCurrentFilter() {
+    this.currentFilterFinalizados = !this.currentFilterFinalizados;
+    console.log(this.currentFilterFinalizados);
+    this.carregarTickets();
+  }
+
   filterTickets() {
-    console.log('Filtering tickets with:', this.filterText);
-    this.filteredTickets = this.queueTickets.filter((ticket) =>
-      this.matchesFilter(ticket)
-    );
-    console.log(this.filteredTickets);
+    this.filteredTickets = this.queueTickets
+      .filter((ticket) => this.matchesStatusFilter(ticket))
+      .filter((ticket) => this.matchesFilter(ticket)); // Aplica o filtro de texto
+
     this.currentPage = 1; // resetar para a primeira pagina
+  }
+
+  matchesStatusFilter(ticket: Ticket): boolean {
+    // Filtra os tickets de acordo com o status (se estiver filtrando por status, por exemplo)
+    if (!this.currentFilterFinalizados) {
+      return ticket.status !== 'fechado' && ticket.status !== 'resolvido';
+    }
+    return ticket.status !== 'aberto' && ticket.status !== 'em andamento';
   }
 
   private matchesFilter(ticket: Ticket): boolean {
@@ -142,8 +169,17 @@ export class TarefasComponent implements OnInit {
             `http://localhost:3000/ticket/${userID}`
           )
           .subscribe((data) => {
-            this.filteredTickets = this.queueTickets = data.tickets;
-            console.log(this.queueTickets);
+            if (this.currentFilterFinalizados == true) {
+              this.filteredTickets = this.queueTickets = data.tickets.filter(
+                (ticket) =>
+                  ticket.status !== 'aberto' && ticket.status !== 'em andamento'
+              );
+            }
+
+            this.filteredTickets = this.queueTickets = data.tickets.filter(
+              (ticket) =>
+                ticket.status !== 'fechado' && ticket.status !== 'resolvido'
+            );
           });
       } catch {
         throw new Error('Erro ao se comunicar com o servidor');

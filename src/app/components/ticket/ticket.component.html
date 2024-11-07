@@ -174,7 +174,7 @@
       </div>
 
       <div
-        class="buttons-area flex gap-x-4 items-end justify-around w-full h-16 sm:h-56 w-4/5"
+        class="buttons-area flex items-end justify-evenly w-full h-16 sm:h-56 w-2/5"
       >
         <button
           (click)="togglePopover()"
@@ -243,6 +243,13 @@
             </div>
           </div>
         </div>
+
+        <button
+        type="button"
+        class="px-4 py-2 font-semibold text-nowrap text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-full duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
+      >
+        Fechar Ticket
+      </button>
 
         <button class="gradient-button rounded-full">Resolvido</button>
       </div>

@@ -7,6 +7,7 @@ import { UsersView } from 'src/entity/usersView.entity';
 import { DataUtilsService } from 'src/repository/DataUtils.service';
 import { Clientes } from 'src/entity/clientes.entity';
 import { Funcionarios } from 'src/entity/funcionarios.entity';
+import { Tickets } from 'src/entity/ticket.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { Funcionarios } from 'src/entity/funcionarios.entity';
       Clientes,
       Funcionarios,
       UsersView,
+      Tickets
     ])
   ],
   providers: [MensagemService, DataUtilsService],
