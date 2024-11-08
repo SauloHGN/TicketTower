@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { FooterComponent } from '../../footer/footer.component';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ThemeService } from '../../services/theme.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { lucideGithub, lucideMoon, lucideSun } from '@ng-icons/lucide';
-import { ThemeService } from '../../../services/theme.service';
-import { HeaderLandingComponent } from "../../header-landing/header-landing.component";
 
 @Component({
-  selector: 'app-landing',
+  selector: 'app-header-landing',
   standalone: true,
-  imports: [FooterComponent, CommonModule, NgIconComponent, HeaderLandingComponent],
-  templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css',
+  imports: [CommonModule, NgIconComponent],
+  templateUrl: './header-landing.component.html',
+  styleUrl: './header-landing.component.css',
   viewProviders: [
     provideIcons({
       lucideGithub,
@@ -20,8 +18,8 @@ import { HeaderLandingComponent } from "../../header-landing/header-landing.comp
     }),
   ],
 })
-export class LandingComponent {
-  state: any;
+export class HeaderLandingComponent {
+  state: boolean = false;
   theme: boolean = false;
 
   constructor(private themeService: ThemeService) {}
@@ -32,12 +30,17 @@ export class LandingComponent {
   }
 
   sendToGithub() {
-    window.location.href = 'https://github.com/SauloHGN/TicketTower';
+    //window.location.href = 'https://github.com/SauloHGN/TicketTower';
+    window.open('https://github.com/SauloHGN/TicketTower', '_blank');
   }
 
   switchColorTheme() {
     this.themeService.switchTheme();
     const value = localStorage.getItem('lightTheme');
     this.theme = value === 'true';
+  }
+
+  toggleMenu() {
+    this.state = !this.state;
   }
 }

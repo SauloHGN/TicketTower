@@ -15,12 +15,14 @@ import { GerenciarUsuariosComponent } from './components/gerenciar-usuarios/gere
 import { TicketComponent } from './components/ticket/ticket.component';
 import { SlaComponent } from './components/sla/sla.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { DocumentacaoComponent } from './components/pages/documentacao/documentacao.component';
 
 export const routes: Routes = [
   { path: '', title: 'Ticket Tower', component: LandingComponent },
   { path: 'login', title: 'Entrar', component: LoginComponent },
   { path: 'redefinir', title: 'Esqueci a senha', component: CodigoComponent },
   { path: 'sla', title: 'Termos de SLA', component: SlaComponent },
+  { path: 'documentacao', title: 'Documntação', component: DocumentacaoComponent },
   {
     path: 'home',
     title: 'Página Inicial',
