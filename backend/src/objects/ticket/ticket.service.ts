@@ -16,6 +16,8 @@ import { SetoresService } from 'src/setores/setores.service';
 import { FuncionarioService } from 'src/users/funcionario/funcionario.service';
 import { LessThan, MoreThanOrEqual, Repository } from 'typeorm';
 import { SlaService } from '../sla/sla.service';
+import { EmailService } from 'src/email/email.service';
+import { TicketTransfer } from 'src/entity/ticketTransfer.entity';
 
 @Injectable()
 export class TicketService {
@@ -26,11 +28,16 @@ export class TicketService {
     private readonly usersView: Repository<UsersView>,
     @InjectRepository(Sla)
     private readonly slaRepository: Repository<Sla>,
+    @InjectRepository(Setores)
+    private readonly setoresRepository: Repository<Setores>,
+    @InjectRepository(TicketTransfer)
+    private readonly ticketTransferRepository: Repository<TicketTransfer>,
 
     private readonly setoresService: SetoresService,
     private readonly funcionarioService: FuncionarioService,
     private readonly dataUtilsService: DataUtilsService,
     private readonly slaService: SlaService,
+    private readonly emailService: EmailService,
   ) {}
 
   async createTicket(
@@ -378,4 +385,92 @@ export class TicketService {
     }
 
   }
+
+  async transferirSetor(ticketID: string, novoSetor: number, userID: string) {
+    try {
+      // Encontra o ticket com o ID fornecido
+      const ticket = await this.ticketRepository.findOne({
+        where: { id: ticketID }
+      });
+
+      // Ticket não encontrado
+      if (!ticket) {
+        return { status: 404, msg: 'Ticket não encontrado' };
+      }
+
+      const setor = await this.setoresRepository.findOne({
+        where: { id: novoSetor }
+      });
+
+      const setorAntigo = ticket.id_setor
+
+      const ticketTransfer = new TicketTransfer();
+      ticketTransfer.setorAnterior = setorAntigo;
+      ticketTransfer.setorNovo = await this.setoresService.getSetorByID(novoSetor);
+      ticketTransfer.ticket = ticket
+      ticketTransfer.usuarioId = userID
+
+      this.ticketTransferRepository.save(ticketTransfer);
+
+
+      // Verifica se o novo setor foi encontrado
+      if (!setor) {
+        return { status: 404, msg: 'Novo setor não encontrado' };
+      }
+
+      // Atualiza o setor do ticket
+      ticket.id_responsavel = null;
+      ticket.id_setor = setor;
+
+      // Salvar alteração
+      await this.ticketRepository.save(ticket);
+
+      return { status: 200, msg: 'Setor transferido com sucesso' };
+
+    } catch (error) {
+      return { status: 500, msg: 'Ocorreu um erro no processamento:\n' + error.message };
+    }
+  }
+
+  async findHistoricoById(ticketID: string){
+    return this.ticketTransferRepository.find({
+      where: { ticket: {id: ticketID}}
+    })
+  }
+
+  async encerrarTicket(ticketID: string, userID: string) {
+    try {
+
+      const user = await this.funcionarioService.getPermissaoByID(userID)
+
+      if(!user){
+        return {status: 403, msg: 'Acesso negado'}
+      }
+
+      const email = this.dataUtilsService.getEmailByID(userID)
+
+      // Encontra o ticket com o ID fornecido
+      const ticket = await this.ticketRepository.findOne({
+        where: { id: ticketID }
+      });
+
+      // Ticket não encontrado
+      if (!ticket) {
+        return { status: 404, msg: 'Ticket não encontrado' };
+      }
+
+      // Atualiza o setor do ticket
+      ticket.status = StatusTicket.RESOLVIDO;
+
+      // Salvar alteração
+      await this.ticketRepository.save(ticket);
+
+      this.emailService.sendMessageEmail(ticket.aberto_por, "Seu ticket foi resolvido!", `Seu ticket com código: ${ticket.id} \n foi encerrado por ${email}, com status: Resolvido.`)
+
+    }catch(error){
+      return { status: 500, msg: 'Erro ao encerrar ticket' };
+    }
+  }
+
+
 }

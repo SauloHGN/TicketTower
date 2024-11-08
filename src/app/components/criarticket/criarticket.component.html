@@ -105,13 +105,29 @@
         <div class="text">
           <span>Clique para fazer upload de arquivos</span>
         </div>
-        <input type="file" id="file" />
+        <input
+          type="file"
+          id="file"
+          class="hidden"
+          (change)="handleFileUpload($event)"
+        />
+        <label
+          class="absolute translate-y-[+220%] mb-2 text-sm font-medium"
+          for="file_input"
+        >
+          <div
+            *ngIf="fileName"
+            class="mt-2 text-sm px-3 py-1 rounded-full text-[var(--primary-font-color)] bg-[var(--tertiary-background-color)] hover:"
+          >
+            Arquivo selecionado: {{ fileName }}
+          </div>
+        </label>
       </label>
       <button
         type="submit"
         id="send"
         (click)="criarTicket()"
-        class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
+        class="bg-gradient-to-r mt-6 from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110"
       >
         Enviar
       </button>

@@ -4,6 +4,9 @@ import { SharedService } from '../../sharedService';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { lucideRefreshCcw, lucideSearch } from '@ng-icons/lucide';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-gerenciar-usuarios',
@@ -19,446 +22,77 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class GerenciarUsuariosComponent implements OnInit {
-  constructor(private sharedService: SharedService) {
-    this.filteredUsers = this.tableItems; // inicializa com todos os usuarios
+  tableItems: tabelaUsuario[] = [];
+  filteredUsers: tabelaUsuario[] = [];
+  filterText = '';
+  currentPage = 1;
+  usersPerPage = 8;
+
+  constructor(
+    private sharedService: SharedService,
+    private router: Router,
+    private http: HttpClient,
+    private toastService: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadUsers();
   }
 
-  tableItems: tabelaUsuario[] = [
-    {
-      nome: 'Liam James',
-      email: 'liamjames@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Software engineer',
-      tipo: 'Cliente',
-    },
-    {
-      nome: 'Olivia Emma',
-      email: 'oliviaemma@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Product designer',
-      tipo: 'Cliente',
-    },
-    {
-      nome: 'William Benjamin',
-      email: 'william.benjamin@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Front-end developer',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Henry Theodore',
-      email: 'henrytheodore@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Laravel engineer',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-    {
-      nome: 'Amelia Elijah',
-      email: 'amelia.elijah@example.com',
-      telefone: '+1 (555) 000-000',
-      cargo: 'Open source manager',
-      tipo: 'Funcionario',
-    },
-  ];
+  async loadUsers() {
+    try {
+      const userInfo = await sessionStorage.getItem('userInfo');
+      if (userInfo) {
+        var user = JSON.parse(userInfo);
+      }
 
-  ngOnInit(): void {}
-
-  deleteUser() {
-    this.sharedService.openModalDelete();
+      this.http.get('http://localhost:3000/users/list', user.id).subscribe({
+        next: (response: any) => {
+          if (response.status === 200) {
+            this.tableItems = response.users.map(
+              (user: {
+                nome: any;
+                email: any;
+                celular: any;
+                source: any;
+                permissao: any;
+              }) => ({
+                nome: user.nome,
+                email: user.email,
+                telefone: user.celular,
+                cargo: user.source,
+                tipo: user.permissao,
+              })
+            );
+            this.filteredUsers = [...this.tableItems]; // inicializa a lista filtrada
+          } else {
+            this.toastService.error(
+              'Não foi possível carregar os dados dos usuários'
+            );
+            console.log(response);
+          }
+        },
+        error: () => {
+          this.toastService.error('Erro ao conectar com o servidor');
+        },
+      });
+    } catch (error) {}
   }
 
-  filteredUsers: tabelaUsuario[] = []; // Esta será a lista filtrada
-  filterText = ''; // valor do filtro (input)
-  currentPage = 1; // pagina atual
-  usersPerPage = 8; // quantidade de usuarios por página
+  RefreshUsers() {
+    setTimeout(() => {
+      this.loadUsers();
+    }, 10000);
+  }
 
   filterUsers() {
-    this.filteredUsers = this.tableItems.filter((tabelaUsuario) =>
-      this.matchesFilter(tabelaUsuario)
+    this.filteredUsers = this.tableItems.filter((user) =>
+      this.matchesFilter(user)
     );
-    this.currentPage = 1; // resetar para a primeira pagina
+    this.currentPage = 1;
   }
 
   private matchesFilter(user: tabelaUsuario): boolean {
-    // filtar dados da tabela de acordo com os atributos definidos
     const lowerCaseFilterText = this.filterText.toLowerCase();
     return (
       user.nome.toLowerCase().includes(lowerCaseFilterText) ||
@@ -472,6 +106,10 @@ export class GerenciarUsuariosComponent implements OnInit {
   get paginatedUsers() {
     const startIndex = (this.currentPage - 1) * this.usersPerPage;
     return this.filteredUsers.slice(startIndex, startIndex + this.usersPerPage);
+  }
+
+  deleteUser() {
+    this.sharedService.openModalDelete();
   }
 
   nextPage() {
@@ -489,12 +127,18 @@ export class GerenciarUsuariosComponent implements OnInit {
   get totalPages() {
     return Math.ceil(this.filteredUsers.length / this.usersPerPage);
   }
+
+  editarUser(tipo: string) {
+    const tipoValue = tipo.toLowerCase();
+    this.sharedService.setEditTypeUser(tipoValue);
+    this.router.navigate(['/home/editar']);
+  }
 }
 
 interface tabelaUsuario {
   nome: string;
   email: string;
   telefone: string;
-  cargo: string;
+  cargo: string; // se você tiver informações sobre cargo, ajuste aqui
   tipo: string;
 }

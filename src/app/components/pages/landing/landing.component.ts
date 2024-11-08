@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { lucideGithub, lucideMoon, lucideSun } from '@ng-icons/lucide';
 import { ThemeService } from '../../../services/theme.service';
+import { HeaderLandingComponent } from "../../header-landing/header-landing.component";
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [FooterComponent, CommonModule, NgIconComponent],
+  imports: [FooterComponent, CommonModule, NgIconComponent, HeaderLandingComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
   viewProviders: [

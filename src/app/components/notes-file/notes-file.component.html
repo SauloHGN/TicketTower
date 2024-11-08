@@ -1,0 +1,110 @@
+<div class="flex items-start gap-2.5 py-6">
+  <div class="flex flex-col gap-1">
+    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+      <span class="text-sm font-semibold text-[var(--primary-font-color)]"
+        >{{nome}}</span
+      >
+      <span class="text-sm font-normal text-gray-500 dark:text-gray-400"
+        >{{data_hora}}</span
+      >
+    </div>
+    <div class="leading-1.5 flex w-full max-w-[400px] min-w-[250px] flex-col">
+      <div
+        class="flex items-start bg-[var(--card-background-color)] rounded-xl p-2"
+      >
+        <div class="me-2 w-full flex flex-col gap-y-1 text-[var(--primary-font-color)]">
+          <span
+            class="flex items-center justify-between max-w-[320px] box-border gap-2 text-sm font-medium text-[var(--primary-font-color)] pb-2"
+          >
+            <!-- sample rectangle -->
+            <svg fill="none" class="w-6 h-6 flex-shrink-0" viewBox="0 0 20 21">
+              <g clip-path="url(#clip0_3173_1381)">
+                <path
+                  fill="#E2E5E7"
+                  d="M5.024.5c-.688 0-1.25.563-1.25 1.25v17.5c0 .688.562 1.25 1.25 1.25h12.5c.687 0 1.25-.563 1.25-1.25V5.5l-5-5h-8.75z"
+                />
+                <path
+                  fill="#B0B7BD"
+                  d="M15.024 5.5h3.75l-5-5v3.75c0 .688.562 1.25 1.25 1.25z"
+                />
+                <path fill="#CAD1D8" d="M18.774 9.25l-3.75-3.75h3.75v3.75z" />
+                <path
+                  fill="#06b6d4"
+                  d="M16.274 16.75a.627.627 0 01-.625.625H1.899a.627.627 0 01-.625-.625V10.5c0-.344.281-.625.625-.625h13.75c.344 0 .625.281.625.625v6.25z"
+                />
+                <path
+                  fill="#CAD1D8"
+                  d="M15.649 17.375H3.774V18h11.875a.627.627 0 00.625-.625v-.625a.627.627 0 01-.625.625z"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_3173_1381">
+                  <path
+                    fill="#fff"
+                    d="M0 0h20v20H0z"
+                    transform="translate(0 .5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+            <p class="max-w-72 break-words">
+              {{nome_arquivo}}
+            </p>
+
+            <div class="inline-flex self-center items-center">
+              <button
+                class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-[var(--card-background-color)] rounded-lg hover:bg-[var(--tertiary-background-color)] focus:ring-4"
+                type="button"
+                (click)="downloadFile(id, nome_arquivo)"
+              >
+                <svg
+                  class="w-4 h-4 text-[var(--primary-font-color)]"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"
+                  />
+                  <path
+                    d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+          </span>
+          <span
+            class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="self-center"
+              width="3"
+              height="4"
+              viewBox="0 0 3 4"
+              fill="none"
+            >
+              <circle cx="1.5" cy="2" r="1.5" fill="#6B7280" />
+            </svg>
+            {{tamanho}}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              class="self-center"
+              width="3"
+              height="4"
+              viewBox="0 0 3 4"
+              fill="none"
+            >
+              <circle cx="1.5" cy="2" r="1.5" fill="#6B7280" />
+            </svg>
+            {{tipo_arquivo}}
+          </span>
+          {{mensagem}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

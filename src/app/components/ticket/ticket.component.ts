@@ -1,52 +1,99 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucidePlus, lucideSendHorizontal } from '@ng-icons/lucide';
+import { NotesFileComponent } from '../notes-file/notes-file.component';
+import { NotesTextComponent } from '../notes-text/notes-text.component';
+import {
+  lucidePlus,
+  lucideSendHorizontal,
+  lucideX,
+  lucideBuilding,
+} from '@ng-icons/lucide';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ticket',
   standalone: true,
-  imports: [FormsModule, CommonModule, NgIconComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    NgIconComponent,
+    NotesFileComponent,
+    NotesTextComponent,
+  ],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.css',
   viewProviders: [
     provideIcons({
       lucidePlus,
       lucideSendHorizontal,
+      lucideX,
+      lucideBuilding,
     }),
   ],
 })
-export class TicketComponent {
+export class TicketComponent implements OnInit {
   isInputDisabled: boolean = true;
   selectedType: string = '';
-  options = [{ type: 'detalhes' }, { type: 'chat' }];
+  options = [
+    { type: 'detalhes' },
+    { type: 'notas' },
+    { type: 'anexos' },
+    { type: 'histórico' },
+  ];
 
   ticketID: string | null = '';
   dadosTicket: any;
 
+  setores?: any[];
+  selectedSetor: any;
+
+  dadosNotas?: Nota[] = [];
+  dadosAnexos?: Anexo[] = [];
+
+  dadosHistorico?: HistoricoTranferencia[] = [];
+
   constructor(
     private http: HttpClient,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private serviceToast: ToastrService
   ) {
     this.selectedType = 'detalhes';
 
     if (this.selectedType === 'detalhes') {
       this.loadDetalhes();
     }
-    if (this.selectedType === 'chat') {
+    if (this.selectedType === 'notas') {
+      this.loadNotas();
+    }
+    if (this.selectedType === 'anexos') {
+      this.loadAnexos();
+    }
+    if (this.selectedType === 'histórico') {
     }
   }
 
-  loadDetalhes() {
-    try {
-      // ------- Captar todos os setores ---------
-      this.activatedRoute.paramMap.subscribe((params) => {
-        this.ticketID = params.get('ticketID');
-      });
+  ngOnInit(): void {
+    this.http.get<any[]>('http://localhost:3000/setores').subscribe((data) => {
+      this.setores = data;
+    });
+  }
 
+  async getParamTicket(): Promise<string | null> {
+    return new Promise((resolve) => {
+      this.activatedRoute.paramMap.subscribe((params) => {
+        const ticket = params.get('ticketID');
+        resolve(ticket);
+      });
+    });
+  }
+
+  async loadDetalhes() {
+    try {
+      this.ticketID = await this.getParamTicket();
       if (this.ticketID == null) {
         return;
       }
@@ -55,14 +102,11 @@ export class TicketComponent {
         .get(`http://localhost:3000/ticket/detalhes/${this.ticketID}`)
         .subscribe({
           next: async (response: any) => {
-            console.log('reposta: ', response);
-
             if (response.status != 200) {
               return;
             }
 
             this.dadosTicket = response.ticket;
-            console.log(this.dadosTicket);
 
             // Acessa os elementos do DOM e define seus valores
             (document.getElementById('id-ticket') as HTMLInputElement).value =
@@ -94,6 +138,80 @@ export class TicketComponent {
             (
               document.getElementById('descricao-ticket') as HTMLInputElement
             ).value = this.dadosTicket.descricao;
+            (
+              document.getElementById('setor-ticket') as HTMLInputElement
+            ).value = this.dadosTicket.id_setor.nome;
+          },
+        });
+    } catch (error) {}
+  }
+
+  async loadAnexos() {
+    try {
+      this.ticketID = await this.getParamTicket();
+
+      if (this.ticketID == null) {
+        return;
+      }
+
+      this.http
+        .get(`http://localhost:3000/ticket/${this.ticketID}/anexos`)
+        .subscribe({
+          next: async (response: any) => {
+            if (response.status != 200) {
+              return;
+            }
+
+            this.dadosAnexos = response.anexos;
+          },
+        });
+    } catch (error) {}
+  }
+
+  async loadNotas() {
+    try {
+      this.ticketID = await this.getParamTicket();
+
+      if (this.ticketID == null) {
+        return;
+      }
+
+      this.http
+        .get(`http://localhost:3000/ticket/${this.ticketID}/notas`)
+        .subscribe({
+          next: async (response: any) => {
+            if (response.status != 200) {
+              return;
+            }
+            this.dadosNotas = response.mensagens;
+            this.scrollToBottom();
+          },
+        });
+    } catch (error) {}
+  }
+
+
+  async loadHistorico() {
+    try {
+      this.ticketID = await this.getParamTicket();
+
+      if (this.ticketID == null) {
+        return;
+      }
+
+      this.http
+        .get(`http://localhost:3000/ticket/${this.ticketID}/historicoSetor`)
+        .subscribe({
+          next: async (response: any) => {
+            if (response.status != 200) {
+              return;
+            }
+            this.dadosHistorico = response.transferencias.map((transferencia: { dataTransferencia: any; setorAnterior: { nome: any; }; setorNovo: { nome: any; }; usuario: any; }) => ({
+              dataTransferencia: transferencia.dataTransferencia,
+              setorAntigo: transferencia.setorAnterior.nome, // Acessando o nome do setor anterior
+              setorNovo: transferencia.setorNovo.nome, // Acessando o nome do setor novo
+              user: transferencia.usuario, // Acessando o e-mail do usuário
+            }));
           },
         });
     } catch (error) {}
@@ -119,5 +237,204 @@ export class TicketComponent {
 
   selectOption(option: any) {
     this.selectedType = option;
+
+    switch (option) {
+      case 'detalhes':
+        this.loadDetalhes();
+        return;
+
+      case 'anexos':
+        this.loadAnexos();
+        return;
+
+      case 'notas':
+        this.loadNotas();
+        this.scrollToBottom();
+        return;
+
+      case 'histórico':
+        this.loadHistorico();
+        return;
+
+      default:
+        return;
+    }
   }
+
+  anexo: File | null = null; // Variável para armazenar o arquivo
+
+  onFileSelected(event: Event): void {
+    const inputFile = event.target as HTMLInputElement;
+
+    if (inputFile && inputFile.files) {
+      const files = inputFile.files;
+      if (files.length > 0) {
+        this.anexo = files[0]; // Armazena o arquivo selecionado na variável `anexo`
+      }
+    }
+
+    if (!this.anexo) {
+      this.serviceToast.info('A nota não pode ser vazia');
+    }
+  }
+
+  async criarNota() {
+    try {
+      const userInfo = await sessionStorage.getItem('userInfo');
+      if (userInfo) {
+        var user = JSON.parse(userInfo);
+      }
+
+      const ticket = await this.getParamTicket();
+      if (ticket == null) {
+        this.serviceToast.info('Não foi possivel criar a nota');
+        return;
+      }
+
+      const mensagem = (
+        document.getElementById('text-nota') as HTMLInputElement
+      ).value;
+
+      if (!mensagem && !this.anexo) {
+        this.serviceToast.info('Não é possivel criar uma nota vazia.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.set('remetenteID', user.id);
+      formData.set('mensagem', mensagem);
+      if (this.anexo) {
+        formData.set('file', this.anexo); // Aqui você adiciona o arquivo ao FormData
+      }
+
+      this.http
+        .post(`http://localhost:3000/ticket/${ticket}/criarNota`, formData)
+        .subscribe({
+          next: (response: any) => {
+            if (response.status != 201) {
+              this.serviceToast.error('Não foi possivel criar a nota');
+              this.togglePopover();
+              return;
+            }
+
+            (document.getElementById('text-nota') as HTMLInputElement).value =
+              '';
+            this.loadNotas();
+            this.scrollToBottom();
+            this.anexo = null;
+            this.fileName = '';
+          },
+        });
+    } catch (error) {}
+  }
+
+  downloadAnexo(anexoId: number, anexoName: string) {
+    const url = `http://localhost:3000/ticket/download/${anexoId}`;
+    this.http.get(url, { responseType: 'blob' }).subscribe(
+      (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${anexoName}`; // Nome padrão
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url); // Limpa o objeto URL
+      },
+      (error) => {
+        console.error('Erro ao baixar o arquivo:', error);
+      }
+    );
+  }
+
+  async setorChange() {
+    try {
+      const ticket = await this.getParamTicket();
+
+      const userInfo = await sessionStorage.getItem('userInfo');
+      if (userInfo) {
+        var user = JSON.parse(userInfo);
+      }
+
+      const novoSetor = await (
+        document.getElementById('novo-setor') as HTMLInputElement
+      ).value;
+
+      if (novoSetor == null || ticket == null) {
+        this.serviceToast.info('Não foi possivel continuar. Tente novamente');
+        return;
+      }
+
+      this.http
+        .patch(`http://localhost:3000/ticket/${ticket}/transferirSetor`, {
+          novoSetor: novoSetor,
+          userID: user.id
+        })
+        .subscribe({
+          next: (response: any) => {
+            if (response.status != 200) {
+              this.serviceToast.error('Não foi possivel fazer a transferência');
+              this.togglePopover();
+              return;
+            }
+            this.togglePopover();
+            this.serviceToast.success('Setor Transferido');
+            this.loadDetalhes();
+          },
+        });
+    } catch (error) {}
+  }
+
+  popoverVisible: boolean = false;
+
+  togglePopover() {
+    this.popoverVisible = !this.popoverVisible;
+  }
+
+  fileName: string | null = null; // Inicializa a variável para armazenar o nome do arquivo
+
+  handleFileUpload(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0]; // Obtém o primeiro arquivo selecionado
+      this.fileName = file.name; // Armazena o nome do arquivo selecionado
+    } else {
+      this.fileName = null; // Reseta o nome se nenhum arquivo for selecionado
+    }
+  }
+
+  scrollToBottom() {
+    // Aguarda um pequeno tempo para garantir que as mensagens sejam renderizadas
+    const messagesContainer = document.getElementById(
+      'mensagens-list'
+    ) as HTMLElement;
+
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight; // Acessa diretamente o scrollTop e scrollHeight
+    }
+  }
+}
+
+export interface Nota {
+  mensagemID: number;
+  nome: string;
+  data_hora: string;
+  mensagem: string;
+  anexo: any;
+}
+
+export interface Anexo {
+  id: number;
+  nome_arquivo: string;
+  tipo_arquivo: string;
+  tamanho: string;
+  anexo: any;
+}
+
+export interface HistoricoTranferencia{
+  dataTransferencia: string;
+  setorAntigo: string;
+  setorNovo: string;
+  user: string
 }

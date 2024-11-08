@@ -49,6 +49,20 @@ export class CriarTicketComponent implements OnInit {
     }
   }
 
+  fileName: string | null = null; // Inicializa a variável para armazenar o nome do arquivo
+
+  handleFileUpload(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0]; // Obtém o primeiro arquivo selecionado
+      this.fileName = file.name; // Armazena o nome do arquivo selecionado
+    } else {
+      this.fileName = null; // Reseta o nome se nenhum arquivo for selecionado
+    }
+  }
+
   arquivosValidos = [
     'jpg',
     'jpeg',

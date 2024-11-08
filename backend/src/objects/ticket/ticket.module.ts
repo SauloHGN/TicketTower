@@ -12,6 +12,15 @@ import { SetoresService } from 'src/setores/setores.service';
 import { Setores } from 'src/entity/setores.entity';
 import { Sla } from 'src/entity/sla.entity';
 import { SlaService } from '../sla/sla.service';
+import { MensagemService } from 'src/utils/mensagem/mensagem.service';
+import { Mensagens } from 'src/entity/mensagens.entity';
+import { Anexos } from 'src/entity/anexos.entity';
+import { EmailService } from 'src/email/email.service';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtService } from '@nestjs/jwt';
+import { MulterModule } from '@nestjs/platform-express';
+import { TicketTransfer } from 'src/entity/ticketTransfer.entity';
+import { RelatorioService } from '../relatorio/relatorio.service';
 
 @Module({
   imports: [
@@ -21,8 +30,14 @@ import { SlaService } from '../sla/sla.service';
       Funcionarios,
       UsersView,
       Setores,
-      Sla
+      Sla,
+      Mensagens,
+      Anexos,
+      TicketTransfer
     ]),
+    MulterModule.register({
+      dest: './uploads', // Configura o destino dos uploads temporários
+    }),
   ],
   controllers: [TicketController],
   providers: [
@@ -30,7 +45,12 @@ import { SlaService } from '../sla/sla.service';
     FuncionarioService,
     DataUtilsService,
     SetoresService,
-    SlaService
+    SlaService,
+    MensagemService,
+    EmailService,
+    AuthService,
+    JwtService,
+    RelatorioService
   ],
   exports: [TicketService],
 })

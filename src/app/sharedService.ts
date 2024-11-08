@@ -48,4 +48,14 @@ export class SharedService {
   closeModalDelete() {
     this.modalSubject.next(false);
   }
+
+  editTypeUser: string = '';
+
+  getEditTypeUser() {
+    return this.editTypeUser;
+  }
+
+  setEditTypeUser(tipo: string) {
+    this.editTypeUser = tipo;
+  }
 }

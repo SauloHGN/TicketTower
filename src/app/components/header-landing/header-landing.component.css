@@ -1,0 +1,50 @@
+.button-login {
+  color: var(--primary-font-color);
+  padding: 8px 36px;
+  margin: 0 8px;
+  border-radius: 20px;
+  font-weight: bold;
+  background-size: 160% 120%;
+  transition: background-position 0.4s ease-in-out;
+  background-image: linear-gradient(
+    to right,
+    #2fc4d8,
+    /* #009ec5, */ #0499ff,
+    #2565eb
+  );
+  box-shadow: 0 4px 12px 0 rgba(49, 196, 190, 0.15);
+}
+
+.button-login:hover {
+  background-position: 99% 30%;
+  -webkit-transition: all 0.4s ease-in-out; /* Safari */
+  -moz-transition: all 0.4s ease-in-out; /* Firefox */
+  -ms-transition: all 0.4s ease-in-out; /* IE */
+  -o-transition: all 0.4s ease-in-out; /* Opera */
+  transition: all 0.4s ease-in-out; /* Padrão */
+  transition: background-image 0.4s ease-in-out;
+  transition: background-position 0.4s ease-in-out;
+  background-image: linear-gradient(
+    to right,
+    #76bcc0,
+    #14c7dc,
+    #3b83f6,
+    #2565eb
+  );
+}
+
+.link-github {
+  padding: 8px;
+  border-radius: 6px;
+  border: solid 1px;
+  border-color: var(--primary-border-color);
+}
+
+.link-github:hover {
+  background-color: var(--tertiary-button-background-color);
+}
+
+.icon-github {
+  text-align: center;
+  vertical-align: middle;
+}

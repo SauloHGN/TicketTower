@@ -89,6 +89,36 @@ export class EmailService {
     }
   }
 
+  async sendMessageEmail(destinatarioID: string, titulo: string, mensagem: string) {
+    try {
+      const year = this.getCurrentYear();
+
+      const resultado = await this.usersViewRepository.findOne({
+        where: { id: destinatarioID },
+      });
+
+      resultado.email;
+
+      this.mailerService.sendMail({
+        to: resultado.email,
+        subject: 'Atualização Ticket Tower',
+        template: 'mensagem',
+        context: {
+          titulo: titulo,
+          destinatario: resultado.nome,
+          remetente: process.env.EMAIL_USER,
+          mensagem: mensagem,
+          year,
+        },
+      });
+
+      return false;
+    } catch (error) {
+      console.error('Erro ao iniciar a recuperação de senha:', error);
+      throw new Error('Erro ao iniciar a recuperação de senha');
+    }
+  }
+
   async authRecoveryPassword(email: string, code: string): Promise<boolean> {
     const userID = await this.dataUtilsService.getIdByEmail(email);
     return await this.authService.verificarCodigo(userID, code);

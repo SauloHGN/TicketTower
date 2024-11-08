@@ -17,7 +17,7 @@ export class Mensagens {
   @JoinColumn({ name: 'id_ticket' })
   id_ticket: Tickets;
 
-  @Column({ name: 'mensagem' })
+  @Column({ name: 'mensagem', nullable: true })
   mensagem: string;
 
   @Column({ name: 'data_hora', nullable: false })
@@ -28,5 +28,5 @@ export class Mensagens {
   id_anexo: Anexos;
 
   @Column({ name: 'id_remetente', nullable: false })
-  id_remetente: number;
+  id_remetente: string;
 }
