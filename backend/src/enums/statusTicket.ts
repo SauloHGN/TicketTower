@@ -4,5 +4,5 @@ export enum StatusTicket {
   RESOLVIDO = 'resolvido',
   FECHADO = 'fechado',
   REABERTO = 'reaberto',
-  CANCELADO = ' cancelado',
+  VENCIDO = ' vencido',
 }

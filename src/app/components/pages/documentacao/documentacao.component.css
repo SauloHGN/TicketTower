@@ -1,0 +1,17 @@
+*{
+  background-color: var(--primary-background-color);
+}
+
+.nav-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+@media screen and (max-width: 678px) {
+  aside{
+    display: none;
+  }
+
+  article{
+    width: 100%;
+  }
+}
