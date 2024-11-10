@@ -21,6 +21,7 @@ import { JwtService } from '@nestjs/jwt';
 import { MulterModule } from '@nestjs/platform-express';
 import { TicketTransfer } from 'src/entity/ticketTransfer.entity';
 import { RelatorioService } from '../relatorio/relatorio.service';
+import { UtilsService } from 'src/utils/utils.service';
 
 @Module({
   imports: [
@@ -50,7 +51,8 @@ import { RelatorioService } from '../relatorio/relatorio.service';
     EmailService,
     AuthService,
     JwtService,
-    RelatorioService
+    RelatorioService,
+    UtilsService
   ],
   exports: [TicketService],
 })

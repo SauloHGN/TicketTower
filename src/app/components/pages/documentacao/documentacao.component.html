@@ -1,12 +1,345 @@
-<body class="bg[var(--primary-background-color]">
-  <app-header-landing></app-header-landing>
-  <section class="flex flex-1 flex-grow">
-    <aside>
+<app-header-landing class="fixed top-0 w-full z-40"></app-header-landing>
 
-    </aside>
-    <main>
-      
+<aside class="relative text-sm pb-5">
+  <nav
+    class="nav-menu fixed z-40 w-32 h-4/6 left-0 top-28 space-y-6 overflow-auto md:w-80 sm:w-48"
+  >
+    <div class="text-[0.9rem] space-y-6">
+      <div>
+        <h3
+          class="pb-5 px-4 font-medium text-[var(--primary-font-color)] md:px-8"
+        >
+          Introdução
+        </h3>
+        <div class="text-[var(--placeholder-default)] px-4 md:px-8">
+          <ul>
+            <li>
+              <a
+                href="documentacao/#ticket-tower"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >Ticket Tower</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3
+          class="pb-4 px-4 font-medium text-[var(--primary-font-color)] md:px-8"
+        >
+          Instalação
+        </h3>
+        <div class="text-[var(--placeholder-default)] px-4 md:px-8">
+          <ul>
+            <li>
+              <a
+                href="documentacao/#pre-requisitos"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >Pré-requisitos</a
+              >
+            </li>
+            <li>
+              <a
+                href="documentacao/#windows"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >Windows</a
+              >
+            </li>
+            <li>
+              <a
+                href="documentacao/#linux-mac"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >Linux e Mac</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h3
+          class="pb-4 px-4 font-medium text-[var(--primary-font-color)] md:px-8"
+        >
+          Guia de uso
+        </h3>
+        <div class="text-[var(--placeholder-default)] px-4 md:px-8">
+          <ul>
+            <li>
+              <a
+                href="documentacao/#funcionalidades-principais"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >Funcionalidades principais</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h3
+          class="pb-4 px-4 font-medium text-[var(--primary-font-color)] md:px-8"
+        >
+          Configuração
+        </h3>
+        <div class="text-[var(--placeholder-default)] px-4 md:px-8">
+          <ul>
+            <li>
+              <a
+                href="documentacao/#opcoes-configuracao"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >Opções de configuração</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h3
+          class="pb-4 px-4 font-medium text-[var(--primary-font-color)] md:px-8"
+        >
+          Suporte e Contribuição
+        </h3>
+        <div class="text-[var(--placeholder-default)] px-4 md:px-8">
+          <ul>
+            <li>
+              <a
+                href="documentacao/#como-contribuir"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >Como contribuir?</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h3
+          class="pb-4 px-4 font-medium text-[var(--primary-font-color)] md:px-8"
+        >
+          Licença
+        </h3>
+        <div class="text-[var(--placeholder-default)] px-4 md:px-8">
+          <ul>
+            <li>
+              <a
+                href="documentacao/#mit"
+                class="block w-full py-2 px-4 border-l text-[var(--tertiary-highligted-text-color)] border-[var(--primary-border-color)] hover:border-[var(--secundary-button-text-color)] hover:text-[var(--primary-font-color)] duration-150"
+                >MIT</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</aside>
+<body>
+  <section class="flex flex-1 flex-grow min-h-full mx-auto px-4 sm:px-2">
+    <main class="flex flex-col mx-4 my-2 md:mr-6 sm:ml-48 md:ml-96 mt-32">
+      <article class="w-4/5 px-4 mb-6" id="ticket-tower">
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Ticket Tower
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="TicketTower"
+        ></p>
+      </article>
+
+      <article class="w-4/5 px-4 mb-6" id="ticket-tower">
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Tabela comparativa
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="textTabelaComparativa"
+        ></p>
+      </article>
+
+      <article class="w-4/5 px-4 mb-6" id="pre-requisitos">
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Pré-requisitos
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="preRequisitos"
+        ></p>
+
+        <p
+          class="text-[var(--tertiary-highligted-text-color)] text-justify text-base sm:text-sm"
+        >
+          <br />
+          Links para download
+        </p>
+        <a
+          href="https://nodejs.org/en/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[var(--primary-font-color)] hover:text-[var(--secundary-font-color)]"
+        >
+          Node.js
+        </a>
+        <br />
+        <a
+          href="https://www.mysql.com/downloads/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[var(--primary-font-color)] hover:text-[var(--secundary-font-color)]"
+        >
+          MySQL
+        </a>
+      </article>
+
+      <article class="w-4/5 px-4 mb-6" id="windows">
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Instalação no windows
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="codeCardWindows"
+        ></p>
+      </article>
+
+      <article class="w-4/5 px-4 mb-6" id="linux-mac">
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Instalação no Linux e Mac
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="codeCardLinuxMac"
+        ></p>
+      </article>
+
+      <article
+        class="w-4/5 px-4 mb-6"
+        id="funcionalidade-principais"
+      >
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Principais funcionalidades
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="principaisFuncionalidade"
+        ></p>
+      </article>
+
+      <article class="w-4/5 px-4 mb-6" id="como-contribuir">
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Contribuições
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="contribuicao"
+        ></p>
+      </article>
+
+      <article class="w-4/5 px-4 mb-6" id="mit">
+        <h3
+          class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
+        >
+          Licença MIT
+          <span class="absolute -top-[140px]"></span>
+          <a
+            class="ml-2 text-2xl text-[var(--secundary-highlighted-text-color)] opacity-0 transition-opacity group-hover:opacity-100"
+            >#</a
+          >
+        </h3>
+        <p
+          style="
+            text-align: justify;
+            font-size: medium;
+            width: 90%;
+            color: var(--primary-font-color);
+          "
+          [innerHTML]="licenca"
+        ></p>
+      </article>
     </main>
   </section>
-  <app-footer></app-footer>
+  <app-footer class="mt-36"></app-footer>
 </body>

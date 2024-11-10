@@ -1,15 +1,17 @@
 <div class="flex flex-col justify-center p-4 w-full">
-  <main class="main-content flex flex-col gap-x-6 lg:flex-row justify-center md:gap-y-4">
+  <main
+    class="main-content flex flex-col gap-x-6 lg:flex-row justify-center md:gap-y-4"
+  >
     <div class="container-large flex w-3/5 flex-col gap-y-4 max-lg:w-4/5">
       <div class="cards flex flex-row justify-between">
         <section
           class="card-item rounded-lg border border-gray-100 p-6 dark:border-gray-800 dark:bg-gray-900 h-36 w-64"
         >
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Profit</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Taxa de resolução</p>
 
             <p class="text-2xl font-medium text-gray-900 dark:text-white">
-              $240.94
+              {{dashboardMetrics.taxaResolucao.toFixed(2)}}%
             </p>
           </div>
 
@@ -30,10 +32,10 @@
             </svg>
 
             <p class="flex gap-2 text-xs">
-              <span class="font-medium"> 67.81% </span>
+              <span class="font-medium"> {{dashboardMetrics.ticketsResolvidos}} </span>
 
               <span class="text-gray-500 dark:text-gray-400">
-                Since last week
+                Tickets resolvidos
               </span>
             </p>
           </div>
@@ -43,10 +45,10 @@
           class="card-item rounded-lg border border-gray-100 p-6 dark:border-gray-800 dark:bg-gray-900 h-36 w-64"
         >
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Profit</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Taxa impedidos</p>
 
             <p class="text-2xl font-medium text-gray-900 dark:text-white">
-              $240.94
+              {{dashboardMetrics.taxaFechados.toFixed(2)}}%
             </p>
           </div>
 
@@ -67,9 +69,9 @@
             </svg>
 
             <p class="flex gap-2 text-xs">
-              <span class="font-medium"> 67.81% </span>
+              <span class="font-medium"> {{dashboardMetrics.totalFechados}} </span>
               <span class="text-gray-500 dark:text-gray-400">
-                Since last week
+                Tickets impedidos
               </span>
             </p>
           </div>
@@ -79,10 +81,10 @@
           class="card-item rounded-lg border border-gray-100 p-6 dark:border-gray-800 dark:bg-gray-900 h-36 w-64"
         >
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Profit</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Taxa de vencimento</p>
 
             <p class="text-2xl font-medium text-gray-900 dark:text-white">
-              $240.94
+              {{dashboardMetrics.taxaVencimento.toFixed(2)}}%
             </p>
           </div>
 
@@ -103,9 +105,9 @@
             </svg>
 
             <p class="flex gap-2 text-xs">
-              <span class="font-medium"> 67.81% </span>
+              <span class="font-medium"> {{dashboardMetrics.ticketsVencidos}}</span>
               <span class="text-gray-500 dark:text-gray-400">
-                Since last week
+                Tickets vencidos
               </span>
             </p>
           </div>
@@ -119,109 +121,64 @@
         <div
           class="grafico-ondas w-full h-8/12 rounded-lg shadow dark:bg-gray-800 p-2 md:p-4"
         >
-          <div class="flex justify-between mb-3">
-            <div class="grid gap-4 grid-cols-2">
+          <div class="flex justify-between mb-8">
+            <div class="gap-4 grid-cols-2">
               <div>
                 <h5
-                  class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2"
+                  class="text-xl font-bold leading-none text-gray-900 pe-1"
                 >
-                  Clicks
+                  Tempo médio de resolução
                 </h5>
-                <p
-                  class="text-gray-900 dark:text-white text-2xl leading-none font-bold"
-                >
-                  42,3k
-                </p>
-              </div>
-              <div>
-                <h5
-                  class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2"
-                >
-                  CPC
-
-                  <div
-                    data-popover
-                    id="cpc-info"
-                    role="tooltip"
-                    class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400"
-                  >
-                    <div data-popper-arrow></div>
-                  </div>
-                </h5>
-                <p
-                  class="text-gray-900 dark:text-white text-2xl leading-none font-bold"
-                >
-                  $5.40
-                </p>
               </div>
             </div>
-            <div>
-              <button
-                id="dropdownDefaultButton"
-                data-dropdown-toggle="lastDaysdropdown"
-                data-dropdown-placement="bottom"
-                type="button"
-                class="px-3 py-2 inline-flex items-center text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              >
-                Last week
-                <svg
-                  class="w-2.5 h-2.5 ms-2.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
+            <div class="flex relative justify-between items-center pt-5">
               <div
-                id="lastDaysdropdown"
-                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                id="menuDateAvgTime"
+                class="z-10 hidden absolute translate-y-[+65%] divide-y divide-gray-100 border-2 border-[var(--primary-border-color)] rounded-lg shadow w-44 bg-[var(--card-background-color)]"
               >
                 <ul
-                  class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                  class="py-2 text-sm text-gray-700"
                   aria-labelledby="dropdownDefaultButton"
                 >
                   <li>
                     <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Yesterday</a
+                      class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                      (click)="selectOptionLine('hoje')"
                     >
+                      Hoje
+                    </a>
                   </li>
                   <li>
                     <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Today</a
+                      class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                      (click)="selectOptionLine('semana')"
                     >
+                      Esta semana
+                    </a>
                   </li>
                   <li>
                     <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Last 7 days</a
+                      class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                      (click)="selectOptionLine('mes')"
                     >
+                      Este mês
+                    </a>
                   </li>
                   <li>
                     <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Last 30 days</a
+                      class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                      (click)="selectOptionLine('ano')"
                     >
+                      Este ano
+                    </a>
                   </li>
                   <li>
                     <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Last 90 days</a
+                      class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                      (click)="selectOptionLine('todo_periodo')"
                     >
+                      Todo período
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -261,9 +218,9 @@
             </div>
             <div>
               <h5
-                class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1"
+                class="leading-none text-xl font-bold text-gray-900 dark:text-white pb-1"
               >
-                3.4k
+                Total {{totalTicketsChartBar}}
               </h5>
               <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
                 Tickets por setor
@@ -311,7 +268,7 @@
             <h5
               class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1"
             >
-              Website traffic
+              Tickets por prioridade
             </h5>
             <svg
               data-popover-target="chart-info"
@@ -339,23 +296,24 @@
         </div>
 
         <!-- Donut Chart -->
-        <div class="py-5" id="donut-chart"></div>
+        <div class="py-5" id="donut-chart" ></div>
 
         <div
           class="grid grid-cols-1 items-center border-[var(--default-border-color)] border-t dark:border-[var(--default-border-color)] justify-between"
         >
-          <div class="flex justify-between items-center pt-5">
+          <div class="flex relative justify-between items-center pt-5">
             <!-- Button -->
             <button
-              id="dropdownDefaultButton"
-              data-dropdown-toggle="lastDaysdropdown"
+              id="buttonDonut"
+              data-dropdown-toggle="menuDateTimeDonut"
               data-dropdown-placement="bottom"
-              class="text-center text-sm p-1 font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
               type="button"
+              class="px-3 py-2 inline-flex items-center text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              (click)="toggleDropdownDonut()"
             >
-              Last 7 days
+              Selecione
               <svg
-                class="w-2.5 m-2.5 ms-1.5"
+                class="w-2.5 h-2.5 ms-2.5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -370,48 +328,47 @@
                 />
               </svg>
             </button>
+
+            <!-- Dropdown Menu -->
             <div
-              id="lastDaysdropdown"
-              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+              id="menuDateTimeDonut"
+              class="z-10 hidden absolute translate-y-[+65%] divide-y divide-gray-100 border-2 border-[var(--primary-border-color)] rounded-lg shadow w-44 bg-[var(--card-background-color)]"
             >
               <ul
-                class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                class="py-2 text-sm text-gray-700"
                 aria-labelledby="dropdownDefaultButton"
               >
                 <li>
                   <a
-                    href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Yesterday</a
+                    class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                    (click)="selectOption('hoje')"
                   >
+                    Hoje
+                  </a>
                 </li>
                 <li>
                   <a
-                    href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Today</a
+                    class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                    (click)="selectOption('semana')"
                   >
+                    Está semana
+                  </a>
                 </li>
                 <li>
                   <a
-                    href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Last 7 days</a
+                    class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                    (click)="selectOption('ano')"
                   >
+                    Este ano
+                  </a>
                 </li>
                 <li>
                   <a
-                    href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Last 30 days</a
+                    class="block px-4 py-2 hover:bg-gray-600 text-[var(--primary-font-color)]"
+                    (click)="selectOption('todo_periodo')"
                   >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >Last 90 days</a
-                  >
+                    Todo periodo
+                  </a>
                 </li>
               </ul>
             </div>
@@ -428,51 +385,59 @@
               <h5
                 class="text-xl font-bold leading-none text-[var(--primary-font-color)] dark:text-white pe-1"
               >
-                Your team's progress
+                Histórico de Tickets
               </h5>
             </div>
           </div>
         </div>
 
         <div class="blocos bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
-          <div class="grid grid-cols-3 gap-3 mb-2">
+          <div class="flex flex-col gap-3 mb-2">
             <dl
-              class="bg-orange-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]"
+              class="bg-orange-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[74px]"
             >
               <dt
-                class="w-8 h-8 rounded-full bg-orange-100 dark:bg-gray-500 text-orange-600 dark:text-orange-300 text-sm font-medium flex items-center justify-center mb-1"
+                class="text-lg font-semibold w-10 h-10 rounded-full bg-gray-500 text-orange-500 text-orange-300 text-md font-medium flex items-center justify-center mb-1"
               >
-                12
+                {{ abertoCount }}
               </dt>
-              <dd
-                class="text-orange-600 dark:text-orange-300 text-sm font-medium"
-              >
-                To do
+              <dd class="text-orange-500 text-orange-300 text-md font-medium">
+                Abertos
               </dd>
             </dl>
             <dl
-              class="bg-teal-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]"
+              class="bg-teal-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[74px]"
             >
               <dt
-                class="w-8 h-8 rounded-full bg-teal-100 dark:bg-gray-500 text-teal-600 dark:text-teal-300 text-sm font-medium flex items-center justify-center mb-1"
+                class="text-lg font-semibold w-10 h-10 rounded-full bg-gray-500 text-teal-300 text-md font-medium flex items-center justify-center mb-1"
               >
-                23
+                {{ andamentoCount }}
               </dt>
-              <dd class="text-teal-600 dark:text-teal-300 text-sm font-medium">
-                In progress
+              <dd class="text-teal-300 text-md font-medium">
+                Em andamento
               </dd>
             </dl>
             <dl
-              class="bg-blue-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]"
+              class="bg-blue-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[74px]"
             >
               <dt
-                class="w-8 h-8 rounded-full bg-blue-100 dark:bg-gray-500 text-blue-600 dark:text-blue-300 text-sm font-medium flex items-center justify-center mb-1"
+                class="text-lg font-semibold w-10 h-10 rounded-full bg-gray-500 text-blue-300 text-md font-medium flex items-center justify-center mb-1"
               >
-                64
+                {{ resolvidoCount }}
               </dt>
-              <dd class="text-blue-600 dark:text-blue-300 text-sm font-medium">
-                Done
+              <dd class="text-blue-600 dark:text-blue-300 text-md font-medium">
+                Resolvidos
               </dd>
+            </dl>
+            <dl
+              class="bg-blue-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[74px]"
+            >
+              <dt
+                class="text-lg font-semibold w-10 h-10 rounded-full bg-gray-500 text-red-400 text-md font-medium flex items-center justify-center mb-1"
+              >
+                {{ vencidoCount }}
+              </dt>
+              <dd class="text-red-400 text-md font-medium">Vencidos</dd>
             </dl>
           </div>
         </div>

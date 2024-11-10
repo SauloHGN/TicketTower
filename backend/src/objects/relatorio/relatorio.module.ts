@@ -17,6 +17,7 @@ import { SlaService } from '../sla/sla.service';
 import { EmailService } from 'src/email/email.service';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { UtilsService } from 'src/utils/utils.service';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { JwtService } from '@nestjs/jwt';
       Setores,
       Sla,
       TicketTransfer,
+      Tickets
     ]),
   ],
   controllers: [RelatorioController],
@@ -40,7 +42,8 @@ import { JwtService } from '@nestjs/jwt';
     SlaService,
     EmailService,
     AuthService,
-    JwtService
+    JwtService,
+    UtilsService
   ],
   exports: [RelatorioService],
 })

@@ -22,7 +22,7 @@ export const routes: Routes = [
   { path: 'login', title: 'Entrar', component: LoginComponent },
   { path: 'redefinir', title: 'Esqueci a senha', component: CodigoComponent },
   { path: 'sla', title: 'Termos de SLA', component: SlaComponent },
-  { path: 'documentacao', title: 'Documntação', component: DocumentacaoComponent },
+  { path: 'documentacao', title: 'Documentação', component: DocumentacaoComponent },
   {
     path: 'home',
     title: 'Página Inicial',
