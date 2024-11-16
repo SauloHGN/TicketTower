@@ -51,12 +51,14 @@ export class GerenciarUsuariosComponent implements OnInit {
           if (response.status === 200) {
             this.tableItems = response.users.map(
               (user: {
+                id: any;
                 nome: any;
                 email: any;
                 celular: any;
                 source: any;
                 permissao: any;
               }) => ({
+                id: user.id,
                 nome: user.nome,
                 email: user.email,
                 telefone: user.celular,
@@ -80,9 +82,7 @@ export class GerenciarUsuariosComponent implements OnInit {
   }
 
   RefreshUsers() {
-    setTimeout(() => {
-      this.loadUsers();
-    }, 10000);
+    this.loadUsers();
   }
 
   filterUsers() {
@@ -108,8 +108,9 @@ export class GerenciarUsuariosComponent implements OnInit {
     return this.filteredUsers.slice(startIndex, startIndex + this.usersPerPage);
   }
 
-  deleteUser() {
+  deleteUser(id: string) {
     this.sharedService.openModalDelete();
+    this.sharedService.setDeleteUserID(id);
   }
 
   nextPage() {
@@ -128,14 +129,17 @@ export class GerenciarUsuariosComponent implements OnInit {
     return Math.ceil(this.filteredUsers.length / this.usersPerPage);
   }
 
-  editarUser(tipo: string) {
+  editarUser(tipo: string, id: string) {
+    console.log(id);
     const tipoValue = tipo.toLowerCase();
+    this.sharedService.setEditIdUser(id);
     this.sharedService.setEditTypeUser(tipoValue);
     this.router.navigate(['/home/editar']);
   }
 }
 
 interface tabelaUsuario {
+  id: string;
   nome: string;
   email: string;
   telefone: string;

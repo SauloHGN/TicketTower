@@ -9,9 +9,10 @@ import { Entity, ViewColumn, ViewEntity, Column } from 'typeorm';
     email,
     'cliente' As permissao,
     celular,
+    id_empresa,
+    NULL AS id_setor,
     'cliente' AS source
     FROM clientes
-
     UNION ALL
 
     SELECT
@@ -20,6 +21,8 @@ import { Entity, ViewColumn, ViewEntity, Column } from 'typeorm';
     email,
     permissao,
     celular,
+    NULL AS id_empresa,
+    id_setor,
     cargo AS source
     FROM funcionarios
   `,
@@ -39,6 +42,12 @@ export class UsersView {
 
   @ViewColumn({ name: 'celular' })
   celular: string;
+
+  @ViewColumn({ name: 'id_empresa' })
+  empresa: string;
+
+  @ViewColumn({ name: 'id_setor' })
+  setor: string;
 
   @ViewColumn({ name: 'source' })
   source: string;

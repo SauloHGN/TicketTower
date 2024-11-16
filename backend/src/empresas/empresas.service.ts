@@ -16,19 +16,19 @@ export class EmpresasService {
     });
     return empresas.map((empresa) => ({ id: empresa.id, nome: empresa.nome }));
   }
-  async obterIdEmpresaPorNome(nomeEmpresa: any): Promise<number> {
+  async obterIdEmpresaPorNome(nomeEmpresa: any) {
     try {
       const empresa = await this.empresaRepository.findOne({
-        where: { nome: nomeEmpresa.nome },
+        where: { nome: nomeEmpresa },
       });
 
       if (!empresa) {
-        throw new Error('Empresa não encontrada');
+        return 'Empresa não encontrada';
       }
 
       return empresa.id;
     } catch (error) {
-      throw new Error('Erro ao obter ID da empresa');
+      return('Erro ao obter ID da empresa');
     }
   }
 }

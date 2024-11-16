@@ -190,7 +190,6 @@ export class TicketComponent implements OnInit {
     } catch (error) {}
   }
 
-
   async loadHistorico() {
     try {
       this.ticketID = await this.getParamTicket();
@@ -206,12 +205,19 @@ export class TicketComponent implements OnInit {
             if (response.status != 200) {
               return;
             }
-            this.dadosHistorico = response.transferencias.map((transferencia: { dataTransferencia: any; setorAnterior: { nome: any; }; setorNovo: { nome: any; }; usuario: any; }) => ({
-              dataTransferencia: transferencia.dataTransferencia,
-              setorAntigo: transferencia.setorAnterior.nome, // Acessando o nome do setor anterior
-              setorNovo: transferencia.setorNovo.nome, // Acessando o nome do setor novo
-              user: transferencia.usuario, // Acessando o e-mail do usuário
-            }));
+            this.dadosHistorico = response.transferencias.map(
+              (transferencia: {
+                dataTransferencia: any;
+                setorAnterior: { nome: any };
+                setorNovo: { nome: any };
+                usuario: any;
+              }) => ({
+                dataTransferencia: transferencia.dataTransferencia,
+                setorAntigo: transferencia.setorAnterior.nome, // Acessando o nome do setor anterior
+                setorNovo: transferencia.setorNovo.nome, // Acessando o nome do setor novo
+                user: transferencia.usuario, // Acessando o e-mail do usuário
+              })
+            );
           },
         });
     } catch (error) {}
@@ -368,7 +374,7 @@ export class TicketComponent implements OnInit {
       this.http
         .patch(`http://localhost:3000/ticket/${ticket}/transferirSetor`, {
           novoSetor: novoSetor,
-          userID: user.id
+          userID: user.id,
         })
         .subscribe({
           next: (response: any) => {
@@ -404,6 +410,72 @@ export class TicketComponent implements OnInit {
     }
   }
 
+  async marcarResolvido() {
+    const ticket = await this.getParamTicket();
+    if (ticket == null) {
+      this.serviceToast.info('Não foi possivel criar a nota');
+      return;
+    }
+
+    const userInfo = await sessionStorage.getItem('userInfo');
+    if (userInfo) {
+      var user = JSON.parse(userInfo);
+    }
+
+    try {
+      this.http
+        .patch(`http://localhost:3000/ticket/${ticket}/resolvido`, {
+          userID: user.id,
+        })
+        .subscribe({
+          next: (response: any) => {
+            if (response.status != 200) {
+              this.serviceToast.error(
+                'Não foi possivel continuar com a solicitação'
+              );
+              return;
+            }
+            this.serviceToast.error('Ticket Atualizado com sucesso');
+          },
+        });
+    } catch (error) {
+      this.serviceToast.error('Não foi possivel se conectar com o servidor');
+    }
+  }
+
+  async fecharTicket() {
+    const ticket = await this.getParamTicket();
+    if (ticket == null) {
+      this.serviceToast.info('Não foi possivel criar a nota');
+      return;
+    }
+
+    const userInfo = await sessionStorage.getItem('userInfo');
+    if (userInfo) {
+      var user = JSON.parse(userInfo);
+    }
+
+    try {
+      this.http
+        .patch(`http://localhost:3000/ticket/${ticket}/fechado`, {
+          userID: user.id,
+        })
+        .subscribe({
+          next: (response: any) => {
+            if (response.status != 200) {
+              this.serviceToast.error(
+                'Não foi possivel continuar com a solicitação'
+              );
+              return;
+            }
+            this.serviceToast.error('Ticket Atualizado com sucesso');
+          },
+        });
+    } catch (error) {
+      this.serviceToast.error('Não foi possivel se conectar com o servidor');
+    }
+  }
+
   scrollToBottom() {
     // Aguarda um pequeno tempo para garantir que as mensagens sejam renderizadas
     const messagesContainer = document.getElementById(
@@ -432,9 +504,9 @@ export interface Anexo {
   anexo: any;
 }
 
-export interface HistoricoTranferencia{
+export interface HistoricoTranferencia {
   dataTransferencia: string;
   setorAntigo: string;
   setorNovo: string;
-  user: string
+  user: string;
 }

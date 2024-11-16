@@ -18,6 +18,8 @@ import { Permissao } from 'src/enums/permissao';
 import { Enderecos } from 'src/entity/enderecos.entity';
 import { EnderecoDto } from 'src/dto/EnderecoDto';
 import { padrao } from 'src/enums/padrao';
+import { AuthService } from 'src/auth/auth.service';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class CadastroService {
@@ -32,6 +34,9 @@ export class CadastroService {
     private readonly enderecosRepository: Repository<Enderecos>,
     @InjectRepository(Setores)
     private readonly setoresRepository: Repository<Setores>,
+
+    private authService: AuthService,
+    private emailService: EmailService,
   ) {}
 
   async cadastrarCliente(funcionarioId: string, clienteDto: ClienteDTO) {
@@ -41,19 +46,28 @@ export class CadastroService {
       });
 
       if (!authAdmin || authAdmin.permissao !== Permissao.ADMIN) {
-        throw new Error('Permissão negada'); // Se não for admin, terá permissao negada
+        return('Permissão negada'); // Se não for admin, terá permissao negada
       }
 
-      clienteDto.senha = padrao.SENHA; //senha default
+      //clienteDto.senha = padrao.SENHA; //senha default
+      clienteDto.senha = this.authService.gerarCodigo(9);
       const senhaHash = await this.GerarHash(clienteDto.senha);
+
+      try {
+        this.emailService.sendConfirmarRegistro(
+          clienteDto.email,
+          clienteDto.senha,
+        );
+      } catch (error) {}
 
       const cliente = this.clientesRepository.create({
         ...clienteDto,
         senha: senhaHash,
       });
+      this.clientesRepository.save(cliente);
       return this.clientesRepository.save(cliente);
     } catch (error) {
-      throw new Error('Erro ao cadastrar cliente');
+      return('Erro ao cadastrar cliente');
     }
   }
 
@@ -67,16 +81,23 @@ export class CadastroService {
       });
 
       if (!authAdmin || authAdmin.permissao !== Permissao.ADMIN) {
-        throw new Error('Permissão negada'); // Se não for admin, terá permissao negada
+        return('Permissão negada'); // Se não for admin, terá permissao negada
       }
 
       console.log(funcionarioDto);
 
       const permissao = funcionarioDto.permissao;
 
-
-      funcionarioDto.senha = padrao.SENHA;
+      //funcionarioDto.senha = padrao.SENHA;
+      funcionarioDto.senha = this.authService.gerarCodigo(9);
       const senhaHash = await this.GerarHash(funcionarioDto.senha);
+
+      try {
+        this.emailService.sendConfirmarRegistro(
+          funcionarioDto.email,
+          funcionarioDto.senha,
+        );
+      } catch (error) {}
 
       const funcionario = this.funcionariosRepository.create({
         ...funcionarioDto,
@@ -85,7 +106,7 @@ export class CadastroService {
       });
       return this.funcionariosRepository.save(funcionario);
     } catch (error) {
-      throw new Error('Erro ao cadastrar funcionario');
+      return('Erro ao cadastrar funcionario');
     }
   }
 
@@ -94,7 +115,7 @@ export class CadastroService {
       const endereco = this.enderecosRepository.create(enderecoDto);
       return this.enderecosRepository.save(endereco);
     } catch (error) {
-      throw new Error('Erro ao cadastrar endereco');
+      return('Erro ao cadastrar endereco');
     }
   }
 
@@ -104,13 +125,13 @@ export class CadastroService {
         where: { cnpj: empresaDto.cnpj, nome: empresaDto.nome },
       });
       if (empresaExistente) {
-        throw new Error('Já existe uma empresa com este nome ou cnpj');
+        return('Já existe uma empresa com este nome ou cnpj');
       }
 
       const empresa = this.empresasRepository.create(empresaDto);
       return this.empresasRepository.save(empresa);
     } catch (error) {
-      throw new Error('Erro ao cadastrar empresa');
+      return('Erro ao cadastrar empresa');
     }
   }
 
@@ -120,13 +141,13 @@ export class CadastroService {
         where: { nome: setorDto.nome },
       });
       if (setorExistente) {
-        throw new Error('Já existe um setor com este nome');
+        return('Já existe um setor com este nome');
       }
 
       const setor = this.setoresRepository.create(setorDto);
       return this.setoresRepository.save(setor);
     } catch (error) {
-      throw new Error('Erro ao cadastrar setor');
+      return('Erro ao cadastrar setor');
     }
   }
 

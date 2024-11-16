@@ -29,7 +29,7 @@ export class EmailService {
       await this.mailerService.sendMail({
         to: destinatario,
         subject: 'Confirmação de Registro',
-        template: 'confirmation',
+        template: 'confirmar',
         context: {
           senha,
           remetente: process.env.EMAIL_USER,
@@ -39,7 +39,7 @@ export class EmailService {
       });
     } catch (error) {
       console.error('Não foi possivel enviar o email ERROR:', error);
-      throw new Error('Não foi possivel enviar o email');
+      return('Não foi possivel enviar o email');
     }
   }
 
@@ -60,7 +60,7 @@ export class EmailService {
       });
     } catch (error) {
       console.error('Não foi possivel enviar o email ERROR:', error);
-      throw new Error('Não foi possivel enviar o email');
+      return('Não foi possivel enviar o email');
     }
   }
 
@@ -85,11 +85,15 @@ export class EmailService {
       return false;
     } catch (error) {
       console.error('Erro ao iniciar a recuperação de senha:', error);
-      throw new Error('Erro ao iniciar a recuperação de senha');
+      return('Erro ao iniciar a recuperação de senha');
     }
   }
 
-  async sendMessageEmail(destinatarioID: string, titulo: string, mensagem: string) {
+  async sendMessageEmail(
+    destinatarioID: string,
+    titulo: string,
+    mensagem: string,
+  ) {
     try {
       const year = this.getCurrentYear();
 
@@ -98,6 +102,7 @@ export class EmailService {
       });
 
       resultado.email;
+      console.log('--------------------------------------\n', resultado);
 
       this.mailerService.sendMail({
         to: resultado.email,
@@ -112,10 +117,10 @@ export class EmailService {
         },
       });
 
-      return false;
+      return { status: 200, msg: 'Email enviado!' };
     } catch (error) {
-      console.error('Erro ao iniciar a recuperação de senha:', error);
-      throw new Error('Erro ao iniciar a recuperação de senha');
+      console.error('Erro ao enviar email:', error);
+      return('Erro ao iniciar ao enviar email');
     }
   }
 

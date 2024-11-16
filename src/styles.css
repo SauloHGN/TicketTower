@@ -104,6 +104,9 @@
 
   --card-background-color: rgba(238, 238, 238, 0.5);
 
+  --card-highlighted-color: rgb(209 213 219);
+  --card-highlighted-color-2: rgb(187, 187, 187);
+
   --background-prioridade-urgente: #dc262670;
   --background-prioridade-alta: #ea5a0c85;
   --background-prioridade-media: #ca8b045d;
@@ -173,6 +176,9 @@
   --primary-shadow-color: rgba(0, 0, 0, 0);
 
   --card-background-color: rgb(32, 32, 32);
+
+  --card-highlighted-color: rgb(75 85 99);
+  --card-highlighted-color-2: rgb(98, 103, 114);
 
   --background-prioridade-urgente: #311919;
   --background-prioridade-alta: #372207;
