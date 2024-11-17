@@ -64,7 +64,6 @@ export class CadastroService {
         ...clienteDto,
         senha: senhaHash,
       });
-      this.clientesRepository.save(cliente);
       return this.clientesRepository.save(cliente);
     } catch (error) {
       return('Erro ao cadastrar cliente');
