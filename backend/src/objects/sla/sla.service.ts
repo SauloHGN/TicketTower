@@ -27,7 +27,7 @@ export class SlaService implements OnModuleInit {
         {
           ticket_tipo: 'incidente',
           prioridade: 'urgente',
-          tempo_resposta: 15,
+          tempo_resposta: 10,
           tempo_resolucao: 30,
         },
         {
@@ -79,13 +79,13 @@ export class SlaService implements OnModuleInit {
         {
           ticket_tipo: 'solicitacao_de_servico',
           prioridade: 'urgente',
-          tempo_resposta: 10,
-          tempo_resolucao: 20,
+          tempo_resposta: 15,
+          tempo_resolucao: 30,
         },
         {
           ticket_tipo: 'solicitacao_de_servico',
           prioridade: 'alta',
-          tempo_resposta: 20,
+          tempo_resposta: 30,
           tempo_resolucao: 60,
         },
         {

@@ -5,6 +5,7 @@ import ApexCharts from 'apexcharts'; // Certifique-se de que a biblioteca está 
 import { Observable } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
 import { DashboardMetrics } from '../../enum/dashboardMetrics';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -363,7 +364,7 @@ export class DashboardComponent implements OnInit {
     };
   };
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private toastService: ToastrService) {
     this.getChartLineOptions();
 
     this.getDonutChartOptions();
@@ -641,7 +642,7 @@ export class DashboardComponent implements OnInit {
           this.cdr.detectChanges();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+     this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 
@@ -673,7 +674,7 @@ export class DashboardComponent implements OnInit {
           this.renderChartBar();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 
@@ -742,7 +743,7 @@ export class DashboardComponent implements OnInit {
           this.renderLineChart();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 

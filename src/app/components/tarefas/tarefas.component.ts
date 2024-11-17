@@ -6,7 +6,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../../sharedService';
 import { Injectable } from '@angular/core';
-import { Toast } from 'ngx-toastr';
+import { Toast, ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { tick } from '@angular/core/testing';
 
@@ -37,7 +37,8 @@ export class TarefasComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private toastService: ToastrService
   ) {
     this.filteredTickets = this.queueTickets; // inicializa com todos os tickets
   }
@@ -69,7 +70,7 @@ export class TarefasComponent implements OnInit {
           this.applyFilter();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 
@@ -182,7 +183,7 @@ export class TarefasComponent implements OnInit {
             );
           });
       } catch {
-        throw new Error('Erro ao se comunicar com o servidor');
+        this.toastService.error('Erro ao se comunicar com o servidor');
       }
     }, 10000);
   }
@@ -206,7 +207,7 @@ export class TarefasComponent implements OnInit {
           this.loadTicket();
         });
     } catch (error) {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 

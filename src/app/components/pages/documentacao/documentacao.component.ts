@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { HeaderLandingComponent } from '../../header-landing/header-landing.component';
 import { FooterComponent } from '../../footer/footer.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-documentacao',
   standalone: true,
-  imports: [HeaderLandingComponent, FooterComponent],
+  imports: [HeaderLandingComponent, FooterComponent, CommonModule],
   templateUrl: './documentacao.component.html',
   styleUrl: './documentacao.component.css',
 })
@@ -151,4 +152,31 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
   Essas métricas ajudam a avaliar a eficiência da equipe e a identificar áreas de melhoria no atendimento.
 
   `;
+
+  tableItems: any = [
+    {
+      tipo: 'Urgente',
+      urgente: 'Resposta: 10 minutos<br>Resolução: 30 minutos',
+      mudanca: 'Resposta: 60 minutos<br>Resolução: 240 minutos',
+      solicitacaoDeServico: 'Resposta: 15 minutos<br>Resolução: 30 minutos',
+    },
+    {
+      tipo: 'Alta',
+      urgente: 'Resposta: 30 minutos<br>Resolução: 60 minutos',
+      mudanca: 'Resposta: 120 minutos<br>Resolução: 480 minutos',
+      solicitacaoDeServico: 'Resposta: 30 minutos<br>Resolução: 60 minutos',
+    },
+    {
+      tipo: 'Média',
+      urgente: 'Resposta: 60 minutos<br>Resolução: 240 minutos',
+      mudanca: 'Resposta: 120 minutos<br>Resolução: 720 minutos',
+      solicitacaoDeServico: 'Resposta: 60 minutos<br>Resolução: 180 minutos',
+    },
+    {
+      tipo: 'Normal',
+      urgente: 'Resposta: 120 minutos<br>Resolução: 480 minutos',
+      mudanca: 'Resposta: 240 minutos<br>Resolução: 1440 minutos',
+      solicitacaoDeServico: 'Resposta: 180 minutos<br>Resolução: 1440 minutos',
+    },
+  ];
 }

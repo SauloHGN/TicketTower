@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { NgxMaskDirective } from 'ngx-mask';
 import { Permissao } from '../../enum/permissao';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -23,13 +23,7 @@ import {
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    NgIconComponent,
-  ],
+  imports: [FormsModule, CommonModule, NgxMaskDirective, NgIconComponent],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
   viewProviders: [
@@ -133,7 +127,15 @@ export class CadastroComponent implements OnInit {
   }
 
   //----- Cadastro -----//
+  isProcessing = false;
+
   Cadastro() {
+    if (this.isProcessing) {
+      return;
+    }
+
+    this.isProcessing = true;
+
     if (this.selectedType === 'empresa') {
       this.CadastrarEmpresa();
     }
@@ -146,6 +148,14 @@ export class CadastroComponent implements OnInit {
     if (this.selectedType === 'funcionario') {
       this.CadastrarFuncionario();
     }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+
+    setTimeout(() => {
+      this.isProcessing = false;
+    }, 1500);
   }
 
   CadastrarEmpresa() {

@@ -53,7 +53,7 @@ export class AppService implements OnApplicationBootstrap {
       this.funcionariosRepository.save(insertDefaultUser);
       return;
     } catch (error) {
-      throw new Error('Erro ao cadastrar usuario padrão.');
+      return('Erro ao cadastrar usuario padrão.');
     }
   }
   async GerarHash(senha: string): Promise<string> {

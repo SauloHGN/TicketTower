@@ -133,7 +133,7 @@ export class EditUserComponent implements OnInit {
               ?.setAttribute('value', data.users.source); // Acessando direto o campo 'source' (cargo)
 
             this.setorSelecionado = data.users.setor;
-            this.permissaoSelecionada = data.users.permissao
+            this.permissaoSelecionada = data.users.permissao;
           }
         }
       });
@@ -170,6 +170,8 @@ export class EditUserComponent implements OnInit {
           document.getElementById('funcionario-setor') as HTMLSelectElement
         )?.value, // Afirmando que é um Select
       };
+
+      window.location.reload();
     }
 
     let userID = '';

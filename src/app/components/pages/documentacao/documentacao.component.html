@@ -136,7 +136,9 @@
 </aside>
 <body>
   <section class="flex flex-1 flex-grow min-h-full mx-auto px-4 sm:px-2">
-    <main class="flex flex-col mx-4 my-2 md:mr-6 sm:ml-48 md:ml-96 mt-32">
+    <main
+      class="flex gap-y-24 flex-col mx-4 my-2 md:mr-6 sm:ml-48 md:ml-96 mt-32"
+    >
       <article class="w-4/5 px-4 mb-6" id="ticket-tower">
         <h3
           class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
@@ -271,10 +273,7 @@
         ></p>
       </article>
 
-      <article
-        class="w-4/5 px-4 mb-6"
-        id="funcionalidade-principais"
-      >
+      <article class="w-4/5 px-4 mb-6" id="funcionalidade-principais">
         <h3
           class="group relative text-2xl font-semibold text-[var(--primary-font-color)] py-2"
         >
@@ -294,6 +293,59 @@
           "
           [innerHTML]="principaisFuncionalidade"
         ></p>
+        <div class="max-w-screen-xl mx-auto py-2 mt-6">
+          <div class="max-w-lg">
+            <h5
+              class="text-[var(--primary-font-color)] text-lg font-bold sm:text-xl"
+            >
+              Tabela de SLA
+            </h5>
+            <p class="text-gray-500 mt-2">
+              Dados padrão de SLA definidos pelo sistema.
+            </p>
+          </div>
+          <div
+            class="mt-4 shadow-sm border border-[var(--primary-border-color)] rounded-lg overflow-x-auto"
+          >
+            <table class="w-full table-auto text-sm text-left">
+              <thead
+                class="text-[var(--primary-font-color)] font-medium border-b border-[var(--primary-border-color)]"
+              >
+                <tr>
+                  <th class="py-3 px-6">-</th>
+                  <th class="py-3 px-6">Incidente</th>
+                  <th class="py-3 px-6">Mudança</th>
+                  <th class="py-3 px-6">Solicitação de serviço</th>
+                </tr>
+              </thead>
+              <tbody
+                class="text-[var(--primary-font-color)] divide-y divide-[var(--primary-border-color)]"
+              >
+                <tr
+                  *ngFor="let item of tableItems; let idx = index"
+                  [attr.key]="idx"
+                  class="divide-x divide-[var(--primary-border-color)]"
+                >
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ item.tipo }}
+                  </td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap"
+                    [innerHTML]="item.urgente"
+                  ></td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap"
+                    [innerHTML]="item.mudanca"
+                  ></td>
+                  <td
+                    class="px-6 py-4 whitespace-nowrap"
+                    [innerHTML]="item.solicitacaoDeServico"
+                  ></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </article>
 
       <article class="w-4/5 px-4 mb-6" id="como-contribuir">
