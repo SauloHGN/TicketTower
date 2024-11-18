@@ -5,13 +5,14 @@ import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ThemeService } from '../../services/theme.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-configuracao',
   standalone: true,
   templateUrl: './configuracao.component.html',
   styleUrl: './configuracao.component.css',
-  imports: [NgIconComponent],
+  imports: [NgIconComponent, CommonModule],
   viewProviders: [
     provideIcons({
       lucidePencilLine,
@@ -20,12 +21,20 @@ import { ThemeService } from '../../services/theme.service';
 })
 export class ConfiguracaoComponent implements OnInit {
   isDisable = true;
+  userInfo: any = '';
 
   constructor(
     private http: HttpClient,
     private toastService: ToastrService,
     private themeService: ThemeService
-  ) {}
+  ) {
+    const userInfo = sessionStorage.getItem('userInfo');
+
+    if (userInfo) {
+      this.userInfo = JSON.parse(userInfo);
+      console.log(userInfo);
+    }
+  }
 
   switchDisable() {
     this.isDisable = !this.isDisable;

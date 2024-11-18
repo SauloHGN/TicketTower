@@ -469,6 +469,13 @@ export class TicketService {
 
       // Atualiza o setor do ticket
       ticket.status = StatusTicket.RESOLVIDO;
+      ticket.data_hora_encerramento = new Date();
+
+      if (ticket.id_responsavel == null) {
+        const email = await this.dataUtilsService.getEmailByID(userID);
+
+        ticket.id_responsavel = { id: userID, email: email };
+      }
 
       // Salvar alteração
       await this.ticketRepository.save(ticket);

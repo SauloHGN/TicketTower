@@ -56,6 +56,8 @@ export class TicketComponent implements OnInit {
 
   dadosHistorico?: HistoricoTranferencia[] = [];
 
+  showButtons: boolean = false;
+
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -107,6 +109,10 @@ export class TicketComponent implements OnInit {
             }
 
             this.dadosTicket = response.ticket;
+
+            if (this.dadosTicket.status != 'resolvido') {
+              this.showButtons = true;
+            }
 
             // Acessa os elementos do DOM e define seus valores
             (document.getElementById('id-ticket') as HTMLInputElement).value =

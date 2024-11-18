@@ -36,11 +36,17 @@ export class MensagemService {
     novaMensagem.id_remetente = remetenteID;
 
     const ticket = await this.ticketRepository.findOne({
-      where: {id: ticketID}
-    })
+      where: { id: ticketID },
+    });
 
-    if (ticket.status == StatusTicket.RESOLVIDO || ticket.status == StatusTicket.EMANDAMENTO) {
-       return { status: 500, erro: 'Não é possível criar uma mensagem em um ticket já finalizado' };
+    if (
+      ticket.status == StatusTicket.RESOLVIDO ||
+      ticket.status == StatusTicket.FECHADO
+    ) {
+      return {
+        status: 500,
+        erro: 'Não é possível criar uma mensagem em um ticket já finalizado',
+      };
     }
 
     // Salva a mensagem e obtém o ID gerado
@@ -58,13 +64,10 @@ export class MensagemService {
 
       novaMensagem.id_anexo = anexoFile; // Adiciona a referência do anexo à mensagem
 
-
       const anexoSalvo = await this.anexoRepository.save(anexoFile);
-
 
       mensagemSalva.id_anexo = anexoSalvo; // Associa o anexo à mensagem
       await this.mensagemRepository.save(mensagemSalva); // Atualiza a mensagem
-
 
       await fs.unlink(anexo.path);
     }
@@ -93,12 +96,16 @@ export class MensagemService {
           mensagem.id_remetente,
         );
 
-        const anexo = mensagem.id_anexo ? {
-          id: mensagem.id_anexo.id,
-          nome_arquivo: mensagem.id_anexo.nome_arquivo,
-          tipo_arquivo: mensagem.id_anexo.tipo_arquivo,
-          tamanho: await this.formatarTamanhoArquivo(mensagem.id_anexo.tamanho)
-        } : null; // Se não houver anexo, retorna null
+        const anexo = mensagem.id_anexo
+          ? {
+              id: mensagem.id_anexo.id,
+              nome_arquivo: mensagem.id_anexo.nome_arquivo,
+              tipo_arquivo: mensagem.id_anexo.tipo_arquivo,
+              tamanho: await this.formatarTamanhoArquivo(
+                mensagem.id_anexo.tamanho,
+              ),
+            }
+          : null; // Se não houver anexo, retorna null
 
         return {
           id: mensagem.id,
@@ -112,49 +119,46 @@ export class MensagemService {
             hour12: false,
           }),
           nome: usuario ? usuario.nome : '...', // ... para usuários não encontrados
-          anexo: anexo
+          anexo: anexo,
         };
       }),
     );
   }
 
-  async downloadAnexo(anexoId: number){
-
+  async downloadAnexo(anexoId: number) {
     const anexo = await this.anexoRepository.findOne({
-      where: {id : anexoId}
+      where: { id: anexoId },
     });
 
     if (!anexo) {
-      return {status: 404, msg: 'Arquivo não encontrado', anexo: null}
+      return { status: 404, msg: 'Arquivo não encontrado', anexo: null };
     }
 
-    return {status: 200, msg: 'Anexo encontrado', anexo: anexo}
-
+    return { status: 200, msg: 'Anexo encontrado', anexo: anexo };
   }
 
   async listarAnexos(ticketID: string) {
     const notas = await this.mensagemRepository.find({
       where: { id_ticket: { id: ticketID } },
-      relations: ['id_anexo']
+      relations: ['id_anexo'],
     });
 
     const anexos = await Promise.all(
       notas
-        .map(mensagem => mensagem.id_anexo)
-        .filter(anexo => anexo !== null) // Filtra para remover nulls
-        .map(async anexo => ({
+        .map((mensagem) => mensagem.id_anexo)
+        .filter((anexo) => anexo !== null) // Filtra para remover nulls
+        .map(async (anexo) => ({
           id: anexo.id,
           nome_arquivo: anexo.nome_arquivo,
           tipo_arquivo: anexo.tipo_arquivo,
           tamanho: await this.formatarTamanhoArquivo(parseInt(anexo.tamanho)), // Formata o tamanho
-        }))
+        })),
     );
 
     return { status: 200, anexos: anexos };
   }
 
-
-  async formatarTamanhoArquivo(tamanhoEmBytes: number):Promise <string> {
+  async formatarTamanhoArquivo(tamanhoEmBytes: number): Promise<string> {
     const tamanhos = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     let index = 0;
 
@@ -167,5 +171,4 @@ export class MensagemService {
 
     return `${tamanho.toFixed(2)} ${tamanhos[index]}`;
   }
-
 }

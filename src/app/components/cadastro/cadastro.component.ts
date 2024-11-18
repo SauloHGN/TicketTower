@@ -151,7 +151,7 @@ export class CadastroComponent implements OnInit {
 
     setTimeout(() => {
       window.location.reload();
-    }, 1000);
+    }, 1500);
 
     setTimeout(() => {
       this.isProcessing = false;
@@ -175,7 +175,6 @@ export class CadastroComponent implements OnInit {
       this.http
         .post('http://localhost:3000/cadastro/endereco', enderecoData)
         .subscribe((response: any) => {
-          console.log(response); //Excluir
           const idEndereco = response.id;
 
           const empresaData = {
@@ -188,7 +187,6 @@ export class CadastroComponent implements OnInit {
           this.http
             .post('http://localhost:3000/cadastro/empresa', empresaData)
             .subscribe((response) => {
-              console.log(response); //Excluir
               this.toastService.success('Empresa Cadastrada com sucesso');
 
               (
@@ -242,12 +240,15 @@ export class CadastroComponent implements OnInit {
         ).value,
       };
 
-      console.log(clienteData);
-
       this.http
         .post(`http://localhost:3000/cadastro/${user.id}/cliente`, clienteData)
-        .subscribe((response) => {
-          //console.log(response); //Excluir
+        .subscribe((response: any) => {
+          if (response.status == 500) {
+            this.toastService.error(
+              'Não foi possivel cadastrar o cliente  \n verifique os dados'
+            );
+            return;
+          }
 
           this.toastService.success('Cliente cadastrado com sucesso');
           // Limpar os campos após o cadastro
@@ -275,8 +276,6 @@ export class CadastroComponent implements OnInit {
       this.http
         .post(`http://localhost:3000/cadastro/setor`, setorData)
         .subscribe((response) => {
-          console.log(response); //Excluir
-
           // Limpar os campos após o cadastro
           this.toastService.success('Setor cadastrado com sucesso');
           (document.getElementById('setor-nome') as HTMLInputElement).value =
@@ -294,8 +293,6 @@ export class CadastroComponent implements OnInit {
         var user = JSON.parse(userInfo);
       }
 
-      console.log(user.id);
-
       let funcionarioData = {
         nome: this.getElementValue('funcionario-nome'),
         email: this.getElementValue('funcionario-email'),
@@ -311,8 +308,14 @@ export class CadastroComponent implements OnInit {
           funcionarioData
         )
         .subscribe({
-          next: (response) => {
-            console.log(response); // Excluir se não for necessário
+          next: (response: any) => {
+            if (response.status == 500) {
+              this.toastService.error(
+                'Não foi possivel cadastrar o funcionario  \n verifique os dados'
+              );
+              return;
+            }
+
             this.toastService.success('Funcionario cadastrado com sucesso');
             (
               document.getElementById('funcionario-nome') as HTMLInputElement
@@ -342,7 +345,6 @@ export class CadastroComponent implements OnInit {
             this.limparCamposFuncionario();
           },
           error: (error) => {
-            console.error(error);
             this.toastService.error('Erro ao cadastrar funcionario');
           },
         });

@@ -185,7 +185,7 @@ export class TarefasComponent implements OnInit {
       } catch {
         this.toastService.error('Erro ao se comunicar com o servidor');
       }
-    }, 10000);
+    }, 500);
   }
 
   adotarTicket(id: string) {

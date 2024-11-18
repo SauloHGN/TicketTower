@@ -238,11 +238,11 @@ export class DashboardComponent implements OnInit {
 
   ticketDataChartBar = [
     { setor: 'Geral', month: '2024-10', count: 0 },
-    { setor: 'manufatura', month: '2024-10', count: 0 },
-    { setor: 'financeiro', month: '2024-10', count: 0 },
-    { setor: 'recursos humanos', month: '2024-10', count: 0 },
-    { setor: 'administrativo', month: '2024-10', count: 0 },
-    { setor: 'tecnologia', month: '2024-10', count: 0 },
+    { setor: 'Marketing', month: '2024-10', count: 0 },
+    { setor: 'Financeiro', month: '2024-10', count: 0 },
+    { setor: 'Recursos Humanos', month: '2024-10', count: 0 },
+    { setor: 'Administrativo', month: '2024-10', count: 0 },
+    { setor: 'Tecnologia', month: '2024-10', count: 0 },
     // Dados dinamicos
   ];
 
@@ -274,13 +274,13 @@ export class DashboardComponent implements OnInit {
       color:
         setor === 'Geral'
           ? '#1A56DB'
-          : setor === 'manufatura'
+          : setor === 'Marketing'
           ? '#FDBA8C'
-          : setor === 'financeiro'
+          : setor === 'Financeiro'
           ? '#329132'
-          : setor === 'tecnologia'
+          : setor === 'Tecnologia'
           ? '#7F8C8D'
-          : setor === 'administrativo'
+          : setor === 'Administrativo'
           ? '#5b2cb2'
           : '#FFC107', // Exemplo de cores dinâmicas
       data: groupedData[setor],
