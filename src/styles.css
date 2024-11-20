@@ -102,7 +102,7 @@
 
   --primary-shadow-color: rgba(0, 0, 0, 0.1);
 
-  --card-background-color: rgba(238, 238, 238, 0.5);
+  --card-background-color: rgba(238, 238, 238);
 
   --card-highlighted-color: rgb(209 213 219);
   --card-highlighted-color-2: rgb(187, 187, 187);
