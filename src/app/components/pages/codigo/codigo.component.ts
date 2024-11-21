@@ -113,7 +113,7 @@ export class CodigoComponent {
       this.codigo += input.value;
     });
 
-    if (this.codigo.length != 6) {
+    if (this.codigo.length < 6) {
       this.toastService.info('O código precisa ter no mínimo 6 caracteres.');
       return;
     }

@@ -38,7 +38,7 @@ export class EmailService {
         },
       });
     } catch (error) {
-      console.error('Não foi possivel enviar o email ERROR:', error);
+      console.log('Não foi possivel enviar o email ERROR:', error);
       return('Não foi possivel enviar o email');
     }
   }
@@ -59,7 +59,7 @@ export class EmailService {
         },
       });
     } catch (error) {
-      console.error('Não foi possivel enviar o email ERROR:', error);
+      console.log('Não foi possivel enviar o email ERROR:', error);
       return('Não foi possivel enviar o email');
     }
   }
@@ -84,7 +84,7 @@ export class EmailService {
 
       return false;
     } catch (error) {
-      console.error('Erro ao iniciar a recuperação de senha:', error);
+      console.log('Erro ao iniciar a recuperação de senha:', error);
       return('Erro ao iniciar a recuperação de senha');
     }
   }
@@ -119,7 +119,7 @@ export class EmailService {
 
       return { status: 200, msg: 'Email enviado!' };
     } catch (error) {
-      console.error('Erro ao enviar email:', error);
+      console.log('Erro ao enviar email:', error);
       return('Erro ao iniciar ao enviar email');
     }
   }
