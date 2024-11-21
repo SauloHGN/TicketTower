@@ -258,8 +258,7 @@ export class RelatorioService {
     let totalFechados = 0;
     let taxaFechados = 0;
 
-    let TotalVencidos = 0
-
+    let TotalVencidos = 0;
 
     // Ajusta a consulta de acordo com a permissão
     let query = this.ticketsRepository.createQueryBuilder('ticket');
@@ -291,7 +290,6 @@ export class RelatorioService {
       .andWhere('ticket.status = :status', { status: StatusTicket.RESOLVIDO })
       .getCount();
 
-
     totalFechados = await query
       .andWhere('ticket.status = :status', { status: StatusTicket.FECHADO })
       .getCount();
@@ -315,11 +313,15 @@ export class RelatorioService {
       ticketsAbertos,
       totalTickets,
 
-      taxaVencimento: totalVencidos.taxaVencimento,
-      ticketsVencidos: totalVencidos.ticketsVencidos,
+      taxaVencimento: totalVencidos.taxaVencimento
+        ? totalVencidos.taxaVencimento
+        : 0,
+      ticketsVencidos: totalVencidos.ticketsVencidos
+        ? totalVencidos.ticketsVencidos
+        : 0,
 
       totalFechados,
-      taxaFechados
+      taxaFechados,
     };
   }
 

@@ -35,7 +35,15 @@
       class="flex items-center justify-center p-2 w-28 h-10 text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-md hover:bg-[var(--tertiary-button-background-color)]"
       (click)="switchCurrentFilter()"
     >
-      {{ currentFilterFinalizados ? "Pendentes" : "Finalizados" }}
+      {{
+        currentFilter == "Finalizados"
+          ? "Finalizados"
+          : currentFilter == "Vencidos"
+          ? "Vencidos"
+          : currentFilter == "Pendentes"
+          ? "Pendentes"
+          : ""
+      }}
     </button>
   </div>
 
@@ -110,7 +118,9 @@
           </td>
 
           <td class="text-right px-4 whitespace-nowrap">
-            <ng-container *ngIf="ticket.responsavel == 'N/A'">
+            <ng-container
+              *ngIf="ticket.responsavel == 'N/A' && permissao != 'cliente'"
+            >
               <a
                 (click)="adotarTicket(ticket.id)"
                 class="button-adotar py-2 px-3 font-medium hover: duration-150 hover: rounded-lg cursor-pointer"

@@ -7,15 +7,14 @@ import { Entity, ViewColumn, ViewEntity, Column } from 'typeorm';
     id,
     nome,
     email,
-    'cliente' As permissao,
+    'cliente' AS permissao,
     celular,
     id_empresa,
     NULL AS id_setor,
-    'cliente' AS source
-    FROM clientes
-    UNION ALL
-
-    SELECT
+    'cliente' COLLATE utf8mb4_unicode_ci AS source
+FROM clientes
+UNION ALL
+SELECT
     id,
     nome,
     email,
@@ -23,8 +22,8 @@ import { Entity, ViewColumn, ViewEntity, Column } from 'typeorm';
     celular,
     NULL AS id_empresa,
     id_setor,
-    cargo AS source
-    FROM funcionarios
+    cargo COLLATE utf8mb4_unicode_ci AS source
+FROM funcionarios;
   `,
 })
 export class UsersView {

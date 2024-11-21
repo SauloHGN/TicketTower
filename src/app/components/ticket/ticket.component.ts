@@ -58,6 +58,8 @@ export class TicketComponent implements OnInit {
 
   showButtons: boolean = false;
 
+  permissao: string = '';
+
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -82,6 +84,13 @@ export class TicketComponent implements OnInit {
     this.http.get<any[]>('http://localhost:3000/setores').subscribe((data) => {
       this.setores = data;
     });
+
+    const userInfoString = sessionStorage.getItem('userInfo');
+      if (userInfoString) {
+        const userInfo = JSON.parse(userInfoString);
+        this.permissao = userInfo.permissao;
+      }
+
   }
 
   async getParamTicket(): Promise<string | null> {

@@ -13,25 +13,15 @@
             </p>
 
             <p class="text-2xl font-medium text-gray-900 dark:text-white">
-              {{ dashboardMetrics.taxaResolucao.toFixed(2) }}%
+              {{
+                dashboardMetrics.taxaResolucao
+                  ? dashboardMetrics.taxaResolucao.toFixed(2)
+                  : "0.00"
+              }}%
             </p>
           </div>
 
           <div class="mt-1 flex gap-1 text-green-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="size-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-              />
-            </svg>
 
             <p class="flex gap-2 text-xs">
               <span class="font-medium">
@@ -54,25 +44,15 @@
             </p>
 
             <p class="text-2xl font-medium text-gray-900 dark:text-white">
-              {{ dashboardMetrics.taxaFechados.toFixed(2) }}%
+              {{
+                dashboardMetrics.taxaFechados
+                  ? dashboardMetrics.taxaFechados.toFixed(2)
+                  : "0.00"
+              }}%
             </p>
           </div>
 
           <div class="mt-1 flex gap-1 text-red-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="size-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-              />
-            </svg>
 
             <p class="flex gap-2 text-xs">
               <span class="font-medium">
@@ -94,30 +74,19 @@
             </p>
 
             <p class="text-2xl font-medium text-gray-900 dark:text-white">
-              {{ dashboardMetrics.taxaVencimento.toFixed(2) }}%
+              {{
+                dashboardMetrics.taxaVencimento
+                  ? dashboardMetrics.taxaVencimento.toFixed(2)
+                  : "0.00"
+              }}%
             </p>
           </div>
 
           <div class="mt-1 flex gap-1 text-red-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="size-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-              />
-            </svg>
-
             <p class="flex gap-2 text-xs">
               <span class="font-medium">
-                {{ dashboardMetrics.ticketsVencidos }}</span
-              >
+                {{ dashboardMetrics.ticketsVencidos }}
+              </span>
               <span class="text-gray-500 dark:text-gray-400">
                 Tickets vencidos
               </span>
@@ -418,7 +387,7 @@
                 Resolvidos
               </dd>
             </dl>
-            <dl
+            <!-- <dl
               class="bg-[var(--card-highlighted-color)] rounded-lg flex flex-col items-center justify-center h-[74px]"
             >
               <dt
@@ -427,7 +396,7 @@
                 {{ vencidoCount }}
               </dt>
               <dd class="text-red-500 text-md font-medium">Vencidos</dd>
-            </dl>
+            </dl> -->
           </div>
         </div>
       </div>

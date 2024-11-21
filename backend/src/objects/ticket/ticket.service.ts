@@ -279,7 +279,10 @@ export class TicketService {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Mês começa em 0
     const year = date.getFullYear();
 
-    let format = `${day}/${month}/${year}`;
+    const hour = String(date.getHours()).padStart(2, '0'); // Hora com 2 dígitos
+    const minute = String(date.getMinutes()).padStart(2, '0'); // Minuto com 2 dígitos
+
+    let format = `${day}/${month}/${year} ${hour}:${minute}`;
 
     if (format == null || format.includes('null') || format == 'NaN/NaN/NaN') {
       format = '-';

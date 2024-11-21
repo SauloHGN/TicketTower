@@ -19,12 +19,15 @@ export class DashboardComponent implements OnInit {
   private circularChartOptions: any;
 
   getDonutChartOptions = () => {
-    let series = this.dataPriorityDistribuition.map((item) =>
-      parseInt(item.count)
-    );
-    const labels = this.dataPriorityDistribuition.map(
-      (item) => item.ticket_prioridade
-    );
+    let series = this.dataPriorityDistribuition.map((item) => {
+      console.log('count', item.count); // Verifique o valor de count antes de convertê-lo
+      return parseInt(item.count);
+    });
+
+    const labels = this.dataPriorityDistribuition.map((item) => {
+      //console.log(item.ticket_prioridade);  // Verifique os valores de prioridade
+      return item.ticket_prioridade;
+    });
 
     const allZero = series.every((value) => value === 0);
 
@@ -34,12 +37,22 @@ export class DashboardComponent implements OnInit {
       labels.push('Nenhum dado'); // Label para indicar ausência de dados
     }
 
+    const colorMapping = {
+      normal: '#2563eb', // Azul
+      urgente: '#dd3636', // Vermelho
+      alta: '#ea580c', // Laranja
+      média: '#ca8a04', // Amarelo
+    };
+
+    // Mapeamento de cores, com valor padrão para chaves não mapeadas
+    const colors = labels.map(
+      (label) => colorMapping[label as keyof typeof colorMapping] || '#e0e0e0'
+    );
+
     return {
       series: series,
       labels: labels,
-      colors: allZero
-        ? ['#e0e0e0']
-        : ['#dd3636', '#ea580c', '#ca8a04', '#2563eb'],
+      colors: colors,
       chart: {
         height: 320,
         width: '100%',
@@ -364,7 +377,11 @@ export class DashboardComponent implements OnInit {
     };
   };
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private toastService: ToastrService) {
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private toastService: ToastrService
+  ) {
     this.getChartLineOptions();
 
     this.getDonutChartOptions();
@@ -634,15 +651,40 @@ export class DashboardComponent implements OnInit {
             Number(item.count)
           );
 
+          const labels = this.dataPriorityDistribuition.map(
+            (item) => item.ticket_prioridade
+          );
+
+          const colorMapping = {
+            normal: '#2563eb', // Azul
+            urgente: '#dd3636', // Vermelho
+            alta: '#ea580c', // Laranja
+            média: '#ca8a04', // Amarelo
+          };
+
+          // Mapear as cores de acordo com as labels
+          const colors = labels.map(
+            (label) =>
+              colorMapping[label as keyof typeof colorMapping] || '#e0e0e0'
+          );
+
+          // Se o gráfico já foi inicializado
           if (this.donutChart) {
-            this.getDonutChartOptions().series = seriesData;
+            // Atualizar as séries, labels e cores
+            this.donutChart.updateOptions({
+              series: seriesData,
+              labels: labels,
+              colors: colors,
+            });
+
+            // Atualizar a série no gráfico
             this.donutChart.updateSeries(seriesData);
           }
 
           this.cdr.detectChanges();
         });
     } catch {
-     this.toastService.error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 
