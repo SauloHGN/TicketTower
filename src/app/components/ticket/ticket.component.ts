@@ -86,11 +86,10 @@ export class TicketComponent implements OnInit {
     });
 
     const userInfoString = sessionStorage.getItem('userInfo');
-      if (userInfoString) {
-        const userInfo = JSON.parse(userInfoString);
-        this.permissao = userInfo.permissao;
-      }
-
+    if (userInfoString) {
+      const userInfo = JSON.parse(userInfoString);
+      this.permissao = userInfo.permissao;
+    }
   }
 
   async getParamTicket(): Promise<string | null> {
@@ -450,7 +449,10 @@ export class TicketComponent implements OnInit {
               );
               return;
             }
-            this.serviceToast.error('Ticket Atualizado com sucesso');
+            this.serviceToast.success('Ticket Resolvido');
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
           },
         });
     } catch (error) {
@@ -483,7 +485,11 @@ export class TicketComponent implements OnInit {
               );
               return;
             }
-            this.serviceToast.error('Ticket Atualizado com sucesso');
+            this.serviceToast.success('Ticket Fechado');
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
           },
         });
     } catch (error) {

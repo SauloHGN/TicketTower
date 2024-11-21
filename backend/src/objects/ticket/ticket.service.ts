@@ -490,6 +490,8 @@ export class TicketService {
         'Seu ticket foi resolvido!',
         `Seu ticket com código: ${ticket.id} \n foi encerrado por ${email}, com status: Resolvido.`,
       );
+
+      return { status: 200, msg: 'Ticket resolvido' };
     } catch (error) {
       return { status: 500, msg: 'Erro ao encerrar ticket' };
     }
@@ -526,6 +528,8 @@ export class TicketService {
         'Seu ticket foi fechado!',
         `Seu ticket com código: ${ticket.id} \n foi encerrado por ${email} devido a algum problema eminente, com status: Fechado.`,
       );
+
+      return {status:200, msg: 'Ticket fechado' }
     } catch (error) {
       return { status: 500, msg: 'Erro ao encerrar ticket' };
     }
