@@ -6,7 +6,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../../sharedService';
 import { Injectable } from '@angular/core';
-import { Toast } from 'ngx-toastr';
+import { Toast, ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { tick } from '@angular/core/testing';
 
@@ -34,15 +34,24 @@ export class TarefasComponent implements OnInit {
 
   currentFilterFinalizados = false;
 
+  permissao: string = '';
+
   constructor(
     private router: Router,
     private http: HttpClient,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private toastService: ToastrService
   ) {
     this.filteredTickets = this.queueTickets; // inicializa com todos os tickets
   }
   ngOnInit(): void {
     this.carregarTickets();
+
+    const userInfoString = sessionStorage.getItem('userInfo');
+    if (userInfoString) {
+      const userInfo = JSON.parse(userInfoString);
+      this.permissao = userInfo.permissao;
+    }
   }
 
   // Método para carregar os tickets com base no filtro atual
@@ -69,30 +78,135 @@ export class TarefasComponent implements OnInit {
           this.applyFilter();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 
   // Método que aplica o filtro baseado no status finalizados
   applyFilter() {
-    if (this.currentFilterFinalizados) {
-      // Se o filtro for "finalizados", mostra tickets que não sejam "aberto" ou "em andamento"
+    if (this.currentFilter === 'Finalizados') {
+      // Filtro para tickets que não estão "aberto" ou "em andamento"
       this.filteredTickets = this.queueTickets.filter(
         (ticket) =>
           ticket.status !== 'aberto' && ticket.status !== 'em andamento'
       );
-    } else {
-      // Caso contrário, exibe os tickets que não estejam "fechado" ou "resolvido"
+    } else if (this.currentFilter === 'Pendentes') {
+      // Filtro para tickets que não estão "fechado" ou "resolvido"
       this.filteredTickets = this.queueTickets.filter(
         (ticket) => ticket.status !== 'fechado' && ticket.status !== 'resolvido'
       );
+    } else if (this.currentFilter === 'Vencidos') {
+      // Filtro para tickets vencidos (com data de encerramento anterior à data atual)
+
+      this.filteredTickets = this.queueTickets.filter((ticket) => {
+        let ticketEndDate;
+        let prazoResolucao;
+
+        if (ticket.prazo_resolucao) {
+          if (typeof ticket.prazo_resolucao === 'string') {
+            prazoResolucao = this.convertToISO(ticket.prazo_resolucao);
+          } else if (ticket.prazo_resolucao instanceof Date) {
+            prazoResolucao = ticket.prazo_resolucao.toISOString();
+          }
+        }
+
+        if (!prazoResolucao || isNaN(new Date(prazoResolucao).getTime())) {
+          return false;
+        }
+
+        if (
+          typeof ticket.data_hora_encerramento === 'string' &&
+          ticket.data_hora_encerramento !== '-'
+        ) {
+          // Converte a data de encerramento para o formato ISO 8601
+          ticketEndDate = this.convertToISO(ticket.data_hora_encerramento);
+        }
+
+        if (!ticketEndDate || isNaN(new Date(ticketEndDate).getTime())) {
+          return false;
+        }
+
+        console.log('END DATE:', ticketEndDate);
+        console.log('RESOLUTION DATE:', prazoResolucao);
+
+        if (ticketEndDate > prazoResolucao) {
+          console.log(`Ticket ${ticket.id} está vencido!`);
+          return true;
+        }
+
+        return false; // Exclui tickets não vencidos
+      });
     }
   }
 
+  convertToISO(dateStr: string): string {
+    // Verifica se a data está no formato 'dd/mm/yyyy hh:mm'
+    const parts = dateStr.split(/[\/\s:]/); // Divide a string nos componentes de dia, mês, ano, hora e minuto
+
+    if (parts.length === 5) {
+      const [day, month, year, hour, minute] = parts;
+
+      // Verifica se os componentes são válidos
+      if (
+        !isNaN(Number(day)) &&
+        !isNaN(Number(month)) &&
+        !isNaN(Number(year)) &&
+        !isNaN(Number(hour)) &&
+        !isNaN(Number(minute))
+      ) {
+        // Retorna no formato ISO 8601 'yyyy-mm-ddThh:mm:ss'
+        const isoString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:00`;
+
+        console.log("ISO String Gerada: ", isoString);  // Verificando a saída da conversão
+        return isoString;
+      } else {
+        console.error("Data inválida:", dateStr);  // Log para caso os componentes da data sejam inválidos
+        return '';
+      }
+    } else {
+      console.error("Formato de data incorreto:", dateStr);  // Log caso o formato da data não seja válido
+      return '';
+    }
+  }
+
+  formatDate(date: Date): Date {
+    const day = String(date.getDate()).padStart(2, '0'); // Garantir que o dia tenha 2 dígitos
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Mês começa em 0, por isso adicionamos 1
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0'); // Garantir que a hora tenha 2 dígitos
+    const minutes = String(date.getMinutes()).padStart(2, '0'); // Garantir que os minutos tenham 2 dígitos
+
+    return this.parseDate(`${day}/${month}/${year} ${hours}:${minutes}`);
+  }
+
+  currentFilter: string = 'Pendentes';
+  // 1 : Pendentes (não "aberto" ou "em andamento")
+  // 2 : Finalizados (não "fechado" ou "resolvido")
+  // 3 : Vencidos (data de encerramento anterior à data atual)
+
   switchCurrentFilter() {
-    this.currentFilterFinalizados = !this.currentFilterFinalizados;
-    console.log(this.currentFilterFinalizados);
-    this.carregarTickets();
+    if (this.currentFilter === 'Finalizados') {
+      this.currentFilter = 'Vencidos';
+    } else if (this.currentFilter === 'Vencidos') {
+      this.currentFilter = 'Pendentes';
+    } else if (this.currentFilter === 'Pendentes') {
+      this.currentFilter = 'Finalizados';
+    }
+
+    // Chama a função para carregar os tickets com o filtro alterado
+    this.applyFilter();
+  }
+
+  parseDate(dateString: string): Date {
+    const [day, month, year, hour, minute] = dateString.split(/[\/\s:]/); // Dividindo por /, espaço e :
+    const parsedDate = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute)
+    );
+    return parsedDate;
   }
 
   filterTickets() {
@@ -182,9 +296,9 @@ export class TarefasComponent implements OnInit {
             );
           });
       } catch {
-        throw new Error('Erro ao se comunicar com o servidor');
+        this.toastService.error('Erro ao se comunicar com o servidor');
       }
-    }, 10000);
+    }, 500);
   }
 
   adotarTicket(id: string) {
@@ -206,7 +320,7 @@ export class TarefasComponent implements OnInit {
           this.loadTicket();
         });
     } catch (error) {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 

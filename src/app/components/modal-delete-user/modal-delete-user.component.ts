@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedService } from '../../sharedService';
+import { HttpClient } from '@angular/common/http';
+import { GerenciarUsuariosComponent } from '../gerenciar-usuarios/gerenciar-usuarios.component';
 
 @Component({
   selector: 'app-modal-delete-user',
@@ -10,7 +12,7 @@ import { SharedService } from '../../sharedService';
   styleUrl: './modal-delete-user.component.css',
 })
 export class ModalDeleteUserComponent implements OnInit {
-  constructor(public sharedService: SharedService) {}
+  constructor(public sharedService: SharedService, public http: HttpClient) {}
 
   ngOnInit() {
     this.sharedService.modalDeleteState$.subscribe((isOpen) => {
@@ -24,8 +26,20 @@ export class ModalDeleteUserComponent implements OnInit {
     this.openDelete = true;
   }
 
-  deleteUser() {
-    
+  async deleteUser() {
+    const userInfo = await sessionStorage.getItem('userInfo');
+    if (userInfo) {
+      var user = JSON.parse(userInfo);
+    }
+
+    try {
+      this.http
+        .delete(
+          `http://localhost:3000/users/${user}/${this.sharedService.getDeleteUserID()}`
+        )
+        .subscribe((response) => {});
+    } catch (error) {}
+
     this.closeModalDelete();
   }
 

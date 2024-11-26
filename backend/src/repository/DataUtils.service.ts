@@ -49,7 +49,7 @@ export class DataUtilsService {
       return null;
     } catch (error) {
       console.error('Erro ao buscar o registro:', error);
-      throw new Error('Erro ao buscar o registro');
+      return('Erro ao buscar o registro');
     }
   }
 
@@ -77,7 +77,7 @@ export class DataUtilsService {
       return 'não encontrado';
     } catch (error) {
       console.error('Erro ao buscar o registro:', error);
-      throw new Error('Erro ao buscar o registro');
+      return('Erro ao buscar o registro');
     }
   }
 
@@ -93,7 +93,7 @@ export class DataUtilsService {
 
       return null;
     } catch (error) {
-      throw new Error('Erro ao buscar o registro');
+      return('Erro ao buscar o registro');
     }
   }
 
@@ -113,5 +113,69 @@ export class DataUtilsService {
     return await this.usersViewRepository.find({
       where: { source: Not('root') },
     });
+  }
+
+  async deleteUserByID(id: string) {
+    const role = await this.getRoleByID(id);
+
+    if (role === 'cliente') {
+      const cliente = await this.clienteRepository.findOne({ where: { id } });
+      if (!cliente) {
+        return { status: 404, msg: 'Cliente não encontrado' };
+      }
+      // Exclui o cliente
+      await this.clienteRepository.remove(cliente);
+      return { status: 200, msg: 'Cliente excluido com sucesso' };
+    }
+    // Verifica se o usuário é um funcionário
+    else if (role === 'funcionario') {
+      const funcionario = await this.funcionarioRepository.findOne({
+        where: { id },
+      });
+      if (!funcionario) {
+        return { status: 404, msg: 'Funcionário não encontrado' };
+      }
+      // Exclui o funcionário
+      await this.funcionarioRepository.remove(funcionario);
+      return { status: 200, msg: 'Funcionário excluido com sucesso' };
+    } else {
+      return { status: 500, msg: 'Usuário inválido' };
+    }
+  }
+
+  async updateUserByID(id: string, alterData: any) {
+    const role = await this.getRoleByID(id);
+
+    if (role === 'cliente') {
+      // Atualiza os dados do cliente
+      const cliente = await this.clienteRepository.findOne({
+        where: { id: id },
+      });
+      if (!cliente) {
+        return { status: 404, msg: 'Cliente não encontrado' };
+      }
+
+      // Atualiza os campos permitidos para clientes
+      const updatedCliente = this.clienteRepository.merge(cliente, alterData);
+      await this.clienteRepository.save(updatedCliente);
+      return { status: 200, msg: 'Usuário Atualizado' };
+    } else {
+      // Atualiza os dados do funcionário
+      const funcionario = await this.funcionarioRepository.findOne({
+        where: { id: id },
+      });
+      if (!funcionario) {
+        return { status: 404, msg: 'Funcionário não encontrado' };
+      }
+
+      // Atualiza os campos permitidos para funcionários
+      console.log(alterData);
+      const updatedFuncionario = this.funcionarioRepository.merge(
+        funcionario,
+        alterData,
+      );
+      await this.funcionarioRepository.save(updatedFuncionario);
+      return { status: 200, msg: 'Usuário Atualizado' };
+    }
   }
 }

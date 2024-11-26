@@ -225,8 +225,14 @@ export class TicketService {
           descricao: ticket.descricao,
           id_setor: ticket.id_setor,
           responsavel: email_responsavel, // Utiliza o valor padrão aqui
-          prazo_resposta: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resposta),
-          prazo_resolucao: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resolucao),
+          prazo_resposta: await this.deadlineTickets(
+            ticket.data_hora_abertura,
+            ticket.sla.tempo_resposta,
+          ),
+          prazo_resolucao: await this.deadlineTickets(
+            ticket.data_hora_abertura,
+            ticket.sla.tempo_resolucao,
+          ),
         };
       }),
     );
@@ -237,9 +243,7 @@ export class TicketService {
     };
   }
 
-
-  async formatTicket(ticket){
-
+  async formatTicket(ticket) {
     const email = await this.dataUtilsService.getEmailByID(ticket.aberto_por);
     const email_responsavel = ticket.id_responsavel
       ? await this.dataUtilsService.getEmailByID(ticket.id_responsavel.id)
@@ -259,9 +263,15 @@ export class TicketService {
       descricao: ticket.descricao,
       id_setor: ticket.id_setor,
       responsavel: email_responsavel, // Utiliza o valor padrão aqui
-      prazo_resposta: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resposta),
-      prazo_resolucao: await this.deadlineTickets(ticket.data_hora_abertura, ticket.sla.tempo_resolucao),
-    }
+      prazo_resposta: await this.deadlineTickets(
+        ticket.data_hora_abertura,
+        ticket.sla.tempo_resposta,
+      ),
+      prazo_resolucao: await this.deadlineTickets(
+        ticket.data_hora_abertura,
+        ticket.sla.tempo_resolucao,
+      ),
+    };
   }
 
   formatDate(date: Date | null) {
@@ -269,7 +279,10 @@ export class TicketService {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Mês começa em 0
     const year = date.getFullYear();
 
-    let format = `${day}/${month}/${year}`;
+    const hour = String(date.getHours()).padStart(2, '0'); // Hora com 2 dígitos
+    const minute = String(date.getMinutes()).padStart(2, '0'); // Minuto com 2 dígitos
+
+    let format = `${day}/${month}/${year} ${hour}:${minute}`;
 
     if (format == null || format.includes('null') || format == 'NaN/NaN/NaN') {
       format = '-';
@@ -280,14 +293,10 @@ export class TicketService {
   async deadlineTickets(openingDate: Date, tempo: number) {
     // Garantir que openingDate é um objeto Date
 
-
     const openingDateObject = new Date(openingDate);
-
 
     const prazo = new Date(openingDateObject); // Cria uma nova data a partir da data de abertura
     prazo.setMinutes(prazo.getMinutes() + tempo); // Adiciona os minutos
-
-
 
     const day = String(prazo.getDate()).padStart(2, '0'); // Dia com 2 dígitos
     const month = String(prazo.getMonth() + 1).padStart(2, '0'); // Mês com 2 dígitos
@@ -369,28 +378,29 @@ export class TicketService {
     }
   }
 
-
-  async getTicketInfo(ticketID: string){
-    try{
+  async getTicketInfo(ticketID: string) {
+    try {
       const ticket = await this.ticketRepository.findOne({
-        where: {id: ticketID}
-      })
+        where: { id: ticketID },
+      });
 
       const dadosTicket = await this.formatTicket(ticket);
 
-      return {status: 200, ticket: dadosTicket, msg:'Consulta bem sucedida' }
-
-    }catch(error){
-      return {status: 500, ticket: null, msg:'Ocorreu um erro no processamento:\n' + error}
+      return { status: 200, ticket: dadosTicket, msg: 'Consulta bem sucedida' };
+    } catch (error) {
+      return {
+        status: 500,
+        ticket: null,
+        msg: 'Ocorreu um erro no processamento:\n' + error,
+      };
     }
-
   }
 
   async transferirSetor(ticketID: string, novoSetor: number, userID: string) {
     try {
       // Encontra o ticket com o ID fornecido
       const ticket = await this.ticketRepository.findOne({
-        where: { id: ticketID }
+        where: { id: ticketID },
       });
 
       // Ticket não encontrado
@@ -399,19 +409,19 @@ export class TicketService {
       }
 
       const setor = await this.setoresRepository.findOne({
-        where: { id: novoSetor }
+        where: { id: novoSetor },
       });
 
-      const setorAntigo = ticket.id_setor
+      const setorAntigo = ticket.id_setor;
 
       const ticketTransfer = new TicketTransfer();
       ticketTransfer.setorAnterior = setorAntigo;
-      ticketTransfer.setorNovo = await this.setoresService.getSetorByID(novoSetor);
-      ticketTransfer.ticket = ticket
-      ticketTransfer.usuarioId = userID
+      ticketTransfer.setorNovo =
+        await this.setoresService.getSetorByID(novoSetor);
+      ticketTransfer.ticket = ticket;
+      ticketTransfer.usuarioId = userID;
 
       this.ticketTransferRepository.save(ticketTransfer);
-
 
       // Verifica se o novo setor foi encontrado
       if (!setor) {
@@ -426,32 +436,33 @@ export class TicketService {
       await this.ticketRepository.save(ticket);
 
       return { status: 200, msg: 'Setor transferido com sucesso' };
-
     } catch (error) {
-      return { status: 500, msg: 'Ocorreu um erro no processamento:\n' + error.message };
+      return {
+        status: 500,
+        msg: 'Ocorreu um erro no processamento:\n' + error.message,
+      };
     }
   }
 
-  async findHistoricoById(ticketID: string){
+  async findHistoricoById(ticketID: string) {
     return this.ticketTransferRepository.find({
-      where: { ticket: {id: ticketID}}
-    })
+      where: { ticket: { id: ticketID } },
+    });
   }
 
-  async encerrarTicket(ticketID: string, userID: string) {
+  async resolverTicket(ticketID: string, userID: string) {
     try {
+      const user = await this.funcionarioService.getPermissaoByID(userID);
 
-      const user = await this.funcionarioService.getPermissaoByID(userID)
-
-      if(!user){
-        return {status: 403, msg: 'Acesso negado'}
+      if (!user) {
+        return { status: 403, msg: 'Acesso negado' };
       }
 
-      const email = this.dataUtilsService.getEmailByID(userID)
+      const email = await this.dataUtilsService.getEmailByID(userID);
 
       // Encontra o ticket com o ID fornecido
       const ticket = await this.ticketRepository.findOne({
-        where: { id: ticketID }
+        where: { id: ticketID },
       });
 
       // Ticket não encontrado
@@ -461,16 +472,66 @@ export class TicketService {
 
       // Atualiza o setor do ticket
       ticket.status = StatusTicket.RESOLVIDO;
+      ticket.data_hora_encerramento = new Date();
+
+      if (ticket.id_responsavel == null) {
+        const email = await this.dataUtilsService.getEmailByID(userID);
+
+        ticket.id_responsavel = { id: userID, email: email };
+      }
 
       // Salvar alteração
       await this.ticketRepository.save(ticket);
 
-      this.emailService.sendMessageEmail(ticket.aberto_por, "Seu ticket foi resolvido!", `Seu ticket com código: ${ticket.id} \n foi encerrado por ${email}, com status: Resolvido.`)
+      console.log(email);
 
-    }catch(error){
+      this.emailService.sendMessageEmail(
+        ticket.aberto_por,
+        'Seu ticket foi resolvido!',
+        `Seu ticket com código: ${ticket.id} \n foi encerrado por ${email}, com status: Resolvido.`,
+      );
+
+      return { status: 200, msg: 'Ticket resolvido' };
+    } catch (error) {
       return { status: 500, msg: 'Erro ao encerrar ticket' };
     }
   }
 
+  async fecharTicket(ticketID: string, userID: string) {
+    try {
+      const user = await this.funcionarioService.getPermissaoByID(userID);
 
+      if (!user) {
+        return { status: 403, msg: 'Acesso negado' };
+      }
+
+      const email = this.dataUtilsService.getEmailByID(userID);
+
+      // Encontra o ticket com o ID fornecido
+      const ticket = await this.ticketRepository.findOne({
+        where: { id: ticketID },
+      });
+
+      // Ticket não encontrado
+      if (!ticket) {
+        return { status: 404, msg: 'Ticket não encontrado' };
+      }
+
+      // Atualiza o setor do ticket
+      ticket.status = StatusTicket.FECHADO;
+
+      // Salvar alteração
+      await this.ticketRepository.save(ticket);
+
+      this.emailService.sendMessageEmail(
+        ticket.aberto_por,
+        'Seu ticket foi fechado!',
+        `Seu ticket com código: ${ticket.id} \n foi encerrado por ${email} devido a algum problema eminente, com status: Fechado.`,
+      );
+
+      return {status:200, msg: 'Ticket fechado' }
+    } catch (error) {
+      return { status: 500, msg: 'Erro ao encerrar ticket' };
+    }
+  }
 }

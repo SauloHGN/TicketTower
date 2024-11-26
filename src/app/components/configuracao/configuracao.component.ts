@@ -1,31 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { lucidePencilLine } from '@ng-icons/lucide';
+import { lucidePencilLine, lucideInfo } from '@ng-icons/lucide';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ThemeService } from '../../services/theme.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-configuracao',
   standalone: true,
   templateUrl: './configuracao.component.html',
   styleUrl: './configuracao.component.css',
-  imports: [NgIconComponent],
+  imports: [NgIconComponent, CommonModule],
   viewProviders: [
     provideIcons({
       lucidePencilLine,
+      lucideInfo,
     }),
   ],
 })
 export class ConfiguracaoComponent implements OnInit {
   isDisable = true;
+  userInfo: any = '';
 
   constructor(
     private http: HttpClient,
     private toastService: ToastrService,
     private themeService: ThemeService
-  ) {}
+  ) {
+    const userInfo = sessionStorage.getItem('userInfo');
+
+    if (userInfo) {
+      this.userInfo = JSON.parse(userInfo);
+      console.log(userInfo);
+    }
+  }
 
   switchDisable() {
     this.isDisable = !this.isDisable;
@@ -216,6 +226,12 @@ export class ConfiguracaoComponent implements OnInit {
 
   ngOnInit(): void {
     this.theme = localStorage.getItem('lightTheme') === 'true';
+
+    this.http
+      .get<SlaResponse[]>('http://localhost:3000/sla/ultimos')
+      .subscribe((data) => {
+        this.slas = data;
+      });
   }
 
   switchColorTheme(event: any): void {
@@ -226,4 +242,30 @@ export class ConfiguracaoComponent implements OnInit {
       this.themeService.switchTheme(); // Serviço global para alterar thema
     }
   }
+
+  slas: any[] = [];
+  openToogleSLA: boolean = false;
+  toogleSLA() {
+    this.openToogleSLA = !this.openToogleSLA;
+  }
+
+  formatTicketType(value: string) {
+    switch (value) {
+      case 'solicitacao_de_servico':
+        return 'Solicitação de Serviço';
+      case 'incidente':
+        return 'Incidente';
+      case 'mudanca':
+        return 'Mudança';
+      default:
+        return value;
+    }
+  }
+}
+
+interface SlaResponse {
+  tipo: string;
+  prioridade: string;
+  tempoResposta: number;
+  tempoResolucao: number;
 }

@@ -56,6 +56,10 @@ export class TicketComponent implements OnInit {
 
   dadosHistorico?: HistoricoTranferencia[] = [];
 
+  showButtons: boolean = false;
+
+  permissao: string = '';
+
   constructor(
     private http: HttpClient,
     private activatedRoute: ActivatedRoute,
@@ -80,6 +84,12 @@ export class TicketComponent implements OnInit {
     this.http.get<any[]>('http://localhost:3000/setores').subscribe((data) => {
       this.setores = data;
     });
+
+    const userInfoString = sessionStorage.getItem('userInfo');
+    if (userInfoString) {
+      const userInfo = JSON.parse(userInfoString);
+      this.permissao = userInfo.permissao;
+    }
   }
 
   async getParamTicket(): Promise<string | null> {
@@ -107,6 +117,10 @@ export class TicketComponent implements OnInit {
             }
 
             this.dadosTicket = response.ticket;
+
+            if (this.dadosTicket.status != 'resolvido') {
+              this.showButtons = true;
+            }
 
             // Acessa os elementos do DOM e define seus valores
             (document.getElementById('id-ticket') as HTMLInputElement).value =
@@ -190,7 +204,6 @@ export class TicketComponent implements OnInit {
     } catch (error) {}
   }
 
-
   async loadHistorico() {
     try {
       this.ticketID = await this.getParamTicket();
@@ -206,12 +219,19 @@ export class TicketComponent implements OnInit {
             if (response.status != 200) {
               return;
             }
-            this.dadosHistorico = response.transferencias.map((transferencia: { dataTransferencia: any; setorAnterior: { nome: any; }; setorNovo: { nome: any; }; usuario: any; }) => ({
-              dataTransferencia: transferencia.dataTransferencia,
-              setorAntigo: transferencia.setorAnterior.nome, // Acessando o nome do setor anterior
-              setorNovo: transferencia.setorNovo.nome, // Acessando o nome do setor novo
-              user: transferencia.usuario, // Acessando o e-mail do usuário
-            }));
+            this.dadosHistorico = response.transferencias.map(
+              (transferencia: {
+                dataTransferencia: any;
+                setorAnterior: { nome: any };
+                setorNovo: { nome: any };
+                usuario: any;
+              }) => ({
+                dataTransferencia: transferencia.dataTransferencia,
+                setorAntigo: transferencia.setorAnterior.nome, // Acessando o nome do setor anterior
+                setorNovo: transferencia.setorNovo.nome, // Acessando o nome do setor novo
+                user: transferencia.usuario, // Acessando o e-mail do usuário
+              })
+            );
           },
         });
     } catch (error) {}
@@ -368,7 +388,7 @@ export class TicketComponent implements OnInit {
       this.http
         .patch(`http://localhost:3000/ticket/${ticket}/transferirSetor`, {
           novoSetor: novoSetor,
-          userID: user.id
+          userID: user.id,
         })
         .subscribe({
           next: (response: any) => {
@@ -404,6 +424,79 @@ export class TicketComponent implements OnInit {
     }
   }
 
+  async marcarResolvido() {
+    const ticket = await this.getParamTicket();
+    if (ticket == null) {
+      this.serviceToast.info('Não foi possivel criar a nota');
+      return;
+    }
+
+    const userInfo = await sessionStorage.getItem('userInfo');
+    if (userInfo) {
+      var user = JSON.parse(userInfo);
+    }
+
+    try {
+      this.http
+        .patch(`http://localhost:3000/ticket/${ticket}/resolvido`, {
+          userID: user.id,
+        })
+        .subscribe({
+          next: (response: any) => {
+            if (response.status != 200) {
+              this.serviceToast.error(
+                'Não foi possivel continuar com a solicitação'
+              );
+              return;
+            }
+            this.serviceToast.success('Ticket Resolvido');
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
+          },
+        });
+    } catch (error) {
+      this.serviceToast.error('Não foi possivel se conectar com o servidor');
+    }
+  }
+
+  async fecharTicket() {
+    const ticket = await this.getParamTicket();
+    if (ticket == null) {
+      this.serviceToast.info('Não foi possivel criar a nota');
+      return;
+    }
+
+    const userInfo = await sessionStorage.getItem('userInfo');
+    if (userInfo) {
+      var user = JSON.parse(userInfo);
+    }
+
+    try {
+      this.http
+        .patch(`http://localhost:3000/ticket/${ticket}/fechado`, {
+          userID: user.id,
+        })
+        .subscribe({
+          next: (response: any) => {
+            if (response.status != 200) {
+              this.serviceToast.error(
+                'Não foi possivel continuar com a solicitação'
+              );
+              return;
+            }
+            this.serviceToast.success('Ticket Fechado');
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
+          },
+        });
+    } catch (error) {
+      this.serviceToast.error('Não foi possivel se conectar com o servidor');
+    }
+  }
+
   scrollToBottom() {
     // Aguarda um pequeno tempo para garantir que as mensagens sejam renderizadas
     const messagesContainer = document.getElementById(
@@ -432,9 +525,9 @@ export interface Anexo {
   anexo: any;
 }
 
-export interface HistoricoTranferencia{
+export interface HistoricoTranferencia {
   dataTransferencia: string;
   setorAntigo: string;
   setorNovo: string;
-  user: string
+  user: string;
 }

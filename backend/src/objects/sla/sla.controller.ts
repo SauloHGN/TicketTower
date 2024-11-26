@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { SlaService } from './sla.service';
 
 @Controller('sla')
@@ -9,6 +9,15 @@ export class SlaController {
   async setSLA(@Body() dadosSLA: any) {
     const { userID, ...slaData } = dadosSLA;
     const result = this.slaService.setSLA(userID, slaData);
+
+    return result;
+  }
+
+
+  @Get('/ultimos')
+  async getultimosSLAs() {
+
+    const result = await this.slaService.getLatestSlas();
 
     return result;
   }

@@ -47,15 +47,34 @@ export class SharedService {
 
   closeModalDelete() {
     this.modalSubject.next(false);
+    this.deleteUserID = '';
   }
 
   editTypeUser: string = '';
+  editIdUser: string = '';
+  deleteUserID: string = '';
 
   getEditTypeUser() {
     return this.editTypeUser;
   }
 
+  getEditIdUser() {
+    return this.editIdUser;
+  }
+
+  setEditIdUser(id: string) {
+    this.editIdUser = id;
+  }
+
   setEditTypeUser(tipo: string) {
     this.editTypeUser = tipo;
+  }
+
+  setDeleteUserID(id: string) {
+    this.deleteUserID = id;
+  }
+
+  getDeleteUserID() {
+    return this.deleteUserID;
   }
 }

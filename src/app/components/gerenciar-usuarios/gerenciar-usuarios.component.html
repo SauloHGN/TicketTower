@@ -58,13 +58,13 @@
           <td class="px-6 py-4 whitespace-nowrap">{{ item.tipo }}</td>
           <td class="text-right px-6 whitespace-nowrap">
             <a
-              (click)="editarUser(item.tipo)"
+              (click)="editarUser(item.tipo, item.id)"
               class="button-edit py-2 px-3 font-medium hover: duration-150 hover: rounded-lg hover:cursor-pointer"
               >Editar</a
             >
             <button
               class="button-delete py-2 leading-none px-3 font-medium hover: duration-150 hover: rounded-lg"
-              (click)="deleteUser()"
+              (click)="deleteUser(item.id)"
             >
               Excluir
             </button>

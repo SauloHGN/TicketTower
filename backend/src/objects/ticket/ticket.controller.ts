@@ -24,7 +24,7 @@ import { DataUtilsService } from 'src/repository/DataUtils.service';
 @Controller('ticket')
 export class TicketController {
   constructor(
-    private readonly dataUtilsService: DataUtilsService ,
+    private readonly dataUtilsService: DataUtilsService,
 
     private readonly funcionarioService: FuncionarioService,
     private readonly ticketService: TicketService,
@@ -114,7 +114,7 @@ export class TicketController {
   ) {
     const usuarioId = body.remetenteID;
     const value = await this.funcionarioService.getPermissaoByID(usuarioId);
-    console.log(file)
+    console.log(file);
 
     if (value.status !== 200) {
       return {
@@ -132,17 +132,18 @@ export class TicketController {
   }
 
   @Get('/:ticketId/anexos')
-  async listarAnexos(
-    @Param('ticketId') ticketId: string,
-  ) {
+  async listarAnexos(@Param('ticketId') ticketId: string) {
     const result = await this.mensagemService.listarAnexos(ticketId);
 
     return result;
   }
 
   @Get('/download/:anexoId')
-  async downloadAnexo(@Param('anexoId') anexoId: number, @Res() response: Response) {
-    const respostaAnexo = await this.mensagemService.downloadAnexo(anexoId)
+  async downloadAnexo(
+    @Param('anexoId') anexoId: number,
+    @Res() response: Response,
+  ) {
+    const respostaAnexo = await this.mensagemService.downloadAnexo(anexoId);
 
     if (respostaAnexo.status != 200) {
       return respostaAnexo;
@@ -155,38 +156,45 @@ export class TicketController {
 
     // Envia o conteúdo do arquivo
     return response.send(respostaAnexo.anexo.anexo);
-
   }
 
   @Patch('/:ticketId/transferirSetor')
   async transferirSetor(
     @Param('ticketId') ticketId: string,
-    @Body() body: { novoSetor: number, userID: string },
+    @Body() body: { novoSetor: number; userID: string },
   ) {
+    const permissao = this.funcionarioService.getPermissaoByID(body.userID);
 
-    const permissao = this.funcionarioService.getPermissaoByID(body.userID)
-
-    if(!permissao){
-      return {status: 403, msg: 'Usuario não autorizado'}
+    if (!permissao) {
+      return { status: 403, msg: 'Usuario não autorizado' };
     }
 
     const result = await this.ticketService.transferirSetor(
       ticketId,
       body.novoSetor,
-      body.userID
+      body.userID,
     );
     return result;
   }
 
-  @Post('/:ticketId/encerrar')
-  async encerrar(
+  @Patch('/:ticketId/resolvido')
+  async resolvido(
     @Param('ticketId') ticketId: string,
     @Body() body: { userID: string },
   ) {
-    const result = await this.ticketService.encerrarTicket(
+    const result = await this.ticketService.resolverTicket(
       ticketId,
       body.userID,
     );
+    return result;
+  }
+
+  @Patch('/:ticketId/fechado')
+  async fechado(
+    @Param('ticketId') ticketId: string,
+    @Body() body: { userID: string },
+  ) {
+    const result = await this.ticketService.fecharTicket(ticketId, body.userID);
     return result;
   }
 
@@ -199,12 +207,16 @@ export class TicketController {
 
     // Formatação dos dados
     const transferenciasFormatadas = await Promise.all(
-      transferencias.map(async transferencia => ({
+      transferencias.map(async (transferencia) => ({
         id: transferencia.id,
-        usuario: await this.dataUtilsService.getEmailByID(transferencia.usuarioId), // Supondo que você tenha um método para obter o e-mail
+        usuario: await this.dataUtilsService.getEmailByID(
+          transferencia.usuarioId,
+        ), // Supondo que você tenha um método para obter o e-mail
         setorAnterior: transferencia.setorAnterior,
         setorNovo: transferencia.setorNovo,
-        dataTransferencia: new Date(transferencia.dataTransferencia).toLocaleString('pt-BR', {
+        dataTransferencia: new Date(
+          transferencia.dataTransferencia,
+        ).toLocaleString('pt-BR', {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
@@ -212,9 +224,8 @@ export class TicketController {
           minute: '2-digit',
           hour12: false,
         }),
-      }))
+      })),
     );
-
 
     return {
       status: 200,
@@ -222,4 +233,3 @@ export class TicketController {
     };
   }
 }
-

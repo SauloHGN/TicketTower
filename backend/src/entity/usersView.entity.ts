@@ -7,21 +7,23 @@ import { Entity, ViewColumn, ViewEntity, Column } from 'typeorm';
     id,
     nome,
     email,
-    'cliente' As permissao,
+    'cliente' AS permissao,
     celular,
-    'cliente' AS source
-    FROM clientes
-
-    UNION ALL
-
-    SELECT
+    id_empresa,
+    NULL AS id_setor,
+    'cliente' COLLATE utf8mb4_unicode_ci AS source
+FROM clientes
+UNION ALL
+SELECT
     id,
     nome,
     email,
     permissao,
     celular,
-    cargo AS source
-    FROM funcionarios
+    NULL AS id_empresa,
+    id_setor,
+    cargo COLLATE utf8mb4_unicode_ci AS source
+FROM funcionarios;
   `,
 })
 export class UsersView {
@@ -39,6 +41,12 @@ export class UsersView {
 
   @ViewColumn({ name: 'celular' })
   celular: string;
+
+  @ViewColumn({ name: 'id_empresa' })
+  empresa: string;
+
+  @ViewColumn({ name: 'id_setor' })
+  setor: string;
 
   @ViewColumn({ name: 'source' })
   source: string;

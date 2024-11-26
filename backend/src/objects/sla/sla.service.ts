@@ -27,7 +27,7 @@ export class SlaService implements OnModuleInit {
         {
           ticket_tipo: 'incidente',
           prioridade: 'urgente',
-          tempo_resposta: 15,
+          tempo_resposta: 10,
           tempo_resolucao: 30,
         },
         {
@@ -79,13 +79,13 @@ export class SlaService implements OnModuleInit {
         {
           ticket_tipo: 'solicitacao_de_servico',
           prioridade: 'urgente',
-          tempo_resposta: 10,
-          tempo_resolucao: 20,
+          tempo_resposta: 15,
+          tempo_resolucao: 30,
         },
         {
           ticket_tipo: 'solicitacao_de_servico',
           prioridade: 'alta',
-          tempo_resposta: 20,
+          tempo_resposta: 30,
           tempo_resolucao: 60,
         },
         {
@@ -155,9 +155,44 @@ export class SlaService implements OnModuleInit {
     };
   }
 
+  async getLatestSlas(): Promise<ResponseSlaDto[]> {
+    // Consulta para pegar os últimos SLAs para cada tipo
+    // Query para pegar o último SLA de cada tipo e prioridade
+    const slas = await this.slaRepository
+      .createQueryBuilder('sla')
+      .select([
+        'sla.ticket_tipo',
+        'sla.prioridade',
+        'sla.tempo_resposta',
+        'sla.tempo_resolucao',
+        'sla.created_at',
+      ])
+      .where(
+        'sla.created_at IN (SELECT MAX(created_at) FROM sla GROUP BY ticket_tipo, prioridade)',
+      )
+      .orderBy('sla.created_at', 'DESC')
+      .getMany();
+
+    // Organizar os dados no formato necessário
+    const responseSlas = slas.map((sla) => ({
+      tipo: sla.ticket_tipo,
+      prioridade: sla.prioridade,
+      tempoResposta: sla.tempo_resposta,
+      tempoResolucao: sla.tempo_resolucao,
+    }));
+
+    return responseSlas;
+  }
   async getSlaById(slaID: number) {
     return await this.slaRepository.findOne({
       where: { id: slaID },
     });
   }
+}
+
+export class ResponseSlaDto {
+  tipo: string;
+  prioridade: string;
+  tempoResposta: number;
+  tempoResolucao: number;
 }

@@ -5,6 +5,7 @@ import ApexCharts from 'apexcharts'; // Certifique-se de que a biblioteca está 
 import { Observable } from 'rxjs';
 import { ThemeService } from '../../services/theme.service';
 import { DashboardMetrics } from '../../enum/dashboardMetrics';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,12 +19,15 @@ export class DashboardComponent implements OnInit {
   private circularChartOptions: any;
 
   getDonutChartOptions = () => {
-    let series = this.dataPriorityDistribuition.map((item) =>
-      parseInt(item.count)
-    );
-    const labels = this.dataPriorityDistribuition.map(
-      (item) => item.ticket_prioridade
-    );
+    let series = this.dataPriorityDistribuition.map((item) => {
+      console.log('count', item.count); // Verifique o valor de count antes de convertê-lo
+      return parseInt(item.count);
+    });
+
+    const labels = this.dataPriorityDistribuition.map((item) => {
+      //console.log(item.ticket_prioridade);  // Verifique os valores de prioridade
+      return item.ticket_prioridade;
+    });
 
     const allZero = series.every((value) => value === 0);
 
@@ -33,12 +37,22 @@ export class DashboardComponent implements OnInit {
       labels.push('Nenhum dado'); // Label para indicar ausência de dados
     }
 
+    const colorMapping = {
+      normal: '#2563eb', // Azul
+      urgente: '#dd3636', // Vermelho
+      alta: '#ea580c', // Laranja
+      média: '#ca8a04', // Amarelo
+    };
+
+    // Mapeamento de cores, com valor padrão para chaves não mapeadas
+    const colors = labels.map(
+      (label) => colorMapping[label as keyof typeof colorMapping] || '#e0e0e0'
+    );
+
     return {
       series: series,
       labels: labels,
-      colors: allZero
-        ? ['#e0e0e0']
-        : ['#dd3636', '#ea580c', '#ca8a04', '#2563eb'],
+      colors: colors,
       chart: {
         height: 320,
         width: '100%',
@@ -237,11 +251,11 @@ export class DashboardComponent implements OnInit {
 
   ticketDataChartBar = [
     { setor: 'Geral', month: '2024-10', count: 0 },
-    { setor: 'manufatura', month: '2024-10', count: 0 },
-    { setor: 'financeiro', month: '2024-10', count: 0 },
-    { setor: 'recursos humanos', month: '2024-10', count: 0 },
-    { setor: 'administrativo', month: '2024-10', count: 0 },
-    { setor: 'tecnologia', month: '2024-10', count: 0 },
+    { setor: 'Marketing', month: '2024-10', count: 0 },
+    { setor: 'Financeiro', month: '2024-10', count: 0 },
+    { setor: 'Recursos Humanos', month: '2024-10', count: 0 },
+    { setor: 'Administrativo', month: '2024-10', count: 0 },
+    { setor: 'Tecnologia', month: '2024-10', count: 0 },
     // Dados dinamicos
   ];
 
@@ -273,13 +287,13 @@ export class DashboardComponent implements OnInit {
       color:
         setor === 'Geral'
           ? '#1A56DB'
-          : setor === 'manufatura'
+          : setor === 'Marketing'
           ? '#FDBA8C'
-          : setor === 'financeiro'
+          : setor === 'Financeiro'
           ? '#329132'
-          : setor === 'tecnologia'
+          : setor === 'Tecnologia'
           ? '#7F8C8D'
-          : setor === 'administrativo'
+          : setor === 'Administrativo'
           ? '#5b2cb2'
           : '#FFC107', // Exemplo de cores dinâmicas
       data: groupedData[setor],
@@ -363,7 +377,11 @@ export class DashboardComponent implements OnInit {
     };
   };
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private toastService: ToastrService
+  ) {
     this.getChartLineOptions();
 
     this.getDonutChartOptions();
@@ -633,15 +651,40 @@ export class DashboardComponent implements OnInit {
             Number(item.count)
           );
 
+          const labels = this.dataPriorityDistribuition.map(
+            (item) => item.ticket_prioridade
+          );
+
+          const colorMapping = {
+            normal: '#2563eb', // Azul
+            urgente: '#dd3636', // Vermelho
+            alta: '#ea580c', // Laranja
+            média: '#ca8a04', // Amarelo
+          };
+
+          // Mapear as cores de acordo com as labels
+          const colors = labels.map(
+            (label) =>
+              colorMapping[label as keyof typeof colorMapping] || '#e0e0e0'
+          );
+
+          // Se o gráfico já foi inicializado
           if (this.donutChart) {
-            this.getDonutChartOptions().series = seriesData;
+            // Atualizar as séries, labels e cores
+            this.donutChart.updateOptions({
+              series: seriesData,
+              labels: labels,
+              colors: colors,
+            });
+
+            // Atualizar a série no gráfico
             this.donutChart.updateSeries(seriesData);
           }
 
           this.cdr.detectChanges();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 
@@ -673,7 +716,7 @@ export class DashboardComponent implements OnInit {
           this.renderChartBar();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 
@@ -742,7 +785,7 @@ export class DashboardComponent implements OnInit {
           this.renderLineChart();
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 

@@ -45,7 +45,7 @@ export class CriarTicketComponent implements OnInit {
           this.setores = data;
         });
     } catch {
-      throw new Error('Erro ao se comunicar com o servidor');
+      this.toastService.error('Erro ao se comunicar com o servidor');
     }
   }
 

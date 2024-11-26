@@ -8,6 +8,11 @@ import { Empresas } from 'src/entity/empresas.entity';
 import { Setores } from 'src/entity/setores.entity';
 import { Enderecos } from 'src/entity/enderecos.entity';
 import { EmpresasService } from 'src/empresas/empresas.service';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtService } from '@nestjs/jwt';
+import { DataUtilsService } from 'src/repository/DataUtils.service';
+import { UsersView } from 'src/entity/usersView.entity';
+import { EmailService } from 'src/email/email.service';
 
 @Module({
   imports: [
@@ -17,9 +22,10 @@ import { EmpresasService } from 'src/empresas/empresas.service';
       Empresas,
       Setores,
       Enderecos,
+      UsersView
     ]),
   ],
   controllers: [CadastroController],
-  providers: [CadastroService, EmpresasService],
+  providers: [CadastroService, EmpresasService, AuthService, JwtService, DataUtilsService, EmailService],
 })
 export class CadastroModule {}

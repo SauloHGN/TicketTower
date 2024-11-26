@@ -32,7 +32,7 @@ export class AuthService {
       const user = await this.verificarLogin(email, senha);
 
       if (user == null) {
-        throw new UnauthorizedException('Credenciais inválidas');
+        return('Credenciais inválidas');
       }
 
       const accessToken = this.jwtService.sign({
@@ -46,7 +46,7 @@ export class AuthService {
 
       return { accessToken };
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 

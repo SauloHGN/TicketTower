@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { NgxMaskDirective } from 'ngx-mask';
 import { Permissao } from '../../enum/permissao';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -23,13 +23,7 @@ import {
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    NgxMaskDirective,
-    NgxMaskPipe,
-    NgIconComponent,
-  ],
+  imports: [FormsModule, CommonModule, NgxMaskDirective, NgIconComponent],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css',
   viewProviders: [
@@ -133,7 +127,15 @@ export class CadastroComponent implements OnInit {
   }
 
   //----- Cadastro -----//
+  isProcessing = false;
+
   Cadastro() {
+    if (this.isProcessing) {
+      return;
+    }
+
+    this.isProcessing = true;
+
     if (this.selectedType === 'empresa') {
       this.CadastrarEmpresa();
     }
@@ -146,6 +148,14 @@ export class CadastroComponent implements OnInit {
     if (this.selectedType === 'funcionario') {
       this.CadastrarFuncionario();
     }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+
+    setTimeout(() => {
+      this.isProcessing = false;
+    }, 1500);
   }
 
   CadastrarEmpresa() {
@@ -165,7 +175,6 @@ export class CadastroComponent implements OnInit {
       this.http
         .post('http://localhost:3000/cadastro/endereco', enderecoData)
         .subscribe((response: any) => {
-          console.log(response); //Excluir
           const idEndereco = response.id;
 
           const empresaData = {
@@ -178,7 +187,6 @@ export class CadastroComponent implements OnInit {
           this.http
             .post('http://localhost:3000/cadastro/empresa', empresaData)
             .subscribe((response) => {
-              console.log(response); //Excluir
               this.toastService.success('Empresa Cadastrada com sucesso');
 
               (
@@ -232,15 +240,15 @@ export class CadastroComponent implements OnInit {
         ).value,
       };
 
-      const idEmpresa = await this.buscarIdEmpresaPorNome(
-        clienteData.id_empresa
-      );
-      clienteData.id_empresa = idEmpresa;
-
       this.http
         .post(`http://localhost:3000/cadastro/${user.id}/cliente`, clienteData)
-        .subscribe((response) => {
-          //console.log(response); //Excluir
+        .subscribe((response: any) => {
+          if (response.status == 500) {
+            this.toastService.error(
+              'Não foi possivel cadastrar o cliente  \n verifique os dados'
+            );
+            return;
+          }
 
           this.toastService.success('Cliente cadastrado com sucesso');
           // Limpar os campos após o cadastro
@@ -268,8 +276,6 @@ export class CadastroComponent implements OnInit {
       this.http
         .post(`http://localhost:3000/cadastro/setor`, setorData)
         .subscribe((response) => {
-          console.log(response); //Excluir
-
           // Limpar os campos após o cadastro
           this.toastService.success('Setor cadastrado com sucesso');
           (document.getElementById('setor-nome') as HTMLInputElement).value =
@@ -287,67 +293,95 @@ export class CadastroComponent implements OnInit {
         var user = JSON.parse(userInfo);
       }
 
-      const funcionarioData = {
-        nome: (document.getElementById('funcionario-nome') as HTMLInputElement)
-          .value,
-        email: (
-          document.getElementById('funcionario-email') as HTMLInputElement
-        ).value,
-        permissao: (
-          document.getElementById('funcionario-permissao') as HTMLInputElement
-        ).value,
-        celular: (
-          document.getElementById('funcionario-celular') as HTMLInputElement
-        ).value,
-        id_setor: (
-          document.getElementById('funcionario-setor') as HTMLInputElement
-        ).value,
-
-        cargo: (
-          document.getElementById('funcionario-cargo') as HTMLInputElement
-        ).value,
+      let funcionarioData = {
+        nome: this.getElementValue('funcionario-nome'),
+        email: this.getElementValue('funcionario-email'),
+        permissao: this.getElementValue('funcionario-permissao'),
+        celular: this.getElementValue('funcionario-celular'),
+        id_setor: this.getElementValue('funcionario-setor'),
+        cargo: this.getElementValue('funcionario-cargo'),
       };
+
       this.http
         .post(
           `http://localhost:3000/cadastro/${user.id}/funcionario`,
           funcionarioData
         )
-        .subscribe((response) => {
-          console.log(response); //Excluir
+        .subscribe({
+          next: (response: any) => {
+            if (response.status == 500) {
+              this.toastService.error(
+                'Não foi possivel cadastrar o funcionario  \n verifique os dados'
+              );
+              return;
+            }
 
-          this.toastService.success('Funcionario cadastrado com sucesso');
-          // Limpar os campos após o cadastro
-          (
-            document.getElementById('funcionario-nome') as HTMLInputElement
-          ).value = '';
-          (
-            document.getElementById('funcionario-email') as HTMLInputElement
-          ).value = '';
-          (
-            document.getElementById('funcionario-permissao') as HTMLInputElement
-          ).value = '';
-          (
-            document.getElementById('funcionario-celular') as HTMLInputElement
-          ).value = '';
-          (
-            document.getElementById('funcionario-setor') as HTMLInputElement
-          ).value = '';
+            this.toastService.success('Funcionario cadastrado com sucesso');
+            (
+              document.getElementById('funcionario-nome') as HTMLInputElement
+            ).value = '';
+
+            (
+              document.getElementById('funcionario-email') as HTMLInputElement
+            ).value = '';
+
+            (
+              document.getElementById(
+                'funcionario-permissao'
+              ) as HTMLInputElement
+            ).value = '';
+
+            (
+              document.getElementById('funcionario-celular') as HTMLInputElement
+            ).value = '';
+
+            (
+              document.getElementById('funcionario-setor') as HTMLInputElement
+            ).value = '';
+
+            (
+              document.getElementById('funcionario-cargo') as HTMLInputElement
+            ).value = '';
+            this.limparCamposFuncionario();
+          },
+          error: (error) => {
+            this.toastService.error('Erro ao cadastrar funcionario');
+          },
         });
     } catch (error) {
       this.toastService.error('Erro ao cadastrar funcionario');
     }
   }
 
-  async buscarIdEmpresaPorNome(nomeEmpresa: string): Promise<number> {
-    const url = `http://localhost:3000/cadastro/nomeEmpresa?nome=${nomeEmpresa}`;
-
-    try {
-      const response: any = await this.http.get<number>(url).toPromise();
-
-      return response;
-    } catch (error) {
-      console.error('Erro ao buscar empresa por nome:', error);
-      throw new Error('Erro ao buscar empresa por nome');
+  getElementValue(id: string): string {
+    const element = document.getElementById(id) as HTMLInputElement;
+    if (element) {
+      return element.value;
     }
+    console.error(`Elemento com id "${id}" não encontrado`);
+    return ''; // ou você pode lançar um erro se preferir
+  }
+
+  limparCamposFuncionario() {
+    document.getElementById('funcionario-nome')?.setAttribute('value', '');
+    document.getElementById('funcionario-email')?.setAttribute('value', '');
+    document.getElementById('funcionario-permissao')?.setAttribute('value', '');
+    document.getElementById('funcionario-celular')?.setAttribute('value', '');
+    document.getElementById('funcionario-setor')?.setAttribute('value', '');
+  }
+
+  async buscarIdEmpresaPorNome(nomeEmpresa: string) {
+    try {
+      this.http
+        .get(`http://localhost:3000/cadastro/nomeEmpresa/${nomeEmpresa}`)
+        .subscribe({
+          next: (response) => {
+            return response;
+          },
+        });
+    } catch (error) {
+      return 'Erro ao buscar empresa por nome';
+    }
+    return null;
   }
 }

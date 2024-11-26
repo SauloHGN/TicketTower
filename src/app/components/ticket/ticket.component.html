@@ -173,85 +173,93 @@
         >
       </div>
 
-      <div
-        class="buttons-area flex items-end justify-evenly w-full h-16 sm:h-56 w-2/5"
-      >
-        <button
-          (click)="togglePopover()"
-          type="button"
-          class="px-4 py-2 font-semibold text-nowrap text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-full duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
-        >
-          Atualizar setor
-        </button>
-
+      <div *ngIf="showButtons && permissao != 'cliente'">
         <div
-          *ngIf="popoverVisible"
-          class="absolute z-10 translate-x-[+5%] w-72 inline-block text-sm text-gray-500 border-2 border-[var(--primary-border-color)] rounded-lg shadow-sm w-80 bg-[var(--card-background-color)]"
+          class="buttons-area flex items-end justify-evenly w-full h-16 sm:h-56 w-2/5"
         >
-          <div class="p-3">
-            <div class="flex">
-              <div>
-                <header class="flex justify-between items-center mb-4">
-                  <div>
-                    <p
-                      class="mb-1 text-base font-semibold leading-none text-gray-900 dark:text-white"
-                    >
-                      <a class="hover:underline">Enviar para</a>
-                    </p>
-                  </div>
-                  <button class="self-start" (click)="togglePopover()">
+          <button
+            (click)="togglePopover()"
+            type="button"
+            class="mx-2 px-4 py-2 font-semibold text-nowrap text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-full duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
+          >
+            Atualizar setor
+          </button>
+
+          <div
+            *ngIf="popoverVisible"
+            class="absolute z-10 translate-x-[+5%] w-72 inline-block text-sm text-gray-500 border-2 border-[var(--primary-border-color)] rounded-lg shadow-sm w-80 bg-[var(--card-background-color)]"
+          >
+            <div class="p-3">
+              <div class="flex">
+                <div>
+                  <header class="flex justify-between items-center mb-4">
+                    <div>
+                      <p
+                        class="mb-1 text-base font-semibold leading-none text-gray-900 dark:text-white"
+                      >
+                        <a class="hover:underline">Enviar para</a>
+                      </p>
+                    </div>
+                    <button class="self-start" (click)="togglePopover()">
+                      <ng-icon
+                        name="lucideX"
+                        strokeWidth="1.8"
+                        size="20"
+                        class="text-[var(--primary-font-color)] hover:text-[var(--tertiary-button-text-color)]"
+                      >
+                      </ng-icon>
+                    </button>
+                  </header>
+                  <p class="mb-4 text-sm">
+                    Essa alterção irá modificar o setor responsável pelo ticket
+                  </p>
+                  <div class="relative w-full">
                     <ng-icon
-                      name="lucideX"
-                      strokeWidth="1.8"
+                      name="lucideBuilding"
+                      strokeWidth="1.5"
                       size="20"
-                      class="text-[var(--primary-font-color)] hover:text-[var(--tertiary-button-text-color)]"
+                      class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
                     >
                     </ng-icon>
-                  </button>
-                </header>
-                <p class="mb-4 text-sm">
-                  Essa alterção irá modificar o setor responsável pelo ticket
-                </p>
-                <div class="relative w-full">
-                  <ng-icon
-                    name="lucideBuilding"
-                    strokeWidth="1.5"
-                    size="20"
-                    class="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
-                  >
-                  </ng-icon>
-                  <select
-                    id="novo-setor"
-                    [(ngModel)]="selectedSetor"
-                    class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border-[var(--primary-border-color)] border focus: shadow-sm rounded-lg"
-                    required
-                  >
-                    <option value="" disabled selected hidden>Setor</option>
-                    <option *ngFor="let setor of setores" [value]="setor.id">
-                      {{ setor.nome }}
-                    </option>
-                  </select>
-                </div>
+                    <select
+                      id="novo-setor"
+                      [(ngModel)]="selectedSetor"
+                      class="w-full pl-12 pr-3 py-2 bg-transparent outline-none border-[var(--primary-border-color)] border focus: shadow-sm rounded-lg"
+                      required
+                    >
+                      <option value="" disabled selected hidden>Setor</option>
+                      <option *ngFor="let setor of setores" [value]="setor.id">
+                        {{ setor.nome }}
+                      </option>
+                    </select>
+                  </div>
 
-                <button
-                  class="flex mx-auto mt-8 justify-center px-4 py-2 border border-[var(--primary-border-color)] text-[var(--primary-font-color)] rounded-lg duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
-                  (click)="setorChange()"
-                >
-                  Alterar
-                </button>
+                  <button
+                    class="flex mx-auto mt-8 justify-center px-4 py-2 border border-[var(--primary-border-color)] text-[var(--primary-font-color)] rounded-lg duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
+                    (click)="setorChange()"
+                  >
+                    Alterar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
+
+          <button
+            type="button"
+            class="mx-2 px-4 py-2 font-semibold text-nowrap text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-full duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
+            (click)="fecharTicket()"
+          >
+            Fechar Ticket
+          </button>
+
+          <button
+            class="gradient-button rounded-full"
+            (click)="marcarResolvido()"
+          >
+            Resolvido
+          </button>
         </div>
-
-        <button
-        type="button"
-        class="px-4 py-2 font-semibold text-nowrap text-[var(--primary-font-color)] border border-[var(--primary-border-color)] rounded-full duration-150 hover:bg-[var(--tertiary-button-background-color)] cursor-pointer"
-      >
-        Fechar Ticket
-      </button>
-
-        <button class="gradient-button rounded-full">Resolvido</button>
       </div>
     </section>
   </div>
@@ -365,14 +373,13 @@
       style="min-height: 0"
     >
       <main class="flex flex-col flex-grow w-full p-4 gap-y-2 overflow-y-auto">
-
         <div *ngFor="let transferencia of dadosHistorico">
           <p class="text-[var(--tertiary-highligted-text-color)]">
-            ➔ [{{transferencia.dataTransferencia}}]: {{transferencia.user}} Transferiu do setor {{transferencia.setorAntigo}}  para {{transferencia.setorNovo}}
+            ➔ [{{ transferencia.dataTransferencia }}]:
+            {{ transferencia.user }} Transferiu do setor
+            {{ transferencia.setorAntigo }} para {{ transferencia.setorNovo }}
           </p>
         </div>
-
-
       </main>
     </div>
     <!-- END Histórico -->
